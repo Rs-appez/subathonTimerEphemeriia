@@ -1,0 +1,27 @@
+<html>
+
+<head>
+    <title>OAuth</title>
+</head>
+
+<body>
+    <div>
+        <h2>Twitch</h2>
+        <a href="twitch/authorize">Connect with Twitch</a>
+        <p>Connected : {{twitch_connected}}</p>
+        {% if twitch_connected %}
+        <p>Username : {{twitch_user}}</p>
+        {% endif %}
+    </div>
+    <div>
+        <h2>StreamLab</h2>
+        <a href="streamlabs/authorize">Connect with streamlabs</a>
+        <p>Connected : {{sl_connected}}</p>
+        {% if sl_connected %}
+        <p>Username : {{sl_user}}</p>
+        {% endif %}
+    </div>
+
+</body>
+
+</html>

@@ -13,7 +13,7 @@ from decouple import config
 
 APP_ID = config('APP_ID')
 APP_SECRET = config('APP_SECRET')
-TARGET_SCOPES = [AuthScope.MODERATOR_READ_FOLLOWERS, AuthScope.CHANNEL_READ_SUBSCRIPTIONS, AuthScope.BITS_READ]
+TARGET_SCOPES = [AuthScope.MODERATOR_READ_FOLLOWERS, AuthScope.BITS_READ]
 TARGET_CHANNEL = config('TARGET_CHANNEL')
 TARGET_USER = config('TARGET_USER')
 
@@ -68,9 +68,9 @@ async def run():
     # the broadcaster is a moderator in their own channel by default so specifying both as the same works in this example
     # We have to subscribe to the first topic within 10 seconds of eventsub.start() to not be disconnected.
     await eventsub.listen_channel_follow_v2(userB.id, userM.id, on_follow)
-    await eventsub.listen_channel_subscribe(userB.id, on_subscription)
-    await eventsub.listen_channel_subscription_gift(userB.id, on_subscription)
-    await eventsub.listen_channel_cheer(userB.id, on_cheer)
+    # await eventsub.listen_channel_subscribe(userB.id, on_subscription)
+    # await eventsub.listen_channel_subscription_gift(userB.id, on_subscription)
+    # await eventsub.listen_channel_cheer(userB.id, on_cheer)
 
     # eventsub will run in its own process
     # so lets just wait for user input before shutting it all down again

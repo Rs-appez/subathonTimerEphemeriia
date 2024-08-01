@@ -27,7 +27,7 @@ SECRET_KEY = config("SECRET_KEY")
 
 DEBUG = config("DEBUG", default=False, cast=bool)
 
-ALLOWED_HOSTS = [config("BACKEND_HOST", default="127.0.0.1")]
+ALLOWED_HOSTS = [config("BACKEND_HOST", default="127.0.0.1"),"127.0.0.1"]
 
 CSRF_TRUSTED_ORIGINS = ["https://" + config("BACKEND_HOST", default="")]
 
@@ -44,7 +44,9 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "subathonTimer",
+    "oauth",
     "channels",
+
 ]
 
 MIDDLEWARE = [
