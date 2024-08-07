@@ -1,15 +1,21 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect
+from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import action
+from rest_framework.response import Response
+
 import requests
 from decouple import config
 import uuid
 
 from .models import TwitchAuth, StreamlabsAuth
+from .serializers import TwitchAuthSerializer, StreamlabsAuthSerializer
+
 
 state = uuid.uuid4()
 
 
 def oauth(request):
-
     if not request.user.is_authenticated:
         return HttpResponseRedirect("/admin_django/login/?next=/oauth/")
 
@@ -40,6 +46,17 @@ def oauth(request):
     if sla:
         sl_connected = True
 
+        res = requests.get(
+            "https://streamlabs.com/api/v2.0/user",
+            headers={
+                "accept": "application/json",
+                "Authorization": f"Bearer {sla.access_token}",
+            },
+        )
+
+        if res.status_code == 200:
+            sl_user = res.json()["twitch"]["display_name"]
+
     return render(
         request,
         "oauth.html",
@@ -57,9 +74,11 @@ def error(request):
 
 
 def authorizeTwich(request):
+    print(request.user)
+
     if not request.user.is_authenticated:
         return HttpResponseRedirect("/admin_django/login/?next=/oauth/")
-    
+
     global state
 
     redirect_uri = "http://" + config("BACKEND_HOST") + ":8000/oauth/twitch/authorize"
@@ -70,10 +89,10 @@ def authorizeTwich(request):
         res = requests.get(
             "https://id.twitch.tv/oauth2/authorize",
             params={
-                "client_id": config("APP_ID"),
+                "client_id": config("TWITCH_APP_ID"),
                 "redirect_uri": redirect_uri,
                 "response_type": "code",
-                "scope": "user:read:email",
+                "scope": "bits:read channel:read:redemptions channel:read:subscriptions moderator:read:followers",
                 "state": state,
             },
         )
@@ -86,8 +105,8 @@ def authorizeTwich(request):
         res = requests.post(
             "https://id.twitch.tv/oauth2/token",
             params={
-                "client_id": config("APP_ID"),
-                "client_secret": config("APP_SECRET"),
+                "client_id": config("TWITCH_APP_ID"),
+                "client_secret": config("TWITCH_APP_SECRET"),
                 "code": request.GET.get("code"),
                 "grant_type": "authorization_code",
                 "redirect_uri": redirect_uri,
@@ -107,12 +126,50 @@ def authorizeTwich(request):
 
         return redirect("oauth")
 
+
 def authorizeStreamlabs(request):
+
+    redirect_uri = (
+        "http://" + config("BACKEND_HOST") + ":8000/oauth/streamlabs/authorize"
+    )
 
     if not request.user.is_authenticated:
         return HttpResponseRedirect("/admin_django/login/?next=/oauth/")
 
-    redirect_uri = "http://" + config("BACKEND_HOST") + ":8000/oauth/streamlabs/authorize"
+    if request.GET.get("code"):
+        res = requests.post(
+            "https://streamlabs.com/api/v2.0/token",
+            data={
+                "grant_type": "authorization_code",
+                "client_id": config("STREAMLABS_CLIENT_ID"),
+                "client_secret": config("STREAMLABS_CLIENT_SECRET"),
+                "redirect_uri": redirect_uri,
+                "code": request.GET.get("code"),
+            },
+        )
+
+        if res.status_code != 200:
+            return redirect("error")
+
+        res_st = requests.get(
+            "https://streamlabs.com/api/v2.0/socket/token",
+            headers={
+                "accept": "application/json",
+                "Authorization": f"Bearer {res.json()['access_token']}",
+            },
+        )
+
+        if res_st.status_code != 200:
+            return redirect("error")
+
+        StreamlabsAuth.objects.create(
+            access_token=res.json()["access_token"],
+            refresh_token=res.json()["refresh_token"],
+            token_type=res.json()["token_type"],
+            socket_token=res_st.json()["socket_token"],
+        )
+
+        return redirect("oauth")
 
     res = requests.get(
         "https://streamlabs.com/api/v2.0/authorize",
@@ -120,8 +177,47 @@ def authorizeStreamlabs(request):
             "client_id": config("STREAMLABS_CLIENT_ID"),
             "redirect_uri": redirect_uri,
             "response_type": "code",
-            "scope": "donations.read",
+            "scope": "donations.read socket.token",
         },
+        headers={"accept": "application/json"},
     )
 
     return redirect(res.url)
+
+class TwitchAuthView(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    queryset = TwitchAuth.objects.all()
+    serializer_class = TwitchAuthSerializer
+
+    @action(detail=False, methods=['get'], permission_classes=[IsAuthenticated])
+    def first(self, request, pk=None):
+        ta = TwitchAuth.objects.first()
+        if ta:
+            serializer = self.get_serializer(ta)
+            return Response(serializer.data)
+        else:
+            return Response({'error': 'No Twitch Auth'})
+
+
+
+    # @action(detail=False, methods=['post'], permission_classes=[IsAuthenticated])
+    # def refresh(self, request, pk=None):
+    #     ta = TwitchAuth.objects.first()
+    #     refresh = ta.refresh()
+
+    #     return Response({'refreshed': refresh})
+
+class StreamlabsAuthView(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    queryset = StreamlabsAuth.objects.all()
+    serializer_class = StreamlabsAuthSerializer
+
+    @action(detail=False, methods=['get'], permission_classes=[IsAuthenticated])
+    def first(self, request, pk=None):
+        sla = StreamlabsAuth.objects.first()
+        if sla:
+            serializer = self.get_serializer(sla)
+            return Response(serializer.data)
+        else:
+            return Response({'error': 'No Streamlabs Auth'})
+        

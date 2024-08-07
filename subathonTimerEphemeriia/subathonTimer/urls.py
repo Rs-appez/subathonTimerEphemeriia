@@ -4,7 +4,7 @@ from .views import TimerViewSet, index
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
-router.register('timer', TimerViewSet)
+router.register(r'timer', TimerViewSet, basename='timer')
 
 urlpatterns = [
     path('api/', include(router.urls)),

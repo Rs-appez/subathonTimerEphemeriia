@@ -27,17 +27,18 @@ class Timer(models.Model):
     timer_active = models.BooleanField(default=False)
 
     # Timer stats
-    timer_total_donations = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    timer_total_donations = models.FloatField(default=0)
     timer_total_subscriptions = models.IntegerField(default=0)
     timer_total_follows = models.IntegerField(default=0)
+    timer_total_bits = models.IntegerField(default=0)
 
 
     # Timer add time
     timer_add_time_sub_t1 = models.IntegerField(default=0)
     timer_add_time_sub_t2 = models.IntegerField(default=0)
     timer_add_time_sub_t3 = models.IntegerField(default=0)
-    timer_add_time_bits = models.IntegerField(default=0)
-    timer_add_time_donation = models.IntegerField(default=0)
+    timer_add_time_bits = models.FloatField(default=0)
+    timer_add_time_donation = models.FloatField(default=0)
 
 
     # Timer messages
@@ -54,9 +55,35 @@ class Timer(models.Model):
         
         return self.timer_end.timestamp()
     
-    def new_t3(self):
+    def new_sub(self, tier):
+
         self.timer_total_subscriptions += 1
-        self.timer_end += timezone.timedelta(seconds=self.timer_add_time_sub_t3)
+
+        match tier:
+            case '1':
+                self.timer_end += timezone.timedelta(seconds=self.timer_add_time_sub_t1)
+            case '2':
+                self.timer_end += timezone.timedelta(seconds=self.timer_add_time_sub_t2)
+            case '3':
+                self.timer_end += timezone.timedelta(seconds=self.timer_add_time_sub_t3)
+            case _:
+                return False
+        self.save()
+
+        return True
+    
+    def new_bits(self, bits : int):
+        self.timer_total_bits += bits
+
+        self.timer_end += timezone.timedelta(seconds=self.timer_add_time_bits * bits)
+
+        self.save()
+
+    def new_donation(self, donation : float):
+        self.timer_total_donations += donation
+
+        self.timer_end += timezone.timedelta(seconds=self.timer_add_time_donation * donation)
+
         self.save()
 
     def send_ticket(self):

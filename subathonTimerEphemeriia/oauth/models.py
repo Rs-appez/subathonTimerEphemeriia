@@ -18,8 +18,8 @@ class TwitchAuth(models.Model):
     
     def refresh(self):
         res = requests.post('https://id.twitch.tv/oauth2/token', params={
-            'client_id': config("APP_ID"),
-            'client_secret': config("APP_SECRET"),
+            'client_id': config("TWITCH_APP_ID"),
+            'client_secret': config("TWITCH_APP_SECRET"),
             'grant_type': 'refresh_token',
             'refresh_token': self.refresh_token
         })
@@ -33,18 +33,18 @@ class TwitchAuth(models.Model):
             self.scope = data['scope']
             self.save()
         else:
-
+            
             return False
 
         return True
-
-    
     
 class StreamlabsAuth(models.Model):
     access_token = models.CharField(max_length=255)
-    expires_in = models.DateTimeField()
+    refresh_token = models.CharField(max_length=255)
+    socket_token = models.CharField(max_length=255)
+    expires_in = models.IntegerField(blank=True, null=True)
     token_type = models.CharField(max_length=255)
-    scope = models.CharField(max_length=255)
+    scope = models.CharField(max_length=255, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
