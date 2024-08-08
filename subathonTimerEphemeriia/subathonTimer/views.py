@@ -10,8 +10,11 @@ from .utils import write_log
 
 
 def index(request):
-    timer = Timer.objects.get(id=1)
-    time = timer.display_time()
+    timer = Timer.objects.last()
+    if timer is None:
+        time = 'no timer'
+    else:
+        time = timer.display_time()
     return render(request, 'index.html', {'time': time})
 
 
