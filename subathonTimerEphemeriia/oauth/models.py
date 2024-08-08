@@ -42,7 +42,6 @@ class StreamlabsAuth(models.Model):
     access_token = models.CharField(max_length=255)
     refresh_token = models.CharField(max_length=255)
     socket_token = models.CharField(max_length=255)
-    expires_in = models.IntegerField(blank=True, null=True)
     token_type = models.CharField(max_length=255)
     scope = models.CharField(max_length=255, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
