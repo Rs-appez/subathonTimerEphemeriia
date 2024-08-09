@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # deepcode ignore HardcodedNonCryptoSecret: <please specify a reason of ignoring this>
 SECRET_KEY = config("SECRET_KEY")
 
-DEBUG = config("DEBUG", default=False, cast=bool)
+DEBUG = config("DEBUG", default=True, cast=bool)
 
 ALLOWED_HOSTS = [config("BACKEND_HOST", default="127.0.0.1")]
 
@@ -98,12 +98,13 @@ DATABASES = {
         conn_max_age=600,
         conn_health_checks=True
     ),
-} if not DEBUG else {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+} 
+# if not DEBUG else {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
