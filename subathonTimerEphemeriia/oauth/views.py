@@ -80,6 +80,8 @@ def authorizeTwich(request):
 
     global state
 
+    print(state)
+
     redirect_uri = "https://" + config("BACKEND_HOST") + "/oauth/twitch/authorize"
 
     if not request.GET.get("state") == str(state):
