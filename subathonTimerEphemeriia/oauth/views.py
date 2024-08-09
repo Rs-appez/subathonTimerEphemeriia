@@ -74,14 +74,13 @@ def error(request):
 
 
 def authorizeTwich(request):
-    print(request.user)
 
     if not request.user.is_authenticated:
         return HttpResponseRedirect("/admin_django/login/?next=/oauth/")
 
     global state
 
-    redirect_uri = "http://" + config("BACKEND_HOST") + ":8000/oauth/twitch/authorize"
+    redirect_uri = "https://" + config("BACKEND_HOST") + "/oauth/twitch/authorize"
 
     if not request.GET.get("state") == str(state):
         state = uuid.uuid4()
@@ -130,7 +129,7 @@ def authorizeTwich(request):
 def authorizeStreamlabs(request):
 
     redirect_uri = (
-        "http://" + config("BACKEND_HOST") + ":8000/oauth/streamlabs/authorize"
+        "https://" + config("BACKEND_HOST") + "/oauth/streamlabs/authorize"
     )
 
     if not request.user.is_authenticated:
