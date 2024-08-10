@@ -39,9 +39,9 @@ class TwitchAuth(models.Model):
         return True
     
 class StreamlabsAuth(models.Model):
-    access_token = models.CharField(max_length=255)
-    refresh_token = models.CharField(max_length=255)
-    socket_token = models.CharField(max_length=255)
+    access_token = models.CharField(max_length=2083)
+    refresh_token = models.CharField(max_length=2083)
+    socket_token = models.CharField(max_length=2083)
     token_type = models.CharField(max_length=255)
     scope = models.CharField(max_length=255, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
