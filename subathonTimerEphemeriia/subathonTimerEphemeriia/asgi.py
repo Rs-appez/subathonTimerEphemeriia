@@ -11,6 +11,7 @@ import os
 
 from channels.routing import ProtocolTypeRouter, URLRouter
 from django.core.asgi import get_asgi_application
+from channels.auth import AuthMiddlewareStack
 
 import subathonTimer.routing as routing
 
@@ -19,8 +20,8 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'subathonTimerEphemeriia.setting
 django_asgi_app = get_asgi_application()
 
 application = ProtocolTypeRouter({
-    "https": django_asgi_app,
-    "websocket": URLRouter(
+    "http": django_asgi_app,
+    "websocket": AuthMiddlewareStack (URLRouter(
         routing.websocket_urlpatterns
-    )
+    ))
 })
