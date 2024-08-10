@@ -25,7 +25,7 @@ var remainingTime = end_timer - new Date().getTime() / 1000;
 
 
 // Websocket
-var ws_url = 'ws://' + window.location.host + '/ws/ticks/';
+var ws_url = 'wss://' + window.location.host + '/ws/ticks/';
 
 function connect(){
     var ws = new WebSocket(ws_url);
