@@ -12,9 +12,6 @@ from .models import TwitchAuth, StreamlabsAuth
 from .serializers import TwitchAuthSerializer, StreamlabsAuthSerializer
 
 
-state = uuid.uuid4()
-
-
 def oauth(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect("/admin_django/login/?next=/oauth/")
@@ -78,14 +75,15 @@ def authorizeTwich(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect("/admin_django/login/?next=/oauth/")
 
-    global state
-
-    print(state)
+    if not request.session.get("oauth_state"):
+        state = uuid.uuid4()
+        request.session["oauth_state"] = str(state)
+    else:
+        state = request.session["oauth_state"]
 
     redirect_uri = "https://" + config("BACKEND_HOST") + "/oauth/twitch/authorize"
 
     if not request.GET.get("state") == str(state):
-        state = uuid.uuid4()
 
         res = requests.get(
             "https://id.twitch.tv/oauth2/authorize",
@@ -101,7 +99,7 @@ def authorizeTwich(request):
         return redirect(res.url)
 
     else:
-        state = None
+        request.session["oauth_state"] = None
 
         res = requests.post(
             "https://id.twitch.tv/oauth2/token",
