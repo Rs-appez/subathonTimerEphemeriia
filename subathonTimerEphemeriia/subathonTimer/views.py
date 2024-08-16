@@ -45,7 +45,13 @@ class TimerViewSet(viewsets.ModelViewSet):
         
         self.seen_ids.add(id)
 
-        if not timer.new_sub(tier) :
+        try:
+            tier = int(tier)
+
+            if not timer.new_sub(tier) :
+                raise Exception
+            
+        except Exception:
             return Response({'message': 'Invalid tier','status' : 400})
 
         timer.send_ticket()

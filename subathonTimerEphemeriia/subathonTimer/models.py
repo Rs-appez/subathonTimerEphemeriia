@@ -55,16 +55,16 @@ class Timer(models.Model):
         
         return self.timer_end.timestamp()
     
-    def new_sub(self, tier):
+    def new_sub(self, tier : int):
 
         self.timer_total_subscriptions += 1
 
         match tier:
-            case '1':
+            case 1 :
                 self.timer_end += timezone.timedelta(seconds=self.timer_add_time_sub_t1)
-            case '2':
+            case 2 :
                 self.timer_end += timezone.timedelta(seconds=self.timer_add_time_sub_t2)
-            case '3':
+            case 3 :
                 self.timer_end += timezone.timedelta(seconds=self.timer_add_time_sub_t3)
             case _:
                 return False
