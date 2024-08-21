@@ -1,15 +1,18 @@
 // Update the timer every second
-function update(){
-    remainingTime = end_timer - new Date().getTime() / 1000;
-    if(remainingTime <= 0){
-        document.getElementById('time').innerHTML = 'FINI !!!!!';
-        return;
+function update() {
+    const timeElement = document.getElementById('time');
+    if (timeElement) {
+        remainingTime = end_timer - new Date().getTime() / 1000;
+        if (remainingTime <= 0) {
+            timeElement.innerHTML = 'FINI !!!!!';
+            return;
+        }
+        timeElement.innerHTML = formatTime(remainingTime);
     }
-    document.getElementById('time').innerHTML = formatTime(remainingTime);
 }
 setInterval(update, 1000);
 
-function formatTime(seconds){
+function formatTime(seconds) {
     var hours = Math.floor(seconds / 3600);
     var minutes = Math.floor((seconds % 3600) / 60);
     minutes = minutes < 10 ? '0' + minutes : minutes;
@@ -27,22 +30,22 @@ var remainingTime = end_timer - new Date().getTime() / 1000;
 // Websocket
 var ws_url = 'wss://' + window.location.host + '/ws/ticks/';
 
-function connect(){
+function connect() {
     var ws = new WebSocket(ws_url);
 
-    ws.onmessage = function(event){
+    ws.onmessage = function (event) {
         var data_ws = JSON.parse(event.data);
         end_timer = data_ws.time_end;
         update();
     }
 
-    ws.onclose = function(event){
+    ws.onclose = function (event) {
         console.log('Connection closed');
         connect();
 
     }
 
-    ws.onerror = function(event){
+    ws.onerror = function (event) {
         console.log('Error');
         ws.close();
     }
