@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated , IsAdminUser, AllowAny
 from rest_framework.decorators import action
@@ -15,8 +16,15 @@ def index(request):
         time = 'no timer'
     else:
         time = timer.display_time()
-    return render(request, 'index.html', {'time': time})
+        started = timer.timer_active
+    return render(request, 'index.html', {'time': time, 'started': started})
 
+def start_timer(request):
+    if request.method == 'POST':
+        timer = Timer.objects.last()
+        timer.timer_active = True
+        timer.save()
+        return redirect('index')
 
 class TimerViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAdminUser]
