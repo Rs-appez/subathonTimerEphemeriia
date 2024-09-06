@@ -86,6 +86,11 @@ class Timer(models.Model):
 
         self.save()
 
+    def add_time(self, time : float):
+        self.timer_end += timezone.timedelta(seconds=time)
+
+        self.save()
+
     def send_ticket(self):
         time = self.display_time()
 

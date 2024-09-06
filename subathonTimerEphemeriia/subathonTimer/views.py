@@ -120,3 +120,21 @@ class TimerViewSet(viewsets.ModelViewSet):
         write_log(f"New donation: {name} - {donation}")
 
         return Response({'message': 'Donation added','status' : 200})
+    
+
+    @action(detail=False, methods=['post'], permission_classes=[IsAuthenticated])
+    def add_time(self, request, pk=None):
+        timer = Timer.objects.last()
+        time = request.data['time']
+
+        try:
+            timer.add_time(float(time))
+
+        except Exception as e:
+            return Response({'message': 'Invalid time','status' : 400})
+
+        timer.send_ticket()
+
+        write_log(f"Added time: {time} seconds")
+
+        return Response({'message': 'Time added','status' : 200})
