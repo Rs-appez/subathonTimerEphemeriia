@@ -126,6 +126,7 @@ class TimerViewSet(viewsets.ModelViewSet):
     def add_time(self, request, pk=None):
         timer = Timer.objects.last()
         time = request.data['time']
+        username = request.data['username'] if 'username' in request.data else 'anonymous'
 
         try:
             timer.add_time(float(time))
@@ -135,6 +136,6 @@ class TimerViewSet(viewsets.ModelViewSet):
 
         timer.send_ticket()
 
-        write_log(f"Added time: {time} seconds")
+        write_log(f"{username} added time: {time} seconds")
 
         return Response({'message': 'Time added','status' : 200})
