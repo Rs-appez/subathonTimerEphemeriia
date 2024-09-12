@@ -5,6 +5,7 @@ import json
 from asgiref.sync import async_to_sync
 import channels.layers
 from django.conf import settings
+from .utils import write_log
 
 class BonusType(models.TextChoices):
     SUB = "SUB"
@@ -60,6 +61,8 @@ class Timer(models.Model):
         self.timer_end = self.timer_start + timezone.timedelta(seconds=self.timer_initial_time)
         self.timer_active = True
         self.save()
+
+        write_log("Subathon started")
     
     def new_sub(self, tier : int):
 
