@@ -8,6 +8,7 @@ from rest_framework.response import Response
 from .models import Timer
 from .serializers import TimerSerializer
 from .utils import write_log
+from django.conf import settings
 
 
 def index(request):
@@ -39,12 +40,23 @@ def add_time(request):
 
         res = tvs.add_time(req)
         
-        return render(request, "addTime.html", {"message": res.data["message"], "status": res.data["status"]})
+        return redirect(f"/add_time_success?message={res.data['message']}&status={res.data['status']}")
 
     elif request.method == "GET":
         if not request.user.is_authenticated:
             return HttpResponseRedirect("/admin_django/login/?next=/add_time/")
-        return render(request, "addTime.html", {})
+        return render(request, "addTime.html", {"logs": __get_logs()})
+    
+def add_time_success(request):  
+    if not request.user.is_authenticated:
+            return HttpResponseRedirect("/admin_django/login/?next=/add_time/")
+    return render(request, "addTime.html", {"message": request.GET.get("message", ""),"status" : request.GET.get("status"), "logs": __get_logs()})
+
+def __get_logs():
+    path = "/logs/log.txt" if not  settings.DEBUG else "log.txt" 
+    with open(path, "r") as f:
+        lines = f.readlines()
+    return lines[::-1]
 
 
 def start_timer(request):
