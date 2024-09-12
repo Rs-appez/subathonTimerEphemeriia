@@ -55,6 +55,12 @@ class Timer(models.Model):
         
         return self.timer_end.timestamp()
     
+    def start_timer(self):
+        self.timer_start = timezone.now()
+        self.timer_end = self.timer_start + timezone.timedelta(seconds=self.timer_initial_time)
+        self.timer_active = True
+        self.save()
+    
     def new_sub(self, tier : int):
 
         self.timer_total_subscriptions += 1

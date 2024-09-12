@@ -51,8 +51,7 @@ def add_time(request):
 def start_timer(request):
     if request.method == "POST":
         timer = Timer.objects.last()
-        timer.timer_active = True
-        timer.save()
+        timer.start_timer()
         return redirect("index")
 
 
