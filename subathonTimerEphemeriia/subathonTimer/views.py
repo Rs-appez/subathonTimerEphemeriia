@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect
-from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpRequest
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
