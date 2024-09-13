@@ -24,6 +24,7 @@ function formatTime(seconds) {
 
 const data = document.currentScript.dataset;
 var end_timer = data.time_left;
+var total_tips = 0;
 var tip_goal_values = data.tip_goal_values;
 var remainingTime = end_timer - new Date().getTime() / 1000;
 
