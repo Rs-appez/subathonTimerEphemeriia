@@ -5,20 +5,29 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from .models import Timer
-from .serializers import TimerSerializer
+from .models import Timer, TipGoal
+from .serializers import TimerSerializer, TipGoalSerializer
 from .utils import write_log
 from django.conf import settings
 
 
 def index(request):
     timer = Timer.objects.last()
+    images = []
+    tip_goals_values = []
+
+
     if timer is None:
         time = "no timer"
     else:
         time = timer.display_time()
         started = timer.timer_active
-    return render(request, "index.html", {"time": time, "started": started})
+
+        for goal in timer.get_tip_goal():
+            images.append(goal.get_image())
+            tip_goals_values.append(goal.goal_amount)
+        
+    return render(request, "index.html", {"time": time, "started": started, "images": images, "tip_goals_values": tip_goals_values})
 
 
 def add_time(request):
@@ -177,3 +186,8 @@ class TimerViewSet(viewsets.ModelViewSet):
         write_log(f"{username} added time: {time} seconds")
 
         return Response({"message": "Time added", "status": 200})
+
+class TipGoalViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAdminUser]
+    queryset = TipGoal.objects.all()
+    serializer_class = TipGoalSerializer

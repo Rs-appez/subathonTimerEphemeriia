@@ -19,6 +19,18 @@ class BonusTime(models.Model):
     bonus_time = models.IntegerField()
     bonus_used = models.BooleanField(default=False)
 
+class TipGoal(models.Model):
+    goal_name = models.CharField(max_length=100)
+    goal_amount = models.FloatField()
+    goal_image = models.ImageField(upload_to='subathonTimerEphemeriia/static/subathonTimer/images/tips/')
+
+    def __str__(self):
+        return self.goal_name
+    
+    def get_image(self):
+        return self.goal_image.url[32:]
+
+
 class Timer(models.Model):
     # Timer settings
     timer_name = models.CharField(max_length=100)
@@ -63,6 +75,9 @@ class Timer(models.Model):
         self.save()
 
         write_log("Subathon started")
+
+    def get_tip_goal(self):
+        return TipGoal.objects.filter(goal_amount__gt=self.timer_total_donations).all()
     
     def new_sub(self, tier : int):
 
@@ -108,6 +123,6 @@ class Timer(models.Model):
             settings.TICKS_GROUP_NAME,
             {
                 'type': 'new_ticks',
-                'content': json.dumps({'time_end': time})
+                'content': json.dumps({'time_end': time, 'total_tips': self.timer_total_donations, 'total_subscriptions': self.timer_total_subscriptions}),
             }
         )

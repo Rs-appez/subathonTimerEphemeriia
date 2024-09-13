@@ -24,8 +24,42 @@ function formatTime(seconds) {
 
 const data = document.currentScript.dataset;
 var end_timer = data.time_left;
+var tip_goal_values = data.tip_goal_values;
 var remainingTime = end_timer - new Date().getTime() / 1000;
 
+
+function triggerAnimation() {
+    const imageElements = document.querySelectorAll('.image_to_move');
+
+    // Remove the animation class to reset the animation
+    imageElements.forEach(image => {
+        image.classList.remove('moving-image');
+        // Force reflow to restart the animation
+        void image.offsetWidth;
+        // Add the animation class to trigger the animation
+        image.classList.add('moving-image');
+    });
+}
+
+function removeFirstImage() {
+    const imageElements = document.querySelectorAll('.image_to_move');
+    if (imageElements.length > 0) {
+        imageElements[0].remove();
+    }
+}
+
+function updateTipGoal() {
+    triggerAnimation();
+    setTimeout(removeFirstImage, 2999);
+}
+
+function checkTipGoal() {
+    if (total_tips >= tip_goal_values[0]) {
+        tip_goal_values.shift();
+        updateTipGoal();
+        checkTipGoal();
+    }
+}
 
 // Websocket
 var ws_url = 'wss://' + window.location.host + '/ws/ticks/';
@@ -36,7 +70,12 @@ function connect() {
     ws.onmessage = function (event) {
         var data_ws = JSON.parse(event.data);
         end_timer = data_ws.time_end;
+        total_tips = data_ws.total_tips;
+        total_subscriptions = data_ws.total_subscriptions;
+
         update();
+        checkTipGoal();
+
     }
 
     ws.onclose = function (event) {
