@@ -77,7 +77,7 @@ class Timer(models.Model):
         write_log("Subathon started")
 
     def get_tip_goal(self):
-        return TipGoal.objects.filter(goal_amount__gt=self.timer_total_donations).all()
+        return TipGoal.objects.filter(goal_amount__gt=self.timer_total_donations).all().order_by('goal_amount')
     
     def new_sub(self, tier : int):
 
