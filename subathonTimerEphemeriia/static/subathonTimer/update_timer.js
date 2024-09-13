@@ -54,7 +54,7 @@ function removeFirstImage() {
 
 function updateTipGoal() {
     triggerAnimation();
-    setTimeout(removeFirstImage, 2999);
+    setTimeout(removeFirstImage, 1999);
 }
 
 function checkTipGoal() {
@@ -66,7 +66,7 @@ function checkTipGoal() {
         setTimeout(function () {
             skip_animation = false;
             checkTipGoal();
-        }, 3001);
+        }, 2001);
     }
 
 }
