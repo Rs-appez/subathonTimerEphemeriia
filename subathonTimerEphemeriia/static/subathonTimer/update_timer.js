@@ -25,8 +25,11 @@ function formatTime(seconds) {
 const data = document.currentScript.dataset;
 var end_timer = data.time_left;
 var total_tips = 0;
-var tip_goal_values = data.tip_goal_values;
+var total_subscriptions = 0;
+var tip_goal_values = JSON.parse(data.tip_goal_values);
 var remainingTime = end_timer - new Date().getTime() / 1000;
+
+var skip_animation = false;
 
 
 function triggerAnimation() {
@@ -55,11 +58,17 @@ function updateTipGoal() {
 }
 
 function checkTipGoal() {
-    if (total_tips >= tip_goal_values[0]) {
+
+    if (total_tips >= tip_goal_values[0] && !skip_animation) {
+        skip_animation = true;
         tip_goal_values.shift();
         updateTipGoal();
-        checkTipGoal();
+        setTimeout(function () {
+            skip_animation = false;
+            checkTipGoal();
+        }, 3001);
     }
+
 }
 
 // Websocket

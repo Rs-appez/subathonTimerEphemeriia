@@ -76,4 +76,4 @@
     }
 </style>
 
-<script src="{% static 'subathonTimer/update_timer.js' %}" defer data-time_left="{{ time }}" data-tip_goal_values="{{ tip_goals_values }}"></script>
+<script src="{% static 'subathonTimer/update_timer.js' %}" defer data-time_left="{{ time }}" defer data-tip_goal_values="{{ tip_goals_values|safe|escapejs }}"></script>
