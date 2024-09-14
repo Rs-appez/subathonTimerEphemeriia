@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect
-from django.http import HttpRequest
+from django.http import HttpRequest 
+from django.core.cache import cache
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 from rest_framework.decorators import action
@@ -95,6 +96,8 @@ class TimerViewSet(viewsets.ModelViewSet):
         tier = request.data["tier"]
         username = request.data["username"]
         id = request.data["id"]
+        gifter = request.data["gifter"]
+
 
         if id in self.seen_ids:
             return Response({"message": "Already seen", "status": 400})
@@ -106,13 +109,37 @@ class TimerViewSet(viewsets.ModelViewSet):
 
             if not timer.new_sub(tier):
                 raise Exception
+            
+            last_gifter = cache.get("last_gifter", ("", 0))
+            
+            if gifter != "" and gifter == last_gifter[0]:
+
+                last_gifter = (gifter, last_gifter[1] + 1)
+
+                if last_gifter[1] == 5:
+                    bonus_time = timer.add_bonus_sub(tier, 5)
+                    write_log(f"Bonus time added for {gifter} - {bonus_time} seconds")
+                
+                elif last_gifter[1] == 10:
+                    bonus_time = timer.add_bonus_sub(tier,15)
+                    write_log(f"Bonus time added for {gifter} - {bonus_time} seconds")
+            else:
+                last_gifter = (gifter, 1)
+
+            cache.set("last_gifter", last_gifter)
+
+            print(last_gifter)
 
         except Exception:
             return Response({"message": "Invalid tier", "status": 400})
 
         timer.send_ticket()
 
-        write_log(f"New sub: {username} - {tier}")
+        msg = f"New sub: {username} - {tier}"
+
+        if gifter != "":
+            msg += f" - offered by {gifter}"
+        write_log(msg)
 
         return Response({"message": "Sub added", "status": 200})
 

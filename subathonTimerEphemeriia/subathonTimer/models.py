@@ -115,6 +115,26 @@ class Timer(models.Model):
 
         self.save()
 
+    def add_bonus_sub(self, tier : int, multiplier : int):
+        bonus_time = 0
+        match tier:
+            case 1 :
+                bonus_time = self.timer_add_time_sub_t1
+            case 2 :
+                bonus_time = self.timer_add_time_sub_t2
+            case 3 :
+                bonus_time = self.timer_add_time_sub_t3
+            case _:
+                return bonus_time
+            
+        bonus_time *= multiplier
+            
+        self.timer_end += timezone.timedelta(seconds=bonus_time)
+        
+        self.save()
+
+        return bonus_time
+           
     def send_ticket(self):
         time = self.display_time()
 
