@@ -1,0 +1,39 @@
+@font-face {
+    font-family: "Century";
+    src: url("{% static 'subathonTimer/fonts/century.ttf' %}") format("truetype");
+}
+
+span.time {
+    font-family: "Century";
+    font-size: 70px;
+    color: white;
+    text-align: center;
+    /* border: 2px solid black; */
+    text-shadow: 3px 3px 5px #000000;
+}
+
+body {
+    /* background-color: #5b00d3; */
+}
+
+.image-column {
+    display: flex;
+    flex-direction: column;
+    width: 42%;
+    overflow: hidden;
+    height: 350px;
+}
+
+.moving-image {
+    animation: moveVertical 2s ease-in;
+}
+
+@keyframes moveVertical {
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(-100%);
+    }
+}

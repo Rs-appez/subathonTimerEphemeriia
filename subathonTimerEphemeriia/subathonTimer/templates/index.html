@@ -37,47 +37,7 @@
 
 </html>
 
-<style type="text/css">
-    @font-face {
-        font-family: "Century";
-        src: url("{% static 'subathonTimer/fonts/century.ttf' %}") format("truetype");
-    }
+<link rel="stylesheet" type="text/css" href="{% static 'subathonTimer/css/index.css' %}">
 
-    span.time {
-        font-family: "Century";
-        font-size: 70px;
-        color: white;
-        text-align: center;
-        /* border: 2px solid black; */
-        text-shadow: 3px 3px 5px #000000;
-    }
-
-    body {
-        /* background-color: #5b00d3; */
-    }
-
-    .image-column {
-        display: flex;
-        flex-direction: column;
-        width: 42%;
-        overflow: hidden;
-        height: 350px;
-    }
-
-    .moving-image {
-        animation: moveVertical 2s ease-in;
-    }
-
-    @keyframes moveVertical {
-        0% {
-            transform: translateY(0);
-        }
-
-        100% {
-            transform: translateY(-100%);
-        }
-    }
-</style>
-
-<script src="{% static 'subathonTimer/update_timer.js' %}" defer data-time_left="{{ time }}" defer
+<script src="{% static 'subathonTimer/js/update_timer.js' %}" defer data-time_left="{{ time }}" defer
     data-tip_goal_values="{{ tip_goals_values|safe|escapejs }}"></script>
