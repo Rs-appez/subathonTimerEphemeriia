@@ -100,6 +100,8 @@ class TimerViewSet(viewsets.ModelViewSet):
         id = request.data["id"]
         gifter = request.data["gifter"]
 
+        bonus_time = 0
+
 
         if id in self.seen_ids:
             return Response({"message": "Already seen", "status": 400})
@@ -120,11 +122,10 @@ class TimerViewSet(viewsets.ModelViewSet):
 
                 if last_gifter[1] == 5:
                     bonus_time = timer.add_bonus_sub(tier, 5)
-                    write_log(f"Bonus time added for {gifter} - {bonus_time} seconds")
                 
                 elif last_gifter[1] == 10:
                     bonus_time = timer.add_bonus_sub(tier,15)
-                    write_log(f"Bonus time added for {gifter} - {bonus_time} seconds")
+                    
             else:
                 last_gifter = (gifter, 1, time.time())
 
@@ -142,6 +143,9 @@ class TimerViewSet(viewsets.ModelViewSet):
         if gifter != "":
             msg += f" - offered by {gifter}"
         write_log(msg)
+
+        if bonus_time > 0:
+            write_log(f"Bonus time added for {gifter} - {bonus_time} seconds")
 
         return Response({"message": "Sub added", "status": 200})
 
