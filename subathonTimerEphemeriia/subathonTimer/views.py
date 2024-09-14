@@ -11,6 +11,8 @@ from .serializers import TimerSerializer, TipGoalSerializer
 from .utils import write_log
 from django.conf import settings
 
+import time
+
 
 def index(request):
     timer = Timer.objects.last()
@@ -110,11 +112,11 @@ class TimerViewSet(viewsets.ModelViewSet):
             if not timer.new_sub(tier):
                 raise Exception
             
-            last_gifter = cache.get("last_gifter", ("", 0))
+            last_gifter = cache.get("last_gifter", ("", 0, 0))
             
-            if gifter != "" and gifter == last_gifter[0]:
+            if gifter != "" and gifter == last_gifter[0] and time.time() - last_gifter[2] < 5:
 
-                last_gifter = (gifter, last_gifter[1] + 1)
+                last_gifter = (gifter, last_gifter[1] + 1, last_gifter[2])
 
                 if last_gifter[1] == 5:
                     bonus_time = timer.add_bonus_sub(tier, 5)
@@ -124,7 +126,7 @@ class TimerViewSet(viewsets.ModelViewSet):
                     bonus_time = timer.add_bonus_sub(tier,15)
                     write_log(f"Bonus time added for {gifter} - {bonus_time} seconds")
             else:
-                last_gifter = (gifter, 1)
+                last_gifter = (gifter, 1, time.time())
 
             cache.set("last_gifter", last_gifter)
 
