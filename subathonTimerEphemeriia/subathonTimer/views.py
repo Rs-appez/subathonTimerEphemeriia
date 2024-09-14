@@ -98,7 +98,7 @@ class TimerViewSet(viewsets.ModelViewSet):
         tier = request.data["tier"]
         username = request.data["username"]
         id = request.data["id"]
-        gifter = request.data["gifter"]
+        gifter = request.data["gifter"] if request.date["gifter"] is not None else ""
 
         bonus_time = 0
 
