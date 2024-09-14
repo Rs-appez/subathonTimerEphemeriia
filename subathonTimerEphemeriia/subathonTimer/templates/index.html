@@ -8,19 +8,16 @@
 
 <body>
     <div>
+        {% if started %}
         <div class="container" style="display: flex;">
             <div>
                 <img src="{% static 'subathonTimer/images/Titre.png' %}" alt="Titre logo">
             </div>
             <div>
-                {% if started %}
+
                 <p><span class="time" id="time"></span></p>
-                {% else %}
-                <form method="POST" action="start_timer">
-                    {% csrf_token %}
-                    <button type="submit">Start</button>
-                </form>
-                {% endif %}
+
+
             </div>
         </div>
         <div class="image-column">
@@ -28,6 +25,12 @@
             <img src="{% static image %}" alt="Image" class="image_to_move">
             {% endfor %}
         </div>
+        {% else %}
+        <form method="POST" action="start_timer">
+            {% csrf_token %}
+            <button type="submit">Start</button>
+        </form>
+        {% endif %}
 
     </div>
 </body>
@@ -76,4 +79,5 @@
     }
 </style>
 
-<script src="{% static 'subathonTimer/update_timer.js' %}" defer data-time_left="{{ time }}" defer data-tip_goal_values="{{ tip_goals_values|safe|escapejs }}"></script>
+<script src="{% static 'subathonTimer/update_timer.js' %}" defer data-time_left="{{ time }}" defer
+    data-tip_goal_values="{{ tip_goals_values|safe|escapejs }}"></script>
