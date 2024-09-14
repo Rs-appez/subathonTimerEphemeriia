@@ -75,6 +75,7 @@ def start_timer(request):
     if request.method == "POST":
         timer = Timer.objects.last()
         timer.start_timer()
+        write_log("Timer started")
         return redirect("index")
 
 
