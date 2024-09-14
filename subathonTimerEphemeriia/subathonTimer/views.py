@@ -116,7 +116,7 @@ class TimerViewSet(viewsets.ModelViewSet):
             
             last_gifter = cache.get("last_gifter", ("", 0, 0))
             
-            if gifter != "" and gifter == last_gifter[0] and time.time() - last_gifter[2] < 5:
+            if gifter != "" and gifter == last_gifter[0] and time.time() - last_gifter[2] < 10:
 
                 last_gifter = (gifter, last_gifter[1] + 1, last_gifter[2])
 
