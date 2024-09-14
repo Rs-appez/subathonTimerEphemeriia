@@ -15,15 +15,26 @@
             </div>
             <div>
 
-                <p><span class="time" id="time"></span></p>
+                <p><span class="time number" id="time"></span></p>
 
 
             </div>
         </div>
-        <div class="image-column">
-            {% for image in images %}
-            <img src="{% static image %}" alt="Image" class="image_to_move">
-            {% endfor %}
+        <div class="tip-wrapper" >
+
+            <div class="image-column">
+                {% for image in images %}
+                <img src="{% static image %}" alt="Image" class="image_to_move">
+                {% endfor %}
+            </div>
+            <div class="progress-container">
+                <div class="progress-wrapper">
+                    <p class="progress-left number">12</p>
+                    <progress id="progress" class="progress" value="0" max="100"></progress>
+                    <p class="progress-right number">20</p>
+                </div>
+            </div>
+
         </div>
         {% else %}
         <form method="POST" action="start_timer">
@@ -41,3 +52,18 @@
 
 <script src="{% static 'subathonTimer/js/update_timer.js' %}" defer data-time_left="{{ time }}" defer
     data-tip_goal_values="{{ tip_goals_values|safe|escapejs }}"></script>
+
+<script>
+    // Assuming you have a function to update the progress bar value
+function updateProgressBar(newValue) {
+    const progressBar = document.getElementById('progress');
+    progressBar.value = newValue;
+}
+var v = 0;
+// Example usage
+setInterval(() => {
+    v += 10;
+    updateProgressBar(v);
+}, 1000);
+// // updateProgressBar(60); // This will trigger the transition effect
+</script>
