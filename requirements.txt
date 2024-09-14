@@ -20,7 +20,7 @@ frozenlist==1.4.1
 gunicorn==22.0.0
 hyperlink==21.0.0
 idna==3.7
-incremental==22.10.0
+incremental==24.7.0
 msgpack==1.0.8
 multidict==6.0.5
 packaging==24.1
