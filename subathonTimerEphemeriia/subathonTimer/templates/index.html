@@ -9,11 +9,11 @@
 <body>
     <div>
         {% if started %}
-        <div class="container" style="display: flex;">
+        <div class="container" style="display: flex; height: 60%;">
             <div>
                 <img src="{% static 'subathonTimer/images/Titre.png' %}" alt="Titre logo">
             </div>
-            <div>
+            <div class="time-container">
 
                 <p><span class="time number" id="time"></span></p>
 
@@ -23,16 +23,21 @@
         <div class="tip-wrapper">
 
             <div class="image-column">
-                {% for image in images %}
-                <img src="{% static image %}" alt="Image" class="image_to_move">
+                {% for tip_image in tip_images %}
+                <img src="{% static tip_image %}" alt="Image" class="tip_image_to_move">
                 {% endfor %}
             </div>
-            <div class="progress-container">
+            <!-- <div class="progress-container">
                 <div class="progress-wrapper">
                     <p class="progress-left number" id="tip-left">12</p>
                     <progress id="progress-tip" class="progress" value="0" max="100"></progress>
                     <p class="progress-right number" id="tip-right">20</p>
                 </div>
+            </div> -->
+            <div class="image-column">
+                {% for sub_image in sub_images %}
+                <img src="{% static sub_image %}" alt="Image" class="sub_image_to_move">
+                {% endfor %}
             </div>
 
         </div>
@@ -51,19 +56,20 @@
 <link rel="stylesheet" type="text/css" href="{% static 'subathonTimer/css/index.css' %}">
 
 <script src="{% static 'subathonTimer/js/update_timer.js' %}" defer data-time_left="{{ time }}" defer
-    data-tip_goal_values="{{ tip_goals_values|safe|escapejs }}" data-total_tips="{{ total_tips }}"></script>
+    data-tip_goal_values="{{ tip_goals_values|safe|escapejs }}" data-total_tips="{{ total_tips }}"
+    data-sub_goals_values="{{ sub_goals_values|safe|escapejs }}" data-total_subs="{{ total_subs }}"></script>
 
-<script>
+<!-- <script>
     // Assuming you have a function to update the progress bar value
-function updateProgressBar(newValue) {
-    const progressBar = document.getElementById('progress-tip');
-    progressBar.value = newValue;
-}
-var v = 0;
-// Example usage
-setInterval(() => {
-    v = (v + 10) % 101;
-    updateProgressBar(v);
-}, 1000);
-// // updateProgressBar(60); // This will trigger the transition effect
-</script>
+    function updateProgressBar(newValue) {
+        const progressBar = document.getElementById('progress-tip');
+        progressBar.value = newValue;
+    }
+    var v = 0;
+    // Example usage
+    setInterval(() => {
+        v = (v + 10) % 101;
+        updateProgressBar(v);
+    }, 1000);
+    // // updateProgressBar(60); // This will trigger the transition effect
+</script> -->

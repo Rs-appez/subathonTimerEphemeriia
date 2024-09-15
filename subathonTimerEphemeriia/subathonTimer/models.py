@@ -89,6 +89,9 @@ class Timer(models.Model):
     def get_tip_goal(self):
         return TipGoal.objects.filter(goal_amount__gt=self.timer_total_donations).all().order_by('goal_amount')
     
+    def get_sub_goal(self):
+        return SubGoal.objects.filter(goal_amount__gt=self.timer_total_subscriptions).all().order_by('goal_amount')
+
     def new_sub(self, tier : int):
 
         self.timer_total_subscriptions += 1

@@ -16,8 +16,11 @@ import time
 
 def index(request):
     timer = Timer.objects.last()
-    images = []
+    tip_images = []
     tip_goals_values = []
+
+    sub_images = []
+    sub_goals_values = []
 
     if timer is None:
         time = "no timer"
@@ -26,8 +29,12 @@ def index(request):
         started = timer.timer_active
 
         for goal in timer.get_tip_goal():
-            images.append(goal.get_image())
+            tip_images.append(goal.get_image())
             tip_goals_values.append(goal.goal_amount)
+        
+        for goal in timer.get_sub_goal():
+            sub_images.append(goal.get_image())
+            sub_goals_values.append(goal.goal_amount)
 
     return render(
         request,
@@ -35,9 +42,12 @@ def index(request):
         {
             "time": time,
             "started": started,
-            "images": images,
+            "tip_images": tip_images,
             "tip_goals_values": tip_goals_values,
             "total_tips": timer.timer_total_donations,
+            "sub_images": sub_images,
+            "sub_goals_values": sub_goals_values,
+            "total_subs": timer.timer_total_subscriptions,
         },
     )
 

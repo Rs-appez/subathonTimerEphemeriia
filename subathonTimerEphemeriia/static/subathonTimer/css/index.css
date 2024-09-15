@@ -3,6 +3,18 @@
   src: url('/static/subathonTimer/fonts/century.ttf') format("truetype");
 }
 
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.time-container {
+  display: flex;
+  justify-content: left;
+  width: 100%;
+}
+
 span.time {
   font-size: 70px;
   text-align: center;
