@@ -164,8 +164,6 @@ class TimerViewSet(viewsets.ModelViewSet):
 
             cache.set("last_gifter", last_gifter)
 
-            print(last_gifter)
-
         except Exception:
             return Response({"message": "Invalid tier", "status": 400})
 
