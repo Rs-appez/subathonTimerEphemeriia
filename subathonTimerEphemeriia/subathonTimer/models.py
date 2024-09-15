@@ -29,6 +29,16 @@ class TipGoal(models.Model):
     
     def get_image(self):
         return self.goal_image.url[32:]
+class SubGoal(models.Model):
+    goal_name = models.CharField(max_length=100)
+    goal_amount = models.FloatField()
+    goal_image = models.ImageField(upload_to='subathonTimerEphemeriia/static/subathonTimer/images/subs/')
+
+    def __str__(self):
+        return self.goal_name
+    
+    def get_image(self):
+        return self.goal_image.url[32:]
 
 
 class Timer(models.Model):
