@@ -20,7 +20,7 @@
 
             </div>
         </div>
-        <div class="tip-wrapper" >
+        <div class="tip-wrapper">
 
             <div class="image-column">
                 {% for image in images %}
@@ -29,9 +29,9 @@
             </div>
             <div class="progress-container">
                 <div class="progress-wrapper">
-                    <p class="progress-left number">12</p>
-                    <progress id="progress" class="progress" value="0" max="100"></progress>
-                    <p class="progress-right number">20</p>
+                    <p class="progress-left number" id="tip-left">12</p>
+                    <progress id="progress-tip" class="progress" value="0" max="100"></progress>
+                    <p class="progress-right number" id="tip-right">20</p>
                 </div>
             </div>
 
@@ -51,18 +51,18 @@
 <link rel="stylesheet" type="text/css" href="{% static 'subathonTimer/css/index.css' %}">
 
 <script src="{% static 'subathonTimer/js/update_timer.js' %}" defer data-time_left="{{ time }}" defer
-    data-tip_goal_values="{{ tip_goals_values|safe|escapejs }}"></script>
+    data-tip_goal_values="{{ tip_goals_values|safe|escapejs }}" data-total_tips="{{ total_tips }}"></script>
 
 <script>
     // Assuming you have a function to update the progress bar value
 function updateProgressBar(newValue) {
-    const progressBar = document.getElementById('progress');
+    const progressBar = document.getElementById('progress-tip');
     progressBar.value = newValue;
 }
 var v = 0;
 // Example usage
 setInterval(() => {
-    v += 10;
+    v = (v + 10) % 101;
     updateProgressBar(v);
 }, 1000);
 // // updateProgressBar(60); // This will trigger the transition effect

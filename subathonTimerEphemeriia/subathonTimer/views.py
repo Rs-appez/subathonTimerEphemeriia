@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect
-from django.http import HttpRequest 
+from django.http import HttpRequest
 from django.core.cache import cache
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
@@ -19,7 +19,6 @@ def index(request):
     images = []
     tip_goals_values = []
 
-
     if timer is None:
         time = "no timer"
     else:
@@ -29,8 +28,18 @@ def index(request):
         for goal in timer.get_tip_goal():
             images.append(goal.get_image())
             tip_goals_values.append(goal.goal_amount)
-        
-    return render(request, "index.html", {"time": time, "started": started, "images": images, "tip_goals_values": tip_goals_values})
+
+    return render(
+        request,
+        "index.html",
+        {
+            "time": time,
+            "started": started,
+            "images": images,
+            "tip_goals_values": tip_goals_values,
+            "total_tips": timer.timer_total_donations,
+        },
+    )
 
 
 def add_time(request):
@@ -51,21 +60,33 @@ def add_time(request):
         tvs = TimerViewSet()
 
         res = tvs.add_time(req)
-        
-        return redirect(f"/add_time_success?message={res.data['message']}&status={res.data['status']}")
+
+        return redirect(
+            f"/add_time_success?message={res.data['message']}&status={res.data['status']}"
+        )
 
     elif request.method == "GET":
         if not request.user.is_authenticated:
             return HttpResponseRedirect("/admin_django/login/?next=/add_time/")
         return render(request, "addTime.html", {"logs": __get_logs()})
-    
-def add_time_success(request):  
+
+
+def add_time_success(request):
     if not request.user.is_authenticated:
-            return HttpResponseRedirect("/admin_django/login/?next=/add_time/")
-    return render(request, "addTime.html", {"message": request.GET.get("message", ""),"status" : request.GET.get("status"), "logs": __get_logs()})
+        return HttpResponseRedirect("/admin_django/login/?next=/add_time/")
+    return render(
+        request,
+        "addTime.html",
+        {
+            "message": request.GET.get("message", ""),
+            "status": request.GET.get("status"),
+            "logs": __get_logs(),
+        },
+    )
+
 
 def __get_logs():
-    path = "/logs/log.txt" if not  settings.DEBUG else "log.txt" 
+    path = "/logs/log.txt" if not settings.DEBUG else "log.txt"
     with open(path, "r") as f:
         lines = f.readlines()
     return lines[::-1]
@@ -102,7 +123,6 @@ class TimerViewSet(viewsets.ModelViewSet):
 
         bonus_time = 0
 
-
         if id in self.seen_ids:
             return Response({"message": "Already seen", "status": 400})
 
@@ -113,19 +133,22 @@ class TimerViewSet(viewsets.ModelViewSet):
 
             if not timer.new_sub(tier):
                 raise Exception
-            
-            last_gifter = cache.get("last_gifter", ("", 0, 0))
-            
-            if gifter != "" and gifter == last_gifter[0] and time.time() - last_gifter[2] < 10:
 
+            last_gifter = cache.get("last_gifter", ("", 0, 0))
+
+            if (
+                gifter != ""
+                and gifter == last_gifter[0]
+                and time.time() - last_gifter[2] < 10
+            ):
                 last_gifter = (gifter, last_gifter[1] + 1, last_gifter[2])
 
                 if last_gifter[1] == 5:
                     bonus_time = timer.add_bonus_sub(tier, 5)
-                
+
                 elif last_gifter[1] == 10:
-                    bonus_time = timer.add_bonus_sub(tier,15)
-                    
+                    bonus_time = timer.add_bonus_sub(tier, 15)
+
             else:
                 last_gifter = (gifter, 1, time.time())
 
@@ -219,6 +242,7 @@ class TimerViewSet(viewsets.ModelViewSet):
         write_log(f"{username} added time: {time} seconds")
 
         return Response({"message": "Time added", "status": 200})
+
 
 class TipGoalViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAdminUser]

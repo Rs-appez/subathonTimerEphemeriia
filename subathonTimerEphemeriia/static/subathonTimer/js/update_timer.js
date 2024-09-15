@@ -24,7 +24,7 @@ function formatTime(seconds) {
 
 const data = document.currentScript.dataset;
 var end_timer = data.time_left;
-var total_tips = 0;
+var total_tips = data.total_tips;
 var total_subscriptions = 0;
 var tip_goal_values = JSON.parse(data.tip_goal_values);
 var remainingTime = end_timer - new Date().getTime() / 1000;
@@ -57,6 +57,21 @@ function updateTipGoal() {
     setTimeout(removeFirstImage, 1999);
 }
 
+function updateTipProgress() {
+    const tipProgress = document.getElementById('progress-tip');
+    const tipLeft = document.getElementById('tip-left');
+    const tipRight = document.getElementById('tip-right');
+
+    if (tipProgress && tipLeft && tipRight) {
+        next_goal = 1000;
+
+        tipProgress.value = (total_tips / next_goal * 100); 
+        tipLeft.innerHTML = total_tips;
+        tipRight.innerHTML = next_goal;
+    }
+
+}
+
 function checkTipGoal() {
 
     if (total_tips >= tip_goal_values[0] && !skip_animation) {
@@ -85,6 +100,7 @@ function connect() {
 
         update();
         checkTipGoal();
+        updateTipProgress();
 
     }
 
@@ -101,3 +117,4 @@ function connect() {
 }
 
 connect();
+updateTipProgress();
