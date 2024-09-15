@@ -158,6 +158,7 @@ class TimerViewSet(viewsets.ModelViewSet):
 
                 elif last_gifter[1] == 10:
                     bonus_time = timer.add_bonus_sub(tier, 15)
+                    last_gifter = (gifter, 0, time.time())
 
             else:
                 last_gifter = (gifter, 1, time.time())
