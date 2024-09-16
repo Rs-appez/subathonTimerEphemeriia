@@ -115,23 +115,8 @@ function checkSubGoal() {
 }
 
 
-function updateTipProgress() {
-    const tipProgress = document.getElementById('progress-tip');
-    const tipLeft = document.getElementById('tip-left');
-    const tipRight = document.getElementById('tip-right');
-
-    if (tipProgress && tipLeft && tipRight) {
-        next_goal = 1000;
-
-        tipProgress.value = (total_tips / next_goal * 100); 
-        tipLeft.innerHTML = total_tips;
-        tipRight.innerHTML = next_goal;
-    }
-
-}
-
 // Websocket
-var ws_url = 'wss://' + window.location.host + '/ws/ticks/';
+var ws_url = 'ws://' + window.location.host + '/ws/ticks/';
 
 function connect() {
     var ws = new WebSocket(ws_url);

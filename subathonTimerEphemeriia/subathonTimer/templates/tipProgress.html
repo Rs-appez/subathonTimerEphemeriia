@@ -8,7 +8,7 @@
     <body>
         <div class="progress-container">
                 <div class="progress-wrapper">
-                    <p class="progress-left number" id="tip-left">12</p>
+                    <p class="progress-left number" id="tip-left">0</p>
                     <progress id="progress-tip" class="progress" value="0" max="100"></progress>
                     <p class="progress-right number" id="tip-right">20</p>
                 </div>
@@ -18,8 +18,9 @@
 </html>
 
 <link rel="stylesheet" type="text/css" href="{% static 'subathonTimer/css/tipProgress.css' %}">
+<script src="{% static 'subathonTimer/js/update_tip_progress.js' %}" data-total_tips="{{ total_tips }}"></script>
 
-<script>
+<!-- <script>
     // Assuming you have a function to update the progress bar value
     function updateProgressBar(newValue) {
         const progressBar = document.getElementById('progress-tip');
@@ -32,4 +33,4 @@
         updateProgressBar(v);
     }, 1000);
     // // updateProgressBar(60); // This will trigger the transition effect
-</script>
+</script> -->

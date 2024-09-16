@@ -109,7 +109,9 @@ def start_timer(request):
         return redirect("index")
     
 def tip_progress(request):
-    return render(request, "tipProgress.html")
+    timer = Timer.objects.last()
+
+    return render(request, "tipProgress.html",{"total_tips": timer.timer_total_donations,})
 
 
 class TimerViewSet(viewsets.ModelViewSet):
