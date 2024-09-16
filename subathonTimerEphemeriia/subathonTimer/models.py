@@ -75,6 +75,9 @@ class Timer(models.Model):
         return self.timer_name
     
     def display_time(self):
+
+        if self.timer_end is None:
+            return 0
         
         return self.timer_end.timestamp()
     
