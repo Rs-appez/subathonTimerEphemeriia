@@ -45,8 +45,8 @@ class Timer(models.Model):
     # Timer settings
     timer_name = models.CharField(max_length=100)
     timer_initial_time = models.IntegerField()
-    timer_start = models.DateTimeField()
-    timer_end = models.DateTimeField()
+    timer_start = models.DateTimeField(null=True, blank=True)
+    timer_end = models.DateTimeField(null=True, blank=True)
     timer_active = models.BooleanField(default=False)
 
     # Timer stats
