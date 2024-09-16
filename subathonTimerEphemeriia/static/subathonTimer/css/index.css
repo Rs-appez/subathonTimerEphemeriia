@@ -51,61 +51,6 @@ body {
   text-shadow: 3px 3px 5px #000000;
 }
 
-.progress-container {
-  width: 80%;
-  margin-top: 20px;
-}
-
-.progress-wrapper {
-  position: relative;
-  width: 100%;
-  margin-bottom: 5px; /* Space between numbers and progress bar */
-}
-
-.progress-wrapper p {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  margin: 0;
-  color: white;
-  font-weight: bold;
-}
-
-.progress-left {
-  left: 10px;
-}
-
-.progress-right {
-  right: 10px;
-}
-
-.progress-wrapper progress {
-  width: 100%;
-  height: 30px;
-  background-color: #f3f3f3;
-  border-radius: 20px;
-  -webkit-appearance: none;
-  appearance: none;
-  transition: width 0.5s ease-in-out; /* Add this line for transition */
-  overflow: hidden; /* Ensure inner elements are clipped to the rounded corners */
-}
-
-progress::-webkit-progress-bar {
-  background-color: #f3f3f3; /* Background color */
-  border-radius: 20px; /* Rounded corners */
-}
-
-progress::-webkit-progress-value {
-  background: linear-gradient(to right, #2e0025, #570031); /* Gradient color */
-  border-radius: 20px; /* Rounded corners */
-  transition: width 0.5s ease-in-out; /* Add this line for transition */
-}
-
-progress::-moz-progress-bar {
-background: linear-gradient(to right, #2e0025, #570031); /* Gradient color */
-  border-radius: 20px; /* Rounded corners */
-  transition: width 0.5s ease-in-out; /* Add this line for transition */
-}
 
 @keyframes moveVertical {
   0% {

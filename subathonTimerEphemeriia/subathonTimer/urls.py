@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import TimerViewSet, index, start_timer, add_time, add_time_success
+from .views import TimerViewSet, index, start_timer, add_time, add_time_success, tip_progress
 
 from rest_framework.routers import DefaultRouter
 
@@ -12,4 +12,5 @@ urlpatterns = [
     path('start_timer',start_timer, name='start_timer'),
     path('add_time',add_time, name='add_time'),
     path('add_time_success',add_time_success, name='add_time_success'),
+    path('tip_progress', tip_progress, name='tip_progress'),
 ]

@@ -107,6 +107,9 @@ def start_timer(request):
         timer = Timer.objects.last()
         timer.start_timer()
         return redirect("index")
+    
+def tip_progress(request):
+    return render(request, "tipProgress.html")
 
 
 class TimerViewSet(viewsets.ModelViewSet):
