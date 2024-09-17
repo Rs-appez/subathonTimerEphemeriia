@@ -1,53 +1,74 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
-
-<head>
+  <head>
     <title>Subathon Timer</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <div>
-        {% if started %}
-        <div class="container" style="display: flex; height: 60%;">
-            <div>
-                <img src="{% static 'subathonTimer/images/Titre.png' %}" alt="Titre logo">
-            </div>
-            <div class="time-container">
-
-                <p><span class="time number" id="time"></span></p>
-
-
-            </div>
+      {% if started %}
+      <div class="container" style="display: flex; height: 60%">
+        <div>
+          <img
+            src="{% static 'subathonTimer/images/Titre.png' %}"
+            alt="Titre logo"
+          />
         </div>
-        <div class="tip-wrapper">
-
-            <div class="image-column">
-                {% for tip_image in tip_images %}
-                <img src="{% static tip_image %}" alt="Image" class="tip_image_to_move">
-                {% endfor %}
-            </div>
-            <div class="image-column">
-                {% for sub_image in sub_images %}
-                <img src="{% static sub_image %}" alt="Image" class="sub_image_to_move">
-                {% endfor %}
-            </div>
-
+        <div class="time-container">
+          <p><span class="time number" id="time"></span></p>
         </div>
-        {% else %}
-        <form method="POST" action="start_timer">
-            {% csrf_token %}
-            <button type="submit">Start</button>
-        </form>
-        {% endif %}
+      </div>
+      <div class="tip-wrapper">
+        <div class="image-column">
+          {% for tip_image in tip_images %}
+          <img
+            src="{% static tip_image %}"
+            alt="Image"
+            class="tip_image_to_move"
+          />
+          {% endfor %}
+        </div>
+        <div class="image-column">
+          {% for sub_image in sub_images %}
+          <img
+            src="{% static sub_image %}"
+            alt="Image"
+            class="sub_image_to_move"
+          />
+          {% endfor %}
+        </div>
+      </div>
+      {% else %}
+      <form method="POST" action="start_timer">
+        {% csrf_token %}
 
+        <button type="submit" style="border: none; background: none">
+          <img
+            src="{% static 'subathonTimer/images/start.png' %}"
+            alt="Titre logo"
+            style="cursor: pointer"
+          />
+        </button>
+      </form>
+      {% endif %}
     </div>
-</body>
-
+  </body>
 </html>
 
-<link rel="stylesheet" type="text/css" href="{% static 'subathonTimer/css/index.css' %}">
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'subathonTimer/css/index.css' %}"
+/>
 
-<script src="{% static 'subathonTimer/js/update_timer.js' %}" defer data-time_left="{{ time }}" defer
-    data-tip_goal_values="{{ tip_goals_values|safe|escapejs }}" data-total_tips="{{ total_tips }}"
-    data-sub_goals_values="{{ sub_goals_values|safe|escapejs }}" data-total_subs="{{ total_subs }}"></script>
+<script
+  src="{% static 'subathonTimer/js/update_timer.js' %}"
+  defer
+  data-time_left="{{ time }}"
+  defer
+  data-tip_goal_values="{{ tip_goals_values|safe|escapejs }}"
+  data-total_tips="{{ total_tips }}"
+  data-sub_goals_values="{{ sub_goals_values|safe|escapejs }}"
+  data-total_subs="{{ total_subs }}"
+></script>
