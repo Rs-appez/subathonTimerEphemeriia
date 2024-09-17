@@ -136,6 +136,9 @@ class TimerViewSet(viewsets.ModelViewSet):
         id = request.data["id"]
         gifter = request.data["gifter"] if "gifter" in request.data else ""
 
+        if gifter is None:
+            gifter = ""
+
         bonus_time = 0
 
         if id in self.seen_ids:
