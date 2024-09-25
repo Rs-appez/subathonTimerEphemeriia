@@ -38,7 +38,7 @@ body {
   flex-direction: column;
   width: 100%;
   overflow: hidden;
-  height: 350px;
+  height: 300px;
 }
 
 .moving-image {
@@ -60,4 +60,12 @@ body {
   100% {
     transform: translateY(-100%);
   }
+}
+
+.tip_image_to_move,
+.sub_image_to_move {
+  height: 150px; /* Set the desired height */
+  object-fit: cover; /* Crop the image to fit the dimensions */
+  object-position: top; /* Position the image to crop from the bottom */
+
 }
