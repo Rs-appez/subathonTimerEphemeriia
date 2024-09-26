@@ -1,3 +1,4 @@
+from django.db.models import F
 from django.db import models
 from django.utils import timezone
 
@@ -97,39 +98,43 @@ class Timer(models.Model):
 
     def new_sub(self, tier : int):
 
-        self.timer_total_subscriptions += 1
+        self.timer_total_subscriptions = F('timer_total_subscriptions') + 1
 
         match tier:
             case 1 :
-                self.timer_end += timezone.timedelta(seconds=self.timer_add_time_sub_t1)
+                self.timer_end = F('timer_end') + timezone.timedelta(seconds=self.timer_add_time_sub_t1)
             case 2 :
-                self.timer_end += timezone.timedelta(seconds=self.timer_add_time_sub_t2)
+                self.timer_end = F('timer_end') + timezone.timedelta(seconds=self.timer_add_time_sub_t2)
             case 3 :
-                self.timer_end += timezone.timedelta(seconds=self.timer_add_time_sub_t3)
+                self.timer_end = F('timer_end') + timezone.timedelta(seconds=self.timer_add_time_sub_t3)
             case _:
                 return False
-        self.save()
+        self.save(update_fields=['timer_total_subscriptions', 'timer_end'])
+        self.refresh_from_db()
 
         return True
     
     def new_bits(self, bits : int):
-        self.timer_total_bits += bits
+        self.timer_total_bits = F('timer_total_bits') + bits
 
-        self.timer_end += timezone.timedelta(seconds=self.timer_add_time_bits * bits)
+        self.timer_end = F('timer_end') + timezone.timedelta(seconds=self.timer_add_time_bits * bits)
 
-        self.save()
+        self.save(update_fields=['timer_total_bits', 'timer_end'])
+        self.refresh_from_db()
 
     def new_donation(self, donation : float):
-        self.timer_total_donations += donation
+        self.timer_total_donations = F('timer_total_donations') + donation
 
-        self.timer_end += timezone.timedelta(seconds=self.timer_add_time_donation * donation)
+        self.timer_end = F('timer_end') + timezone.timedelta(seconds=self.timer_add_time_donation * donation)
 
-        self.save()
+        self.save(update_fields=['timer_total_donations', 'timer_end'])
+        self.refresh_from_db()
 
     def add_time(self, time : float):
-        self.timer_end += timezone.timedelta(seconds=time)
+        self.timer_end = F('timer_end') + timezone.timedelta(seconds=time)
 
-        self.save()
+        self.save(update_fields=['timer_end'])
+        self.refresh_from_db()
 
     def add_bonus_sub(self, tier : int, multiplier : int):
         bonus_time = 0
@@ -145,9 +150,10 @@ class Timer(models.Model):
             
         bonus_time *= multiplier
             
-        self.timer_end += timezone.timedelta(seconds=bonus_time)
+        self.timer_end = F('timer_end') + timezone.timedelta(seconds=bonus_time)
         
-        self.save()
+        self.save(update_fields=['timer_end'])
+        self.refresh_from_db()
 
         return bonus_time
            
