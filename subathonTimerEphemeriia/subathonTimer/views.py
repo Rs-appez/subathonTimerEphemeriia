@@ -157,12 +157,10 @@ class TimerViewSet(viewsets.ModelViewSet):
             last_gifter = [x for x in last_gifters if x[0] == gifter]
             last_gifter = last_gifter[0] if last_gifter else ("", 0, 0)
             
-            print(last_gifter)
-
             if (
                 gifter != ""
                 and gifter == last_gifter[0]
-                and time.time() - last_gifter[2] < 10
+                and time.time() - last_gifter[2] < 30
             ):
                 update_gifter = (gifter, last_gifter[1] + 1, last_gifter[2])
 
@@ -180,8 +178,6 @@ class TimerViewSet(viewsets.ModelViewSet):
                 last_gifters[last_gifters.index(last_gifter)] = update_gifter
             else:
                 last_gifters.append(update_gifter)
-
-            print(last_gifters)
 
             cache.set("last_gifter", last_gifters)
 
