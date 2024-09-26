@@ -152,28 +152,41 @@ class TimerViewSet(viewsets.ModelViewSet):
             if not timer.new_sub(tier):
                 raise Exception
 
-            last_gifter = cache.get("last_gifter", ("", 0, 0))
+            last_gifters = cache.get("last_gifter", [])
+            
+            last_gifter = [x for x in last_gifters if x[0] == gifter]
+            last_gifter = last_gifter[0] if last_gifter else ("", 0, 0)
+            
+            print(last_gifter)
 
             if (
                 gifter != ""
                 and gifter == last_gifter[0]
                 and time.time() - last_gifter[2] < 10
             ):
-                last_gifter = (gifter, last_gifter[1] + 1, last_gifter[2])
+                update_gifter = (gifter, last_gifter[1] + 1, last_gifter[2])
 
-                if last_gifter[1] == 5:
+                if update_gifter[1] == 5:
                     bonus_time = timer.add_bonus_sub(tier, 5)
 
-                elif last_gifter[1] == 10:
+                elif update_gifter[1] == 10:
                     bonus_time = timer.add_bonus_sub(tier, 15)
-                    last_gifter = (gifter, 0, time.time())
+                    update_gifter = (gifter, 0, time.time())
 
             else:
-                last_gifter = (gifter, 1, time.time())
+                update_gifter = (gifter, 1, time.time())
 
-            cache.set("last_gifter", last_gifter)
+            if last_gifter in last_gifters and last_gifter[0] != "":
+                last_gifters[last_gifters.index(last_gifter)] = update_gifter
+            else:
+                last_gifters.append(update_gifter)
 
-        except Exception:
+            print(last_gifters)
+
+            cache.set("last_gifter", last_gifters)
+
+        except Exception as e:
+            print(e)
             return Response({"message": "Invalid tier", "status": 400})
 
         timer.send_ticket()
