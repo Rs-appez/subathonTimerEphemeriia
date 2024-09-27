@@ -48,7 +48,10 @@ class Timer(models.Model):
     timer_initial_time = models.IntegerField()
     timer_start = models.DateTimeField(null=True, blank=True)
     timer_end = models.DateTimeField(null=True, blank=True)
+    paused_time = models.DateTimeField(null=True, blank=True)
     timer_active = models.BooleanField(default=False)
+    timer_paused = models.BooleanField(default=False)
+
 
     # Timer stats
     timer_total_donations = models.FloatField(default=0)
@@ -89,6 +92,27 @@ class Timer(models.Model):
         self.save()
 
         write_log("Subathon started")
+
+    def pause_timer(self):
+        self.paused_time = timezone.now()
+        self.timer_paused = True
+        self.save()
+
+        write_log("Subathon paused")
+
+    def resume_timer(self):
+        if self.paused_time is None:
+            return False
+
+        self.timer_end = F('timer_end') + (timezone.now() - self.paused_time)
+        self.timer_paused = False
+        self.paused_time = None
+        self.save()
+        self.refresh_from_db()
+
+        write_log("Subathon resumed")
+
+        return True
 
     def get_tip_goal(self):
         return TipGoal.objects.filter(goal_amount__gt=self.timer_total_donations).all().order_by('goal_amount')
