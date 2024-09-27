@@ -268,6 +268,21 @@ class TimerViewSet(viewsets.ModelViewSet):
         write_log(f"{username} added time: {time} seconds")
 
         return Response({"message": "Time added", "status": 200})
+    
+    @action(detail=False, methods=["post"], permission_classes=[IsAdminUser])
+    def pause(self, request, pk=None):
+        timer = Timer.objects.last()
+        timer.pause_timer()
+        timer.send_ticket()
+        return Response({"message": "Timer paused", "status": 200})
+    
+    @action(detail=False, methods=["post"], permission_classes=[IsAdminUser])
+    def resume(self, request, pk=None):
+        timer = Timer.objects.last()
+        if timer.resume_timer() :
+            timer.send_ticket()
+            return Response({"message": "Timer resumed", "status": 200})
+        return Response({"message": "Timer not paused", "status": 400})
 
 
 class TipGoalViewSet(viewsets.ModelViewSet):
