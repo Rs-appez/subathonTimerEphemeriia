@@ -120,9 +120,9 @@ def pause_timer(request):
 
         req = HttpRequest()
         req.method = "POST"
+        req.user = request.user
 
         tvs = TimerViewSet()
-        print(request.POST)
         if request.POST.get("pause") == "true":
             res = tvs.pause(req)
         
@@ -207,7 +207,6 @@ class TimerViewSet(viewsets.ModelViewSet):
             cache.set("last_gifter", last_gifters)
 
         except Exception as e:
-            print(e)
             return Response({"message": "Invalid tier", "status": 400})
 
         timer.send_ticket()
@@ -297,7 +296,8 @@ class TimerViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=["post"], permission_classes=[IsAdminUser])
     def pause(self, request, pk=None):
         timer = Timer.objects.last()
-        if timer.pause_timer() :
+        user = request.user
+        if timer.pause_timer(user.username) :
             timer.send_ticket()
             return Response({"message": "Timer paused", "status": 200})
         return Response({"message": "Timer already paused", "status": 400})
@@ -305,7 +305,8 @@ class TimerViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=["post"], permission_classes=[IsAdminUser])
     def resume(self, request, pk=None):
         timer = Timer.objects.last()
-        if timer.resume_timer() :
+        user = request.user
+        if timer.resume_timer(user.username) :
             timer.send_ticket()
             return Response({"message": "Timer resumed", "status": 200})
         return Response({"message": "Timer not paused", "status": 400})

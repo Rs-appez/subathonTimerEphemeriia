@@ -111,7 +111,7 @@ class Timer(models.Model):
 
         write_log("Subathon started")
 
-    def pause_timer(self):
+    def pause_timer(self, user : str):
 
         if self.timer_paused:
             return False
@@ -120,11 +120,11 @@ class Timer(models.Model):
         self.timer_paused = True
         self.save()
 
-        write_log("Subathon paused")
+        write_log("Subathon paused by " + user)
 
         return True
 
-    def resume_timer(self):
+    def resume_timer(self, user : str):
         if self.paused_time is None:
             return False
 
@@ -134,7 +134,7 @@ class Timer(models.Model):
         self.save()
         self.refresh_from_db()
 
-        write_log("Subathon resumed")
+        write_log("Subathon resumed by " + user)
 
         return True
 
