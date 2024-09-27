@@ -48,6 +48,8 @@ def index(request):
             "sub_images": sub_images,
             "sub_goals_values": sub_goals_values,
             "total_subs": timer.timer_total_subscriptions,
+            'timer_paused': timer.timer_paused,
+            "paused_time": timer.display_paused_time(),
         },
     )
 

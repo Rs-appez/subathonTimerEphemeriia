@@ -2,7 +2,11 @@
 function update() {
     const timeElement = document.getElementById('time');
     if (timeElement) {
-        remainingTime = end_timer - new Date().getTime() / 1000;
+        if (!timer_paused) {
+            remainingTime = end_timer - new Date().getTime() / 1000;
+        } else {
+            remainingTime = end_timer - paused_time;
+        }
         if (remainingTime <= 0) {
             timeElement.innerHTML = 'FINI !!!!!';
             return;
@@ -33,6 +37,11 @@ var remainingTime = end_timer - new Date().getTime() / 1000;
 var skip_tip_animation = false;
 var skip_sub_animation = false;
 
+var timer_paused = data.timer_paused === 'True';
+var paused_time = data.paused_time;
+
+console.log('end_timer', end_timer);
+console.log('paused_time', paused_time);
 
 // Tip goal
 
@@ -115,6 +124,8 @@ function checkSubGoal() {
 }
 
 
+
+
 // Websocket
 var ws_url = 'wss://' + window.location.host + '/ws/ticks/';
 
@@ -126,11 +137,12 @@ function connect() {
         end_timer = data_ws.time_end;
         total_tips = data_ws.total_tips;
         total_subscriptions = data_ws.total_subscriptions;
+        timer_paused = data_ws.timer_paused;
+        paused_time = data_ws.paused_time;
 
         update();
         checkTipGoal();
         checkSubGoal();
-        // updateTipProgress();
 
     }
 
@@ -147,4 +159,3 @@ function connect() {
 }
 
 connect();
-updateTipProgress();

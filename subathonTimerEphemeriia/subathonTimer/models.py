@@ -58,6 +58,7 @@ class Timer(models.Model):
     timer_start = models.DateTimeField(null=True, blank=True)
     timer_end = models.DateTimeField(null=True, blank=True)
     paused_time = models.DateTimeField(null=True, blank=True)
+
     timer_active = models.BooleanField(default=False)
     timer_paused = models.BooleanField(default=False)
 
@@ -93,6 +94,12 @@ class Timer(models.Model):
             return 0
 
         return self.timer_end.timestamp()
+    
+    def display_paused_time(self):
+        if self.paused_time is None:
+            return 0
+
+        return self.paused_time.timestamp()
 
     def start_timer(self):
         self.timer_start = timezone.now()
@@ -211,6 +218,7 @@ class Timer(models.Model):
 
     def send_ticket(self):
         time = self.display_time()
+        paused_time = self.display_paused_time()
 
         channel_layer = channels.layers.get_channel_layer()
         async_to_sync(channel_layer.group_send)(
@@ -223,6 +231,7 @@ class Timer(models.Model):
                         "total_tips": self.timer_total_donations,
                         "total_subscriptions": self.timer_total_subscriptions,
                         "timer_paused": self.timer_paused,
+                        "paused_time": paused_time,
                     }
                 ),
             },
