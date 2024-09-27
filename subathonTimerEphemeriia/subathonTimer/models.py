@@ -112,11 +112,17 @@ class Timer(models.Model):
         write_log("Subathon started")
 
     def pause_timer(self):
+
+        if self.timer_paused:
+            return False
+
         self.paused_time = timezone.now()
         self.timer_paused = True
         self.save()
 
         write_log("Subathon paused")
+
+        return True
 
     def resume_timer(self):
         if self.paused_time is None:

@@ -80,12 +80,14 @@ def add_time(request):
     elif request.method == "GET":
         if not request.user.is_authenticated:
             return HttpResponseRedirect("/admin_django/login/?next=/add_time/")
-        return render(request, "addTime.html", {"logs": __get_logs()})
+        timer = Timer.objects.last()
+        return render(request, "addTime.html", {"logs": __get_logs(), 'timer_paused': timer.timer_paused})
 
 
 def add_time_success(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect("/admin_django/login/?next=/add_time/")
+    timer = Timer.objects.last()
     return render(
         request,
         "addTime.html",
@@ -93,6 +95,7 @@ def add_time_success(request):
             "message": request.GET.get("message", ""),
             "status": request.GET.get("status"),
             "logs": __get_logs(),
+            'timer_paused': timer.timer_paused,
         },
     )
 
@@ -109,6 +112,26 @@ def start_timer(request):
         timer = Timer.objects.last()
         timer.start_timer()
         return redirect("index")
+    
+def pause_timer(request):
+    if not request.user.is_authenticated:
+            return HttpResponseRedirect("/admin_django/login/?next=/add_time/")
+    if request.method == "POST":
+
+        req = HttpRequest()
+        req.method = "POST"
+
+        tvs = TimerViewSet()
+        print(request.POST)
+        if request.POST.get("pause") == "true":
+            res = tvs.pause(req)
+        
+        else:
+            res = tvs.resume(req)
+
+        return redirect(
+            f"/add_time_success?message={res.data['message']}&status={res.data['status']}"
+        )
     
 def tip_progress(request):
     timer = Timer.objects.last()
@@ -274,9 +297,10 @@ class TimerViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=["post"], permission_classes=[IsAdminUser])
     def pause(self, request, pk=None):
         timer = Timer.objects.last()
-        timer.pause_timer()
-        timer.send_ticket()
-        return Response({"message": "Timer paused", "status": 200})
+        if timer.pause_timer() :
+            timer.send_ticket()
+            return Response({"message": "Timer paused", "status": 200})
+        return Response({"message": "Timer already paused", "status": 400})
     
     @action(detail=False, methods=["post"], permission_classes=[IsAdminUser])
     def resume(self, request, pk=None):
