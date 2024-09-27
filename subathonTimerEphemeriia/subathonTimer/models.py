@@ -222,6 +222,7 @@ class Timer(models.Model):
                         "time_end": time,
                         "total_tips": self.timer_total_donations,
                         "total_subscriptions": self.timer_total_subscriptions,
+                        "timer_paused": self.timer_paused,
                     }
                 ),
             },
