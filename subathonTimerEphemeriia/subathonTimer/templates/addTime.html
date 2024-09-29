@@ -13,7 +13,7 @@
 <body>
     <h1>Manage Time</h1>
     <div>
-        <form method="POST" action="add_time" class="inline-form">
+        <form method="POST" action="{% url 'add_time' %}" class="inline-form">
             {% csrf_token %}
             <label for="time">Time to add (in seconds):</label>
             <p style="font-style: italic;">Negative number for substract time</p>
@@ -21,7 +21,7 @@
             <button type="submit">Add</button>
         </form>
 
-        <form action="pause_timer" method="POST" class="inline-form">
+        <form action="{% url 'pause_timer' %}" method="POST" class="inline-form">
             {% csrf_token %}
             {% if timer_paused %}
             <input type="hidden" name="pause" value="false">
