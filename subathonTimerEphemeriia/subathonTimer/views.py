@@ -57,7 +57,7 @@ def index(request):
 def add_time(request):
     if request.method == "POST":
         if not request.user.is_authenticated:
-            return HttpResponseRedirect("/admin_django/login/?next=/add_time/")
+            return HttpResponseRedirect("/admin_django/login/?next=/add_time")
 
         user = request.user
 
