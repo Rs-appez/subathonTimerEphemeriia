@@ -162,6 +162,9 @@ class TimerViewSet(viewsets.ModelViewSet):
         id = request.data["id"]
         gifter = request.data["gifter"] if "gifter" in request.data else ""
 
+        print('Start sub :', id)
+
+
         if gifter is None:
             gifter = ""
 
@@ -179,6 +182,8 @@ class TimerViewSet(viewsets.ModelViewSet):
                 raise Exception
 
             last_gifters = cache.get("last_gifter", [])
+
+            print(f'Cache for {id} :', last_gifters)
             
             last_gifter = [x for x in last_gifters if x[0] == gifter]
             last_gifter = last_gifter[0] if last_gifter else ("", 0, 0)
@@ -206,6 +211,10 @@ class TimerViewSet(viewsets.ModelViewSet):
                 last_gifters.append(update_gifter)
 
             cache.set("last_gifter", last_gifters)
+
+            print(f'Cache after {id} :', last_gifters)
+
+            print('End sub :', id)
 
         except Exception as e:
             return Response({"message": "Invalid tier", "status": 400})
