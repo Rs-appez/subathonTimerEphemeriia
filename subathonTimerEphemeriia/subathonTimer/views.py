@@ -185,9 +185,9 @@ class TimerViewSet(viewsets.ModelViewSet):
             if (
                 gifter != ""
                 and gifter == last_gifter[0]
-                and time.time() - last_gifter[2] < 30
+                and time.time() - last_gifter[2] < 20
             ):
-                update_gifter = (gifter, last_gifter[1] + 1, last_gifter[2])
+                update_gifter = (gifter, last_gifter[1] + 1, time.time())
 
                 if update_gifter[1] == 5:
                     bonus_time = timer.add_bonus_sub(tier, 5)
