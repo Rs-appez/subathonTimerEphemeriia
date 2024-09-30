@@ -144,6 +144,14 @@ class Timer(models.Model):
             .all()
             .order_by("goal_amount")
         )
+    
+    def get_last_tip_goal(self):
+        return (
+            TipGoal.objects
+            .all()
+            .order_by("goal_amount")
+            .last()
+        )
 
     def get_sub_goal(self):
         return (

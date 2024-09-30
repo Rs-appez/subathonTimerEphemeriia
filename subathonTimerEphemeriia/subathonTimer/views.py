@@ -135,8 +135,9 @@ def pause_timer(request):
     
 def tip_progress(request):
     timer = Timer.objects.last()
+    last_goal = timer.get_last_tip_goal()
 
-    return render(request, "tipProgress.html",{"total_tips": timer.timer_total_donations,})
+    return render(request, "tipProgress.html",{"total_tips": timer.timer_total_donations,"last_goal": last_goal.goal_amount})
 
 
 class TimerViewSet(viewsets.ModelViewSet):

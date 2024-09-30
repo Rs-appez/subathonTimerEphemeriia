@@ -1,5 +1,6 @@
 const data = document.currentScript.dataset;
 var total_tips = data.total_tips;
+var last_goal = data.last_goal;
 
 function updateTipProgress() {
     const tipProgress = document.getElementById('progress-tip');
@@ -7,7 +8,7 @@ function updateTipProgress() {
     const tipRight = document.getElementById('tip-right');
 
     if (tipProgress && tipLeft && tipRight) {
-        next_goal = 1000;
+        next_goal = last_goal;
 
         tipProgress.value = (total_tips / next_goal * 100); 
         tipLeft.innerHTML = total_tips;
