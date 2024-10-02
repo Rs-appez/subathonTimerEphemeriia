@@ -12,6 +12,7 @@ from .utils import write_log
 from django.conf import settings
 
 import time
+import threading
 
 
 def index(request):
@@ -146,6 +147,7 @@ class TimerViewSet(viewsets.ModelViewSet):
     serializer_class = TimerSerializer
 
     seen_ids = set()
+    cache_lock = threading.Lock()
 
     @action(detail=False, methods=["get"], permission_classes=[AllowAny])
     def get_timer_info(self, request, pk=None):
@@ -180,39 +182,41 @@ class TimerViewSet(viewsets.ModelViewSet):
 
             if not timer.new_sub(tier):
                 raise Exception
-
-            last_gifters = cache.get("last_gifter", [])
-
-            print(f'Cache for {id} :', last_gifters)
             
-            last_gifter = [x for x in last_gifters if x[0] == gifter]
-            last_gifter = last_gifter[0] if last_gifter else ("", 0, 0)
-            
-            if (
-                gifter != ""
-                and gifter == last_gifter[0]
-                and time.time() - last_gifter[2] < 20
-            ):
-                update_gifter = (gifter, last_gifter[1] + 1, time.time())
+            with self.cache_lock:
 
-                if update_gifter[1] == 5:
-                    bonus_time = timer.add_bonus_sub(tier, 5)
+                last_gifters = cache.get("last_gifter", [])
 
-                elif update_gifter[1] == 10:
-                    bonus_time = timer.add_bonus_sub(tier, 15)
-                    update_gifter = (gifter, 0, time.time())
+                print(f'Cache for {id} :', last_gifters)
+                
+                last_gifter = [x for x in last_gifters if x[0] == gifter]
+                last_gifter = last_gifter[0] if last_gifter else ("", 0, 0)
+                
+                if (
+                    gifter != ""
+                    and gifter == last_gifter[0]
+                    and time.time() - last_gifter[2] < 20
+                ):
+                    update_gifter = (gifter, last_gifter[1] + 1, time.time())
 
-            else:
-                update_gifter = (gifter, 1, time.time())
+                    if update_gifter[1] == 5:
+                        bonus_time = timer.add_bonus_sub(tier, 5)
 
-            if last_gifter in last_gifters and last_gifter[0] != "":
-                last_gifters[last_gifters.index(last_gifter)] = update_gifter
-            else:
-                last_gifters.append(update_gifter)
+                    elif update_gifter[1] == 10:
+                        bonus_time = timer.add_bonus_sub(tier, 15)
+                        update_gifter = (gifter, 0, time.time())
 
-            cache.set("last_gifter", last_gifters)
+                else:
+                    update_gifter = (gifter, 1, time.time())
 
-            print(f'Cache after {id} :', last_gifters)
+                if last_gifter in last_gifters and last_gifter[0] != "":
+                    last_gifters[last_gifters.index(last_gifter)] = update_gifter
+                else:
+                    last_gifters.append(update_gifter)
+
+                cache.set("last_gifter", last_gifters)
+
+                print(f'Cache after {id} :', last_gifters)
 
             print('End sub :', id)
 
