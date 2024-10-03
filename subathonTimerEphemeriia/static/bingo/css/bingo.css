@@ -1,0 +1,26 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.bingo-card {
+    display: grid;
+    gap: 5px;
+}
+.bingo-cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: white;
+    border: 1px solid #ccc;
+    height: 150px;
+    width: 150px;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+.bingo-cell.free {
+    background-color: #ffeb3b;
+}
