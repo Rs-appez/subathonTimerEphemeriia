@@ -22,4 +22,5 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
     path('oauth/',include('oauth.urls')),
     path('',include('subathonTimer.urls')),
+    path('bingo/',include('bingo.urls')),
 ]
