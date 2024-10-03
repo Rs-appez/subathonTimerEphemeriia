@@ -56,7 +56,7 @@ def oauth(request):
 
     return render(
         request,
-        "oauth.html",
+        "oauth/oauth.html",
         {
             "twitch_connected": twitch_connected,
             "twitch_user": twitch_user,
@@ -67,7 +67,7 @@ def oauth(request):
 
 
 def error(request):
-    return render(request, "error.html")
+    return render(request, "oauth/error.html")
 
 
 def authorizeTwich(request):
