@@ -32,5 +32,6 @@ class BingoItemUser(models.Model):
     is_checked = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.user
+        return f'{self.bingo_item}'
+
     
