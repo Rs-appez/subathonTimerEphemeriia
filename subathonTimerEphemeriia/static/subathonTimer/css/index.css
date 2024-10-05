@@ -40,6 +40,13 @@ body {
   overflow: hidden;
   height: 450px;
 }
+.image-column-sub {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow: hidden;
+  height: 150px;
+}
 
 .moving-image {
   animation: moveVertical 2s ease-in;
