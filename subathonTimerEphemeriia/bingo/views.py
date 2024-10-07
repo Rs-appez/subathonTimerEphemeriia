@@ -104,15 +104,14 @@ class BingoViewSet(viewsets.ModelViewSet):
             if not bingo_item:
                 return Response({"status": "Bingo item not found"}, status=400)
 
-            bingo_item.is_checked = not bingo_item.is_checked
-            bingo_item.save()
+            bingo_item.check_item()
 
             bingo_items = BingoItemUser.objects.filter(user=user)
 
             return Response({"status": "Bingo item checked", "bingo_items": BingoItemUserSerializer(bingo_items, many=True).data})
 
         except ExpiredSignatureError:
-            return Response({"status": "Token has expired"}, status=400)
+            return Response({"status": "Token has expired", "bingo_items" : []}, status=400)
         except InvalidTokenError:
             return Response({"status": "Invalid token"}, status=400)
 

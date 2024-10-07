@@ -42,5 +42,10 @@ class BingoItemUser(models.Model):
 
     def __str__(self):
         return f'{self.bingo_item}'
+    
+    def check_item(self):
+        self.is_checked = not self.is_checked
+        self.save()
+        return self.is_checked
 
     
