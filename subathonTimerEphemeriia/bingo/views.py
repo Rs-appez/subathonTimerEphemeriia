@@ -5,7 +5,8 @@ from rest_framework.permissions import IsAdminUser, AllowAny
 from rest_framework.response import Response
 
 from .models import Bingo, BingoItem, BingoItemUser, User
-from .serializers import BingoSerializer, BingoItemUserSerializer
+from .serializers import BingoSerializer, BingoItemUserSerializer, BingoItemSerializer
+
 from .utils import validate_jwt_token, get_twitch_access_token
 from jwt import ExpiredSignatureError, InvalidTokenError
 
@@ -109,7 +110,20 @@ class BingoViewSet(viewsets.ModelViewSet):
         except InvalidTokenError:
             return Response({"status": "Invalid token"}, status=400)
         
-    
+
+
+
+class BingoItemViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAdminUser]
+    queryset = BingoItem.objects.all()
+    serializer_class = BingoItemSerializer
+
+
+class BingoItemUserViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAdminUser]
+    queryset = BingoItemUser.objects.all()
+    serializer_class = BingoItemUserSerializer
+
     @action(detail=False, methods=["post"], permission_classes=[AllowAny])
     def check_item(self, request):
         token = request.data.get("token")
@@ -135,4 +149,3 @@ class BingoViewSet(viewsets.ModelViewSet):
             return Response({"status": "Token has expired", "bingo_items" : []}, status=400)
         except InvalidTokenError:
             return Response({"status": "Invalid token"}, status=400)
-
