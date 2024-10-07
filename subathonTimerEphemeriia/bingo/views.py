@@ -66,7 +66,10 @@ class BingoViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=["post"], permission_classes=[IsAdminUser])
     def activate(self, request, pk=None):
-
+        old_bingos = Bingo.objects.filter(is_active=True)
+        for bingo in old_bingos:
+            bingo.is_active = False
+            bingo.save()
         bingo = self.get_object()
         bingo.is_active = True
         bingo.save()
