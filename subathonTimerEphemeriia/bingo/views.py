@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponseRedirect
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAdminUser, AllowAny
@@ -42,6 +42,23 @@ def index(request):
     return render(request, "bingo/error.html", {"message": "User not found"})
 
 
+def admin(request, bingo_id=None ):
+    if not request.user.is_authenticated:
+            return HttpResponseRedirect("/admin_django/login/?next=/bingo/admin/")
+    
+    bingo = bingo_id
+
+    if bingo:
+        bingo = Bingo.objects.get(id=bingo)
+        bingo_items = BingoItem.objects.filter(bingo=bingo)
+
+        return render(request, "bingo/admin.html", {"bingo": bingo, "bingo_items": bingo_items})
+
+    bingos = Bingo.objects.all()
+
+    return render(request, "bingo/admin.html", {"bingos": bingos})
+
+
 class BingoViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAdminUser]
     queryset = Bingo.objects.all()
@@ -49,6 +66,7 @@ class BingoViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=["post"], permission_classes=[IsAdminUser])
     def activate(self, request, pk=None):
+
         bingo = self.get_object()
         bingo.is_active = True
         bingo.save()

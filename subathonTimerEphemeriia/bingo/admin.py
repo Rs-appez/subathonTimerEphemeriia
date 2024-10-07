@@ -13,3 +13,4 @@ class BingoAdmin(admin.ModelAdmin):
 admin.site.register(Bingo, BingoAdmin)
 admin.site.register(User)
 admin.site.register(BingoItemUser)
+admin.site.register(BingoItem)

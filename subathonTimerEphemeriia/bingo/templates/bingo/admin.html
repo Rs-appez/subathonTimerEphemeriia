@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Admin Bingo</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'bingo/css/admin.css' %}">
+</head>
+
+<body>
+    {% for bingo in bingos %}
+    <div class="bingo">
+        <h2>{{ bingo.name }}</h2>
+        <p>{{ bingo.description }}</p>
+        <a href="{% url 'admin_arg' bingo.id %}">Items</a>
+    </div>
+    {% endfor %}
+
+    {% if bingo %}
+    <div class="bingo-item">
+        <h2>{{ bingo.name }}</h2>
+        <a href="{% url 'admin' %}">Back</a>
+        <div class="item">
+            <p>Name</p>
+            <p>Actived</p>
+            <p>Active</p>
+            <p>Admin</p>
+
+        </div>
+        {% for item in bingo_items %}
+        <div class="item  {% if forloop.counter|divisibleby:2 %}alternate{% endif %}">
+            <p>{{ item.name }}</p>
+            <p>{{ item.is_active }}</p>
+            <p><a href="">Enable</a></p>
+            <p><a href="/admin_django/bingo/bingoitem/{{ item.id}}/change/">Edit</a></p>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% endif %}
+</body>
+
+</html>
