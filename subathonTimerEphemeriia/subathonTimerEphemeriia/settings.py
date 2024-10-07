@@ -32,7 +32,7 @@ ALLOWED_HOSTS = [config("BACKEND_HOST", default="127.0.0.1")]
 
 CSRF_TRUSTED_ORIGINS = ["https://" + config("BACKEND_HOST", default="")]
 
-CORS_ALLOWED_ORIGINS = [config("FRONTEND_HOST", default="http://localhost:1234")]
+CORS_ALLOWED_ORIGINS = [config("FRONTEND_HOST", default="http://localhost:4321")]
 
 
 # Application definition
