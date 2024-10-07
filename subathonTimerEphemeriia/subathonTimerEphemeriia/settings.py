@@ -32,6 +32,8 @@ ALLOWED_HOSTS = [config("BACKEND_HOST", default="127.0.0.1")]
 
 CSRF_TRUSTED_ORIGINS = ["https://" + config("BACKEND_HOST", default="")]
 
+CORS_ALLOWED_ORIGINS = [config("FRONTEND_HOST", default="http://localhost:1234")]
+
 
 # Application definition
 
@@ -50,6 +52,8 @@ INSTALLED_APPS = [
     "oauth",
     "bingo",
     "channels",
+    'corsheaders',
+
 
 ]
 
@@ -61,7 +65,9 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    'whitenoise.middleware.WhiteNoiseMiddleware'
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+
 ]
 
 ROOT_URLCONF = "subathonTimerEphemeriia.urls"
