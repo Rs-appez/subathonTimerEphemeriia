@@ -61,7 +61,7 @@ class BingoViewSet(viewsets.ModelViewSet):
             decoded_token = validate_jwt_token(token)
             user_id = decoded_token.get("user_id")
 
-            bingo = Bingo.objects.last()
+            bingo = Bingo.objects.filter(is_active=True).last()
 
             user = User.objects.filter(id_twitch=user_id)
             if not user:
