@@ -27,6 +27,14 @@ class User(models.Model):
     def __str__(self):
         return self.name
     
+    @staticmethod
+    def create_with_bingoIteam(name, id_twitch, bingo):
+        user = User.objects.create(name=name, id_twitch=id_twitch)
+        bingo_default_items = BingoItem.objects.filter(bingo=bingo).order_by("?")
+        for bingo_item in bingo_default_items:
+            BingoItemUser.objects.create(user=user, bingo_item=bingo_item)
+        return user
+    
 class BingoItemUser(models.Model):
     bingo_item = models.ForeignKey(BingoItem, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
