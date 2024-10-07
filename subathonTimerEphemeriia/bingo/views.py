@@ -87,3 +87,32 @@ class BingoViewSet(viewsets.ModelViewSet):
             return Response({"status": "Token has expired"}, status=400)
         except InvalidTokenError:
             return Response({"status": "Invalid token"}, status=400)
+        
+    
+    @action(detail=False, methods=["post"], permission_classes=[AllowAny])
+    def check_item(self, request):
+        token = request.data.get("token")
+        try:
+            decoded_token = validate_jwt_token(token)
+            user_id = decoded_token.get("user_id")
+            user = User.objects.filter(id_twitch=user_id).first()
+            if not user:
+                return Response({"status": "User not found"}, status=400)
+
+            bingo_item_name = request.data.get("bingo_item")
+            bingo_item = BingoItemUser.objects.filter(bingo_item__name=bingo_item_name).first()
+            if not bingo_item:
+                return Response({"status": "Bingo item not found"}, status=400)
+
+            bingo_item.is_checked = not bingo_item.is_checked
+            bingo_item.save()
+
+            bingo_items = BingoItemUser.objects.filter(user=user)
+
+            return Response({"status": "Bingo item checked", "bingo_items": BingoItemUserSerializer(bingo_items, many=True).data})
+
+        except ExpiredSignatureError:
+            return Response({"status": "Token has expired"}, status=400)
+        except InvalidTokenError:
+            return Response({"status": "Invalid token"}, status=400)
+
