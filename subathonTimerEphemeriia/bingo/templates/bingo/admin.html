@@ -30,7 +30,7 @@
         {% for item in bingo_items %}
         <div class="item  {% if forloop.counter|divisibleby:2 %}alternate{% endif %}">
             <p>{{ item.name }}</p>
-            <p>{{ item.is_active }}</p>
+            <p class="{% if item.is_active %}active{% else %}inactive{% endif %}">{{ item.is_active }}</p>
             <p><a href="{% url 'activate_item' bingo.id item.id  %}">Enable</a></p>
             <p><a href="/admin_django/bingo/bingoitem/{{ item.id}}/change/">Edit</a></p>
         </div>
