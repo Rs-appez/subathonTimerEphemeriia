@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Bingo, BingoItemUser, BingoItem
+from .models import Bingo, BingoItemUser, BingoItem, User
 
 class BingoSerializer(serializers.ModelSerializer):
     class Meta:
@@ -19,3 +19,7 @@ class BingoItemUserSerializer(serializers.ModelSerializer):
         model = BingoItemUser
         fields = ['bingo_item', 'is_checked']
 
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = '__all__'

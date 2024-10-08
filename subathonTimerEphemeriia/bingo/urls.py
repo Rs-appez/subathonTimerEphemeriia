@@ -1,7 +1,7 @@
 from django.urls import path, include
 
 from .views import index, admin, activate_item, admin_bingo
-from .views import BingoViewSet, BingoItemViewSet, BingoItemUserViewSet
+from .views import BingoViewSet, BingoItemViewSet, BingoItemUserViewSet, UserViewSet
 
 from rest_framework.routers import DefaultRouter
 
@@ -9,6 +9,7 @@ router = DefaultRouter()
 router.register(r'bingo', BingoViewSet, basename='bingo')
 router.register(r'bingo_item', BingoItemViewSet, basename='bingo_item')
 router.register(r'bingo_item_user', BingoItemUserViewSet, basename='bingo_item_user')
+router.register(r'user', UserViewSet, basename='user')
 
 urlpatterns = [
     path('api/', include(router.urls)),

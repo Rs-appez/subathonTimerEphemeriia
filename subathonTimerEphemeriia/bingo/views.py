@@ -5,7 +5,12 @@ from rest_framework.permissions import IsAdminUser, AllowAny
 from rest_framework.response import Response
 
 from .models import Bingo, BingoItem, BingoItemUser, User
-from .serializers import BingoSerializer, BingoItemUserSerializer, BingoItemSerializer
+from .serializers import (
+    BingoSerializer,
+    BingoItemUserSerializer,
+    BingoItemSerializer,
+    UserSerializer,
+)
 
 from .utils import validate_jwt_token, get_twitch_access_token
 from jwt import ExpiredSignatureError, InvalidTokenError
@@ -39,38 +44,45 @@ def index(request):
 
     return render(request, "bingo/error.html", {"message": "User not found"})
 
+
 def admin_bingo(request):
     if not request.user.is_authenticated:
-            return HttpResponseRedirect("/admin_django/login/?next=/bingo/admin/")
-    
+        return HttpResponseRedirect("/admin_django/login/?next=/bingo/admin/")
+
     user = User.objects.get(name="Ephemeriia")
     bingo_items = BingoItemUser.objects.filter(user=user)
     bingo_lenght = sqrt(len(bingo_items))
 
-    return render(request, "bingo/admin_bingo.html", {"bingo_items": bingo_items, "bingo_lenght": bingo_lenght})
+    return render(
+        request,
+        "bingo/admin_bingo.html",
+        {"bingo_items": bingo_items, "bingo_lenght": bingo_lenght},
+    )
 
 
-def admin(request, bingo_id=None ):
+def admin(request, bingo_id=None):
     if not request.user.is_authenticated:
-            return HttpResponseRedirect("/admin_django/login/?next=/bingo/admin/")
-    
+        return HttpResponseRedirect("/admin_django/login/?next=/bingo/admin/")
+
     bingo = bingo_id
 
     if bingo:
         bingo = Bingo.objects.get(id=bingo)
         bingo_items = BingoItem.objects.filter(bingo=bingo)
 
-        return render(request, "bingo/admin.html", {"bingo": bingo, "bingo_items": bingo_items})
+        return render(
+            request, "bingo/admin.html", {"bingo": bingo, "bingo_items": bingo_items}
+        )
 
     bingos = Bingo.objects.all()
 
     return render(request, "bingo/admin.html", {"bingos": bingos})
 
-def activate_item(request, bingo_id, item_id):
 
+def activate_item(request, bingo_id, item_id):
     if not request.user.is_authenticated:
         return HttpResponseRedirect("/admin_django/login/?next=/bingo/admin/")
-    
+
     bingo_item = BingoItem.objects.get(id=item_id)
     bingo_item.activate_item()
 
@@ -112,7 +124,9 @@ class BingoViewSet(viewsets.ModelViewSet):
                     },
                 )
                 username = res.json()["data"][0]["login"]
-                user = User.create_with_bingoIteam(name=username, id_twitch=user_id, bingo=bingo)
+                user = User.create_with_bingoIteam(
+                    name=username, id_twitch=user_id, bingo=bingo
+                )
             else:
                 user = user.first()
 
@@ -126,8 +140,6 @@ class BingoViewSet(viewsets.ModelViewSet):
             return Response({"status": "Token has expired"}, status=400)
         except InvalidTokenError:
             return Response({"status": "Invalid token"}, status=400)
-        
-
 
 
 class BingoItemViewSet(viewsets.ModelViewSet):
@@ -139,12 +151,10 @@ class BingoItemViewSet(viewsets.ModelViewSet):
     def activate_item(self, request, pk=None):
         bingo_item = self.get_object()
 
-        if bingo_item.activate_item() :
+        if bingo_item.activate_item():
             return Response({"status": "Bingo item activated"})
-        
+
         return Response({"status": "Bingo item deactivated"})
-
-
 
 
 class BingoItemUserViewSet(viewsets.ModelViewSet):
@@ -163,7 +173,9 @@ class BingoItemUserViewSet(viewsets.ModelViewSet):
                 return Response({"status": "User not found"}, status=400)
 
             bingo_item_name = request.data.get("bingo_item")
-            bingo_item = BingoItemUser.objects.filter(bingo_item__name=bingo_item_name).first()
+            bingo_item = BingoItemUser.objects.filter(
+                bingo_item__name=bingo_item_name
+            ).first()
             if not bingo_item:
                 return Response({"status": "Bingo item not found"}, status=400)
 
@@ -171,9 +183,43 @@ class BingoItemUserViewSet(viewsets.ModelViewSet):
 
             bingo_items = BingoItemUser.objects.filter(user=user)
 
-            return Response({"status": "Bingo item checked", "bingo_items": BingoItemUserSerializer(bingo_items, many=True).data})
+            return Response(
+                {
+                    "status": "Bingo item checked",
+                    "bingo_items": BingoItemUserSerializer(bingo_items, many=True).data,
+                }
+            )
 
         except ExpiredSignatureError:
-            return Response({"status": "Token has expired", "bingo_items" : []}, status=400)
+            return Response(
+                {"status": "Token has expired", "bingo_items": []}, status=400
+            )
         except InvalidTokenError:
             return Response({"status": "Invalid token"}, status=400)
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAdminUser]
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+    @action(detail=False, methods=["post"], permission_classes=[IsAdminUser])
+    def create_user(self, request):
+        name = request.data.get("name")
+        bingo = request.data.get("bingo")
+
+        if not name or not bingo:
+            return Response({"status": "Invalid data"}, status=400)
+
+        res = requests.get(
+            f"https://api.twitch.tv/helix/users?login={name}",
+            headers={
+                "Client-ID": config("TWITCH_APP_ID"),
+                "Authorization": f"Bearer {get_twitch_access_token()}",
+            },
+        )
+        id_twitch = res.json()["data"][0]["id"]
+
+        user = User.create_with_bingoIteam(name=name, id_twitch=id_twitch, bingo=bingo)
+
+        return Response({"status": "User created", "user": UserSerializer(user).data})
