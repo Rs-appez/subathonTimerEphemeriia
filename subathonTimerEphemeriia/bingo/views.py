@@ -24,10 +24,7 @@ def index(request):
         user_name = bleach.clean(user_name)
         user = User.objects.filter(name=user_name)
         if not user:
-            # user = User.objects.create(name=user_name)
             return render(request, "bingo/error.html", {"message": "User not found"})
-
-
         else:
             user = user.first()
 
@@ -41,6 +38,16 @@ def index(request):
         )
 
     return render(request, "bingo/error.html", {"message": "User not found"})
+
+def admin_bingo(request):
+    if not request.user.is_authenticated:
+            return HttpResponseRedirect("/admin_django/login/?next=/bingo/admin/")
+    
+    user = User.objects.get(name="Ephemeriia")
+    bingo_items = BingoItemUser.objects.filter(user=user)
+    bingo_lenght = sqrt(len(bingo_items))
+
+    return render(request, "bingo/admin_bingo.html", {"bingo_items": bingo_items, "bingo_lenght": bingo_lenght})
 
 
 def admin(request, bingo_id=None ):

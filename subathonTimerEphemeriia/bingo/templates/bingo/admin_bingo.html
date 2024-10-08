@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bingo Admin</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'bingo/css/bingo.css' %}" />
+</head>
+
+<body>
+    <div class="bingo-card" id="bingoCard">
+        {% for item in bingo_items %}
+        <div class="bingo-cell">{{ item }}</div>
+        {% endfor %}
+    </div>
+</body>
+
+</html>
+
+<script src="{% static 'bingo/js/bingo.js' %}" data-bingo_lenght="{{ bingo_lenght|safe }}"></script>
+<script src="{% static 'bingo/js/admin_bingo.js' %}"></script>
