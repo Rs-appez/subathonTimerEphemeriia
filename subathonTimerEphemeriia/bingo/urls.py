@@ -1,6 +1,7 @@
 from django.urls import path, include
 
-from .views import index, admin, BingoViewSet, BingoItemViewSet, BingoItemUserViewSet
+from .views import index, admin, activate_item
+from .views import BingoViewSet, BingoItemViewSet, BingoItemUserViewSet
 
 from rest_framework.routers import DefaultRouter
 
@@ -14,4 +15,6 @@ urlpatterns = [
     path('', index, name='index'),
     path('admin/', admin, name='admin'),
     path('admin/<int:bingo_id>/', admin, name='admin_arg'),
+    path('admin/<int:bingo_id>/activate/<int:item_id>/', activate_item, name='activate_item'),
+
 ]

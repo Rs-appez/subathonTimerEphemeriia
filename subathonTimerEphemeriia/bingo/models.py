@@ -1,4 +1,5 @@
 from django.db import models
+import threading
 
 # Create your models here.
 class Bingo(models.Model):
@@ -17,7 +18,22 @@ class BingoItem(models.Model):
     is_active = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.name    
+        return self.name
+    
+    def activate_item(self):
+        self.is_active = True
+        self.save()
+        self.__auto_desactivate()
+        return self.is_active
+    
+    def desactivate_item(self):
+        self.is_active = False
+        self.save()
+        return self.is_active
+    
+    def __auto_desactivate(self):
+        min = 5
+        threading.Timer(min*60, self.desactivate_item).start()        
     
 class User(models.Model):
     name = models.CharField(max_length=100)

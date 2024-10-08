@@ -59,6 +59,16 @@ def admin(request, bingo_id=None ):
 
     return render(request, "bingo/admin.html", {"bingos": bingos})
 
+def activate_item(request, bingo_id, item_id):
+
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect("/admin_django/login/?next=/bingo/admin/")
+    
+    bingo_item = BingoItem.objects.get(id=item_id)
+    bingo_item.activate_item()
+
+    return HttpResponseRedirect(f"/bingo/admin/{bingo_id}/")
+
 
 class BingoViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAdminUser]
@@ -117,6 +127,17 @@ class BingoItemViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAdminUser]
     queryset = BingoItem.objects.all()
     serializer_class = BingoItemSerializer
+
+    @action(detail=True, methods=["post"], permission_classes=[IsAdminUser])
+    def activate_item(self, request, pk=None):
+        bingo_item = self.get_object()
+
+        if bingo_item.activate_item() :
+            return Response({"status": "Bingo item activated"})
+        
+        return Response({"status": "Bingo item deactivated"})
+
+
 
 
 class BingoItemUserViewSet(viewsets.ModelViewSet):
