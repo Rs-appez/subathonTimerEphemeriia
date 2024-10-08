@@ -33,7 +33,9 @@ class BingoItem(models.Model):
     
     def __auto_desactivate(self):
         min = 5
-        threading.Timer(min*60, self.desactivate_item).start()        
+        timer = threading.Timer(min*60, self.desactivate_item)
+        timer.name = f"Auto desactivate item {self.id}"
+        timer.start()        
     
 class User(models.Model):
     name = models.CharField(max_length=100)
