@@ -62,8 +62,10 @@ class BingoItemUser(models.Model):
         return f'{self.bingo_item}'
     
     def check_item(self):
-        self.is_checked = not self.is_checked
-        self.save()
+
+        if not self.is_checked :
+            self.is_checked = self.bingo_item.is_active
+            self.save()
         return self.is_checked
 
     
