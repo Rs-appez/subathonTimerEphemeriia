@@ -20,4 +20,4 @@
 </html>
 
 <script src="{% static 'bingo/js/bingo.js' %}" data-bingo_lenght="{{ bingo_lenght|safe }}"></script>
-<script src="{% static 'bingo/js/admin_bingo.js' %}"></script>
+<script src="{% static 'bingo/js/admin_bingo.js' %}" data-bingo_items="{{ bingo_items_data|escapejs|safe }}"></script>

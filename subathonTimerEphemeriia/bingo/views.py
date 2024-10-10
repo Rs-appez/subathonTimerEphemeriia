@@ -56,7 +56,11 @@ def admin_bingo(request):
     return render(
         request,
         "bingo/admin_bingo.html",
-        {"bingo_items": bingo_items, "bingo_lenght": bingo_lenght},
+        {
+            "bingo_items": bingo_items,
+            "bingo_lenght": bingo_lenght,
+            "bingo_items_data": BingoItemUserSerializer(bingo_items, many=True).data,
+        },
     )
 
 
