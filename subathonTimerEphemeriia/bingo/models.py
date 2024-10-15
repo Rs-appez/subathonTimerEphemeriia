@@ -1,5 +1,6 @@
 from django.db import models
 import threading
+import bleach
 
 # Create your models here.
 class Bingo(models.Model):
@@ -19,6 +20,10 @@ class BingoItem(models.Model):
 
     def __str__(self):
         return self.name
+    
+    def save(self):
+        self.name = bleach.clean(self.name)
+        return super().save()
     
     def activate_item(self):
         self.is_active = True
