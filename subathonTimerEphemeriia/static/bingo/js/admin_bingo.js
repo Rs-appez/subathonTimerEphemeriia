@@ -1,4 +1,8 @@
 const data_admin = document.currentScript.dataset;
+
+const backend = window.location.host;
+
+
 const formattedData = data_admin.bingo_items
 .replace(/{'/g, '{"')
 .replace(/': '/g, '": "')
@@ -7,38 +11,77 @@ const formattedData = data_admin.bingo_items
 .replace(/':/g, '":')
 .replace(/False/g, 'false')
 .replace(/True/g, 'true');
-const bingo_items = JSON.parse(formattedData);
+
+var bingo_items = JSON.parse(formattedData);
 
 
-const bingoItems = document.querySelectorAll('.bingo-cell');
+var bingoBoard = document.querySelectorAll('.bingo-cell');
 
-
-bingoItems.forEach(item => {
-    item.addEventListener('click', () => {
-        clickCell(item);
+bingoBoard.forEach(item => {
+    item.addEventListener('click',
+        clickCell);
     });
-});
 
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
 
+function makeBingoBoard(){
+    var board = document.getElementById("bingoCard");
+    board.innerHTML = "";
+    length = Math.sqrt(bingo_items.length);
+    board.style.gridTemplateColumns = "repeat("+length+", 1fr)";
+  
+    for (var i = 0; i < bingo_items.length; i++){
+      item = bingo_items[i];
+      var cell = document.createElement("div");
+      if (item['is_checked']){
+        cell.className = "bingo-cell bingo-cell-checked";
+      }
+      else{
+      cell.className = "bingo-cell";
+      }
+      cell.innerHTML = item['bingo_item']['name'];
+      cell.addEventListener('click',clickCell);
+      board.appendChild(cell);
+    }
+  }
 
-function clickCell(item) {
+function clickCell() {
+    var item = this;
     var cellIndex = Array.from(item.parentNode.children).indexOf(item);
     var item = bingo_items[cellIndex];
 
     console.log(item);
-    // fetch(backend+"/bingo/api/bingo_item_user/check_item/", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({token: token, bingo_item: item['bingo_item']['name']}),
-    // })
-    // .then(response => response.json())
-    // .then((data) => {
-    //   bingoBoard = data["bingo_items"];
-    //   makeBingoBoard();
-    // })
-    // .catch((error) => {
-    //   console.error('Error:', error);
-    //   });
+
+    var csrftoken = getCookie('csrftoken');
+
+    fetch("http://"+backend+"/bingo/api/bingo_item_user/check_item_admin/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": csrftoken,
+      },
+      body: JSON.stringify({bingo_item: item['bingo_item']['name']}),
+    })
+    .then(response => response.json())
+    .then((data) => {
+        console.log(data);  
+        bingo_items = data["bingo_items"];
+        makeBingoBoard();
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+      });
 }

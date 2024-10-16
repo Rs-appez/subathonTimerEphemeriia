@@ -200,7 +200,34 @@ class BingoItemUserViewSet(viewsets.ModelViewSet):
             )
         except InvalidTokenError:
             return Response({"status": "Invalid token"}, status=400)
+        
+    @action(detail=False, methods=["post"], permission_classes=[IsAdminUser])
+    def check_item_admin(self, request):
 
+        user = User.objects.filter(name="Ephemeriia").first()
+        if not user:
+            return Response({"status": "User not found"}, status=400)
+
+        bingo_item_name = request.data.get("bingo_item")
+        bingo_item = BingoItemUser.objects.filter(
+            bingo_item__name=bingo_item_name, user=user
+        ).first()
+        if not bingo_item:
+            return Response({"status": "Bingo item not found"}, status=400)
+        
+        bingo_item_original = BingoItem.objects.filter(name=bingo_item_name).first()
+        bingo_item_original.activate_item()
+
+        bingo_item.check_item()
+
+        bingo_items = BingoItemUser.objects.filter(user=user)
+
+        return Response(
+            {
+                "status": "Bingo item checked",
+                "bingo_items": BingoItemUserSerializer(bingo_items, many=True).data,
+            }
+        )
 
 class UserViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAdminUser]

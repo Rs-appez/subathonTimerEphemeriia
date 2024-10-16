@@ -12,7 +12,7 @@
 <body>
     <div class="bingo-card" id="bingoCard">
         {% for item in bingo_items %}
-        <div class="bingo-cell">{{ item }}</div>
+        <div class="bingo-cell {% if item.is_checked %}bingo-cell-checked{% endif %}">{{ item }}</div>
         {% endfor %}
     </div>
 </body>

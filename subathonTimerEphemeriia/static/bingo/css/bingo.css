@@ -21,6 +21,6 @@ body {
     font-size: 1.5em;
     font-weight: bold;
 }
-.bingo-cell.free {
-    background-color: #ffeb3b;
+.bingo-cell-checked {
+    background-color: #068f24;
 }
