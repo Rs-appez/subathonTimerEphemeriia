@@ -12,6 +12,16 @@ class Bingo(models.Model):
 
     def __str__(self):
         return self.name
+
+
+    def reset_all_items(self):
+        bingo_items = BingoItem.objects.filter(bingo=self)
+        bingo_item_users = BingoItemUser.objects.filter(bingo_item__in=bingo_items)
+        for bingo_item in bingo_items:
+            bingo_item.desactivate_item()
+        for bingo_item_user in bingo_item_users:
+            bingo_item_user.is_checked = False
+            bingo_item_user.save()
     
 class BingoItem(models.Model):
     name = models.CharField(max_length=100)
@@ -57,6 +67,12 @@ class User(models.Model):
         for bingo_item in bingo_default_items:
             BingoItemUser.objects.create(user=user, bingo_item=bingo_item)
         return user
+
+    def reset_all_items(self):
+        bingo_items = BingoItemUser.objects.filter(user=self)
+        for bingo_item in bingo_items:
+            bingo_item.is_checked = False
+            bingo_item.save()
     
 class BingoItemUser(models.Model):
     bingo_item = models.ForeignKey(BingoItem, on_delete=models.CASCADE)

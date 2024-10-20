@@ -145,6 +145,13 @@ class BingoViewSet(viewsets.ModelViewSet):
         except InvalidTokenError:
             return Response({"status": "Invalid token"}, status=400)
 
+    @action(detail=True, methods=["post"], permission_classes=[IsAdminUser])
+    def reset(self, request, pk=None):
+        bingo = self.get_object()
+        bingo.reset_all_items()
+        return Response({"status": "Bingo reset"})
+
+
 
 class BingoItemViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAdminUser]
@@ -254,3 +261,12 @@ class UserViewSet(viewsets.ModelViewSet):
         user = User.create_with_bingoIteam(name=name, id_twitch=id_twitch, bingo=bingo)
 
         return Response({"status": "User created", "user": UserSerializer(user).data})
+
+
+    @action(detail=False, methods=["post"], permission_classes=[IsAdminUser])
+    def reset_items(self, request):
+        name = request.data.get("name")
+        user = User.objects.get(name=name)
+        user.reset_all_items()
+        
+        return Response({"status": "Items reset"})
