@@ -191,6 +191,7 @@ class BingoItemUserViewSet(viewsets.ModelViewSet):
                 return Response({"status": "Bingo item not found"}, status=400)
 
             bingo_item.check_item()
+            bingo_finished = bingo_item.check_bingo()
 
             bingo_items = BingoItemUser.objects.filter(user=user)
 
@@ -198,6 +199,7 @@ class BingoItemUserViewSet(viewsets.ModelViewSet):
                 {
                     "status": "Bingo item checked",
                     "bingo_items": BingoItemUserSerializer(bingo_items, many=True).data,
+                    "bingo_finished": bingo_finished,
                 }
             )
 
@@ -268,5 +270,5 @@ class UserViewSet(viewsets.ModelViewSet):
         name = request.data.get("name")
         user = User.objects.get(name=name)
         user.reset_all_items()
-        
+
         return Response({"status": "Items reset"})
