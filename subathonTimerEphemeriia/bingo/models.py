@@ -1,5 +1,7 @@
 from django.db import models
 import threading
+import math
+
 import bleach
 
 # Create your models here.
@@ -90,3 +92,26 @@ class BingoItemUser(models.Model):
         return self.is_checked
 
     
+    def check_bingo(self):
+        bingo_items = BingoItemUser.objects.filter(user=self.user)
+
+        size = int(math.sqrt(len(bingo_items)))
+
+        for i in range(size):
+            line = bingo_items[i*size:(i+1)*size]
+            if all([item.is_checked for item in line]):
+                return True
+
+            column = bingo_items[i::size]
+            if all([item.is_checked for item in column]):
+                return True
+
+        diagonal1 = bingo_items[::size+1]
+        if all([item.is_checked for item in diagonal1]):
+            return True
+        
+        diagonal2 = bingo_items[size-1::size-1][:size]
+        if all([item.is_checked for item in diagonal2]):
+            return True
+
+        return False
