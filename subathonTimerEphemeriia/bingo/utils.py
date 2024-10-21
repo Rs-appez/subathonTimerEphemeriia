@@ -28,3 +28,31 @@ def get_twitch_access_token():
     
     return res.json()["access_token"]
     
+def send_chat_message( message, token):
+    try:
+
+        jwt_token = validate_jwt_token(token)
+        brodacast_id = jwt_token.get("channel_id")
+        res = requests.post(
+            f"https://api.twitch.tv/helix/extensions/chat?broadcaster_id={brodacast_id}",
+            headers={
+                'Content-Type': 'application/json',
+                "Client-ID": config("TWITCH_EXTENSION_ID"),
+                "Authorization": f"Bearer {token}",
+            },
+            params= {
+                "text": message,
+                "extension_id" :config("TWITCH_EXTENSION_ID"),
+                "extension_version": "0.0.1"
+
+            }
+        )
+
+        if res.status_code == 204:
+            return True
+        
+        return False
+
+    except Exception as e:
+        return False
+        
