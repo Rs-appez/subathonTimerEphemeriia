@@ -12,7 +12,7 @@ from .serializers import (
     UserSerializer,
 )
 
-from .utils import validate_jwt_token, get_twitch_access_token
+from .utils import validate_jwt_token, get_twitch_access_token, send_chat_message
 from jwt import ExpiredSignatureError, InvalidTokenError
 
 import requests
@@ -152,7 +152,6 @@ class BingoViewSet(viewsets.ModelViewSet):
         return Response({"status": "Bingo reset"})
 
 
-
 class BingoItemViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAdminUser]
     queryset = BingoItem.objects.all()
@@ -193,6 +192,9 @@ class BingoItemUserViewSet(viewsets.ModelViewSet):
             bingo_item.check_item()
             bingo_finished = bingo_item.check_bingo()
 
+            if bingo_finished:
+                print(send_chat_message(f"{user.name} has finished the bingo!", token))
+
             bingo_items = BingoItemUser.objects.filter(user=user)
 
             return Response(
@@ -209,10 +211,9 @@ class BingoItemUserViewSet(viewsets.ModelViewSet):
             )
         except InvalidTokenError:
             return Response({"status": "Invalid token"}, status=400)
-        
+
     @action(detail=False, methods=["post"], permission_classes=[IsAdminUser])
     def check_item_admin(self, request):
-
         user = User.objects.filter(name="Ephemeriia").first()
         if not user:
             return Response({"status": "User not found"}, status=400)
@@ -223,7 +224,7 @@ class BingoItemUserViewSet(viewsets.ModelViewSet):
         ).first()
         if not bingo_item:
             return Response({"status": "Bingo item not found"}, status=400)
-        
+
         bingo_item_original = BingoItem.objects.filter(name=bingo_item_name).first()
         bingo_item_original.activate_item()
 
@@ -237,6 +238,7 @@ class BingoItemUserViewSet(viewsets.ModelViewSet):
                 "bingo_items": BingoItemUserSerializer(bingo_items, many=True).data,
             }
         )
+
 
 class UserViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAdminUser]
@@ -263,7 +265,6 @@ class UserViewSet(viewsets.ModelViewSet):
         user = User.create_with_bingoIteam(name=name, id_twitch=id_twitch, bingo=bingo)
 
         return Response({"status": "User created", "user": UserSerializer(user).data})
-
 
     @action(detail=False, methods=["post"], permission_classes=[IsAdminUser])
     def reset_items(self, request):
