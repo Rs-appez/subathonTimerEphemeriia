@@ -76,6 +76,9 @@ class User(models.Model):
         for bingo_item in bingo_items:
             bingo_item.is_checked = False
             bingo_item.save()
+        
+        self.has_won = False
+        self.save()
 
     def win(self):
         self.has_won = True
