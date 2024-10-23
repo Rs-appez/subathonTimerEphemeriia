@@ -11,7 +11,7 @@ channels==4.1.0
 channels-redis==4.2.0
 charset-normalizer==3.4.0
 constantly==23.10.4
-cryptography==43.0.1
+cryptography==43.0.3
 daphne==4.1.2
 dj-database-url==2.2.0
 Django==5.1.2
@@ -24,8 +24,8 @@ incremental==24.7.2
 msgpack==1.1.0
 multidict==6.1.0
 packaging==24.1
-pillow==10.4.0
-psycopg2==2.9.9
+pillow==11.0.0
+psycopg2==2.9.10
 pyasn1==0.6.1
 pyasn1_modules==0.4.1
 pycparser==2.22
@@ -42,5 +42,5 @@ txaio==23.1.1
 typing_extensions==4.12.2
 urllib3==2.2.3
 whitenoise==6.7.0
-yarl==1.15.2
+yarl==1.15.5
 zope.interface==7.1.0
