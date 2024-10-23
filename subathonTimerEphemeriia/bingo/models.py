@@ -76,6 +76,10 @@ class User(models.Model):
         for bingo_item in bingo_items:
             bingo_item.is_checked = False
             bingo_item.save()
+
+    def win(self):
+        self.has_won = True
+        self.save()
     
 class BingoItemUser(models.Model):
     bingo_item = models.ForeignKey(BingoItem, on_delete=models.CASCADE)

@@ -190,10 +190,12 @@ class BingoItemUserViewSet(viewsets.ModelViewSet):
                 return Response({"status": "Bingo item not found"}, status=400)
 
             bingo_item.check_item()
+
             bingo_finished = bingo_item.check_bingo()
 
-            if bingo_finished:
-                print(send_chat_message(f"{user.name} has finished the bingo!", token))
+            if bingo_finished and not user.has_won:
+                send_chat_message(f"{user.name} has finished the bingo!", token)
+                user.win()
 
             bingo_items = BingoItemUser.objects.filter(user=user)
 
