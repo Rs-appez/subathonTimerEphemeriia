@@ -18,12 +18,11 @@ class Bingo(models.Model):
 
     def reset_all_items(self):
         bingo_items = BingoItem.objects.filter(bingo=self)
-        bingo_item_users = BingoItemUser.objects.filter(bingo_item__in=bingo_items)
+        users = User.objects.all()
         for bingo_item in bingo_items:
             bingo_item.desactivate_item()
-        for bingo_item_user in bingo_item_users:
-            bingo_item_user.is_checked = False
-            bingo_item_user.save()
+        for user in users:
+            user.reset_all_items()
     
 class BingoItem(models.Model):
     name = models.CharField(max_length=100)
@@ -66,16 +65,20 @@ class User(models.Model):
     @staticmethod
     def create_with_bingoIteam(name, id_twitch, bingo):
         user = User.objects.create(name=name, id_twitch=id_twitch)
-        bingo_default_items = BingoItem.objects.filter(bingo=bingo).order_by("?")
-        for bingo_item in bingo_default_items:
-            BingoItemUser.objects.create(user=user, bingo_item=bingo_item)
+        user.get_new_items(bingo)
+        
         return user
+    
+    def get_new_items(self, bingo):
+        bingo_default_items = BingoItem.objects.filter(bingo=bingo).order_by("?")
+        BingoItemUser.objects.filter(user=self).delete()
+        for bingo_item in bingo_default_items:
+            BingoItemUser.objects.create(user=self, bingo_item=bingo_item)
+        self.save()
 
     def reset_all_items(self):
-        bingo_items = BingoItemUser.objects.filter(user=self)
-        for bingo_item in bingo_items:
-            bingo_item.is_checked = False
-            bingo_item.save()
+        bingo = Bingo.objects.filter(is_active=True).last()
+        self.get_new_items(bingo)
         
         self.has_won = False
         self.save()
