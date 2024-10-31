@@ -71,7 +71,6 @@ def error(request):
 
 
 def authorizeTwich(request):
-
     if not request.user.is_authenticated:
         return HttpResponseRedirect("/admin_django/login/?next=/oauth/")
 
@@ -84,14 +83,13 @@ def authorizeTwich(request):
     redirect_uri = "https://" + config("BACKEND_HOST") + "/oauth/twitch/authorize"
 
     if not request.GET.get("state") == str(state):
-
         res = requests.get(
             "https://id.twitch.tv/oauth2/authorize",
             params={
                 "client_id": config("TWITCH_APP_ID"),
                 "redirect_uri": redirect_uri,
                 "response_type": "code",
-                "scope": "bits:read channel:read:redemptions channel:read:subscriptions moderator:read:followers",
+                "scope": "bits:read channel:read:redemptions channel:read:subscriptions moderator:read:followers channel:read:predictions channel:manage:predictions channel:read:redemptions channel:manage:redemptions",
                 "state": state,
             },
         )
@@ -127,10 +125,7 @@ def authorizeTwich(request):
 
 
 def authorizeStreamlabs(request):
-
-    redirect_uri = (
-        "https://" + config("BACKEND_HOST") + "/oauth/streamlabs/authorize"
-    )
+    redirect_uri = "https://" + config("BACKEND_HOST") + "/oauth/streamlabs/authorize"
 
     if not request.user.is_authenticated:
         return HttpResponseRedirect("/admin_django/login/?next=/oauth/")
@@ -183,21 +178,20 @@ def authorizeStreamlabs(request):
 
     return redirect(res.url)
 
+
 class TwitchAuthView(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = TwitchAuth.objects.all()
     serializer_class = TwitchAuthSerializer
 
-    @action(detail=False, methods=['get'], permission_classes=[IsAuthenticated])
+    @action(detail=False, methods=["get"], permission_classes=[IsAuthenticated])
     def first(self, request, pk=None):
         ta = TwitchAuth.objects.first()
         if ta:
             serializer = self.get_serializer(ta)
             return Response(serializer.data)
         else:
-            return Response({'error': 'No Twitch Auth'})
-
-
+            return Response({"error": "No Twitch Auth"})
 
     # @action(detail=False, methods=['post'], permission_classes=[IsAuthenticated])
     # def refresh(self, request, pk=None):
@@ -206,17 +200,17 @@ class TwitchAuthView(viewsets.ModelViewSet):
 
     #     return Response({'refreshed': refresh})
 
+
 class StreamlabsAuthView(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = StreamlabsAuth.objects.all()
     serializer_class = StreamlabsAuthSerializer
 
-    @action(detail=False, methods=['get'], permission_classes=[IsAuthenticated])
+    @action(detail=False, methods=["get"], permission_classes=[IsAuthenticated])
     def first(self, request, pk=None):
         sla = StreamlabsAuth.objects.first()
         if sla:
             serializer = self.get_serializer(sla)
             return Response(serializer.data)
         else:
-            return Response({'error': 'No Streamlabs Auth'})
-        
+            return Response({"error": "No Streamlabs Auth"})
