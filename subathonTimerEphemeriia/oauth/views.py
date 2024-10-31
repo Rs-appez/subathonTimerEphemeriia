@@ -89,7 +89,7 @@ def authorizeTwich(request):
                 "client_id": config("TWITCH_APP_ID"),
                 "redirect_uri": redirect_uri,
                 "response_type": "code",
-                "scope": "bits:read channel:read:redemptions channel:read:subscriptions moderator:read:followers channel:read:predictions channel:manage:predictions channel:read:redemptions channel:manage:redemptions",
+                "scope": "bits:read channel:read:subscriptions moderator:read:followers channel:read:predictions channel:manage:predictions channel:read:redemptions channel:manage:redemptions",
                 "state": state,
             },
         )
