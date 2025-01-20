@@ -1,26 +1,39 @@
+@font-face {
+    font-family: "Century";
+    src: url("/static/subathonTimer/fonts/century.ttf") format("truetype");
+}
+
 body {
     font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
 }
+
 .bingo-card {
     display: grid;
-    gap: 5px;
+    grid-template-columns: repeat(4, 1fr);
 }
+
 .bingo-cell {
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
-    background-color: white;
-    border: 1px solid #ccc;
-    height: 150px;
-    width: 150px;
-    font-size: 1.5em;
+    color: #2c0022;
+    background-color: #ccbadb;
+    border: 1px solid #fff;
     font-weight: bold;
+    font-size: 3vw;
+    font-family: "Century";
+
+    height: 21vh;
+    width: 21vw;
+    padding: 2vw;
 }
+
 .bingo-cell-checked {
-    background-color: #068f24;
+    background-color: #2c0022;
+    color: #ccbadb;
+}
+
+.bingo-cell-waiting {
+    background-color: #ffeb3b;
 }
