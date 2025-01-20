@@ -39,6 +39,12 @@
 
     <div style="padding: 5px;">
         <a href="/bingo/api/bingo/{{ bingo.id }}/reset/">Reset ALL</a>
+            <form action="/bingo/api/bingo/{{ bingo.id }}/reset/" method = "POST">
+
+                {% csrf_token %}
+                <button>Reset all</button>
+            </form>
+
     </div>
 
     {% endif %}
