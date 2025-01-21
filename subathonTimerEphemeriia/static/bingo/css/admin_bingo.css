@@ -1,0 +1,15 @@
+.button {
+    position: absolute;
+    display: flex;
+    font-size: min(2vh, 2vw);
+}
+
+.b1 {
+    top: min(49.5vh, 49.5vw);
+    left: min(33vh, 33vw);
+}
+
+.b2 {
+    top: min(49.5vh, 49.5vw);
+    left: min(60vh, 60vw);
+}

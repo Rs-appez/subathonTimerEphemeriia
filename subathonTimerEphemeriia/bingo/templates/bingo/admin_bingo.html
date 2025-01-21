@@ -7,19 +7,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bingo Admin</title>
     <link rel="stylesheet" type="text/css" href="{% static 'bingo/css/bingo.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'bingo/css/admin_bingo.css' %}" />
 </head>
 
 <body>
-        <div class="bingo-container">
+        
+    <div class="container">
+                {% include "./bingo_template.html" %}
+            <div>
+                <div>
+                <button id="show_bingo" class="button b1">Show Bingo</button>
+                </div>
 
-    <div class="bingo-card" id="bingoCard">
-        {% for item in bingo_items %}
-        <div class="bingo-cell {% if item.is_checked %}bingo-cell-checked{% endif %}">{{ item }}</div>
-        {% endfor %}
+                <div>
+                <button id="hide_admin" class="button b2">Hide Bingo</button>
+                </div>
+            </div>
     </div>
-            <img src="/static/bingo/images/cacatchu.png" alt="Transparent Image" class="overlay-image" />
 
-    </div>
 </body>
 
 </html>
