@@ -62,7 +62,11 @@ class User(models.Model):
     has_won = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.name
+        return str(self.name)
+
+    def save(self):
+        self.name = bleach.clean(self.name)
+        return super().save()
 
     @staticmethod
     def create_with_bingoIteam(name, id_twitch, bingo):
