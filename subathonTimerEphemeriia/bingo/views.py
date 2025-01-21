@@ -25,7 +25,7 @@ def index(request):
     bingo = Bingo.objects.last()
 
     user_name = request.GET.get("user")
-    show_bingo = request.GET.get("show") == "true"
+    show_bingo = request.GET.get("show") != "false"
 
     if user_name:
         user_name = bleach.clean(user_name)
