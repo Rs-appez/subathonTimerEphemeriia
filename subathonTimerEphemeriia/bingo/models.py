@@ -34,7 +34,7 @@ class BingoItem(models.Model):
         return self.name
 
     def save(self):
-        self.name = bleach.clean(self.name)
+        self.name = bleach.clean(self.name).upper()
         return super().save()
 
     def activate_item(self):
