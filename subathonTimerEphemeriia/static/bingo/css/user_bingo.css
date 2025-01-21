@@ -1,3 +1,13 @@
 .bingo-show {
-    display: block;
+    position: fixed;
+    bottom: -100%;
+    /* Start off-screen */
+    left: 0;
+    right: 0;
+    transition: bottom 1.5s ease-out;
+}
+
+.bingo-show.visible {
+    bottom: 100%;
+    /* Move into view */
 }
