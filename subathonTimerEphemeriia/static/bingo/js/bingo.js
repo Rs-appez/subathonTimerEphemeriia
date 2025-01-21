@@ -11,6 +11,20 @@ if (show_bingo) {
 
 function toggle_bingo() {
     show_bingo = !show_bingo;
+    animate_bingo();
+}
+
+function show_bingo() {
+    bingoElement.classList.add("visible");
+    animate_bingo();
+}
+
+function hide_bingo() {
+    bingoElement.classList.remove("visible");
+    animate_bingo();
+}
+
+function animate_bingo() {
     if (show_bingo) {
         bingoElement.classList.add("visible");
     } else {
