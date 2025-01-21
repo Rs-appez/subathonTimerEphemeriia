@@ -10,10 +10,13 @@
 </head>
 
 <body>
+        <div class="bingo-container">
     <div class="bingo-card" id="bingoCard">
         {% for item in bingo_items %}
         <div class="bingo-cell {% if item.is_checked %}bingo-cell-checked{% endif %}">{{ item }}</div>
         {% endfor %}
+    </div>
+            <img src="/static/bingo/images/cacatchu.png" alt="Transparent Image" class="overlay-image" />
     </div>
 </body>
 
