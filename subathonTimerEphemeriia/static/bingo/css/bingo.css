@@ -1,6 +1,6 @@
 @font-face {
-    font-family: "Century";
-    src: url("/static/subathonTimer/fonts/century.ttf") format("truetype");
+    font-family: "Sauce Barbe";
+    src: url("/static/bingo/fonts/Sauce Barbe.otf") format("truetype");
 }
 
 body {
@@ -31,7 +31,7 @@ body {
     border: 1px solid #fff;
     font-weight: bold;
     font-size: min(3.2vh, 3.2vw);
-    font-family: "Century";
+    font-family: "Sauce Barbe";
 
     width: min(25vh, 25vw);
     height: min(25vh, 25vw);
