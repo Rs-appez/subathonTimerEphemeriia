@@ -25,6 +25,8 @@ def index(request):
     bingo = Bingo.objects.last()
 
     user_name = request.GET.get("user")
+    show_bingo = request.GET.get("show") == "true"
+
     if user_name:
         user_name = bleach.clean(user_name)
         user = User.objects.filter(name=user_name)
@@ -39,7 +41,12 @@ def index(request):
         return render(
             request,
             "bingo/bingo.html",
-            {"bingo": bingo, "bingo_items": bingo_items, "bingo_lenght": bingo_lenght},
+            {
+                "bingo": bingo,
+                "bingo_items": bingo_items,
+                "bingo_lenght": bingo_lenght,
+                "show_bingo": show_bingo,
+            },
         )
 
     return render(request, "bingo/error.html", {"message": "User not found"})
@@ -92,6 +99,7 @@ def activate_item(request, bingo_id, item_id):
 
     return HttpResponseRedirect(f"/bingo/admin/{bingo_id}/")
 
+
 def reset_bingo(request, bingo_id):
     if not request.user.is_authenticated:
         return HttpResponseRedirect("/admin_django/login/?next=/bingo/admin/")
@@ -100,6 +108,7 @@ def reset_bingo(request, bingo_id):
     bingo.reset_all_items()
 
     return HttpResponseRedirect(f"/bingo/admin/{bingo_id}/")
+
 
 class BingoViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAdminUser]
