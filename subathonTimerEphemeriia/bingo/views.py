@@ -20,6 +20,11 @@ from math import sqrt
 import bleach
 from decouple import config
 
+import json
+from django.conf import settings
+from asgiref.sync import async_to_sync
+import channels.layers
+
 
 def index(request):
     bingo = Bingo.objects.last()
@@ -167,6 +172,34 @@ class BingoViewSet(viewsets.ModelViewSet):
         bingo = self.get_object()
         bingo.reset_all_items()
         return Response({"status": "Bingo reset"})
+
+    @action(detail=False, methods=["post"], permission_classes=[IsAdminUser])
+    def display_bingo_widget(self, request):
+
+        user = request.data.get("user")
+        show_bingo = request.data.get("show")
+
+        print(user, show_bingo)
+        user_name = bleach.clean(user)
+        channel_layer = channels.layers.get_channel_layer()
+
+        if channel_layer is None:
+            return Response({"status": "Channel layer not found"}, status=400)
+
+        async_to_sync(channel_layer.group_send)(
+            settings.BINGO_GROUP_NAME,
+            {
+                "type": "new_ticks",
+                "content": json.dumps(
+                    {
+                        "user": user_name,
+                        "show": show_bingo,
+                    }
+                ),
+            },
+        )
+
+        return Response({"status": "Bingo widget displayed"})
 
 
 class BingoItemViewSet(viewsets.ModelViewSet):

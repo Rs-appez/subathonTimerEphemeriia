@@ -14,7 +14,7 @@ function toggle_bingo() {
     animate_bingo();
 }
 
-function show_bingo() {
+function display_bingo() {
     bingoElement.classList.add("visible");
     animate_bingo();
 }
@@ -32,4 +32,33 @@ function animate_bingo() {
     }
 }
 
-document.getElementById("showBingo").addEventListener("click", toggle_bingo);
+// Websocket
+var ws_url = "ws://" + window.location.host + "/ws/bingo/";
+
+function connect() {
+    var ws = new WebSocket(ws_url);
+
+    ws.onmessage = function(event) {
+        var data_ws = JSON.parse(event.data);
+        show_bingo = data_ws.show;
+        user = data_ws.user;
+
+        if (show_bingo) {
+            display_bingo();
+        } else {
+            hide_bingo();
+        }
+    };
+
+    ws.onclose = function(event) {
+        console.log("Connection closed");
+        //connect();
+    };
+
+    ws.onerror = function(event) {
+        console.log("Error");
+        ws.close();
+    };
+}
+
+connect();

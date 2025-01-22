@@ -16,11 +16,11 @@
                 {% include "./bingo_template.html" %}
             <div>
                 <div>
-                <button id="show_bingo" class="button b1">Show Bingo</button>
+                <button id="showBingo" class="button b1">Show Bingo</button>
                 </div>
 
                 <div>
-                <button id="hide_admin" class="button b2">Hide Bingo</button>
+                <button id="hideBingo" class="button b2">Hide Bingo</button>
                 </div>
             </div>
     </div>
@@ -29,5 +29,4 @@
 
 </html>
 
-<script src="{% static 'bingo/js/bingo.js' %}" data-bingo_lenght="{{ bingo_lenght|safe }}"></script>
 <script src="{% static 'bingo/js/admin_bingo.js' %}" data-bingo_items="{{ bingo_items_data }}"></script>
