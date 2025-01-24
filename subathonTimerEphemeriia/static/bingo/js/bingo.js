@@ -52,7 +52,7 @@ function makeBingoBoard() {
 }
 
 // Websocket
-var ws_url = "ws://" + window.location.host + "/ws/bingo/";
+var ws_url = "wss://" + window.location.host + "/ws/bingo/";
 
 function connect() {
     var ws = new WebSocket(ws_url);
