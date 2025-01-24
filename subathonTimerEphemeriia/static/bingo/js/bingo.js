@@ -3,6 +3,8 @@ const data = document.currentScript.dataset;
 let show_bingo = data.show_bingo === "True";
 let bingoElement = document.getElementsByClassName("bingo-show")[0];
 
+let bingo_items;
+
 if (show_bingo) {
     bingoElement.classList.add("visible");
 } else {
@@ -32,6 +34,23 @@ function animate_bingo() {
     }
 }
 
+function makeBingoBoard() {
+    var board = document.getElementById("bingoCard");
+    board.innerHTML = "";
+
+    for (var i = 0; i < bingo_items.length; i++) {
+        item = bingo_items[i];
+        var cell = document.createElement("div");
+        if (item["is_checked"]) {
+            cell.className = "bingo-cell bingo-cell-checked";
+        } else {
+            cell.className = "bingo-cell";
+        }
+        cell.innerHTML = item["bingo_item"]["name"];
+        board.appendChild(cell);
+    }
+}
+
 // Websocket
 var ws_url = "ws://" + window.location.host + "/ws/bingo/";
 
@@ -40,13 +59,18 @@ function connect() {
 
     ws.onmessage = function(event) {
         var data_ws = JSON.parse(event.data);
-        show_bingo = data_ws.show;
-        user = data_ws.user;
+        type = data_ws.type;
 
-        if (show_bingo) {
-            display_bingo();
-        } else {
-            hide_bingo();
+        if ("refresh" === type) {
+            bingo_items = data_ws.bingo_items;
+            makeBingoBoard();
+        } else if ("display_bingo_widget" === type) {
+            show_bingo = data_ws.show;
+            if (show_bingo) {
+                display_bingo();
+            } else {
+                hide_bingo();
+            }
         }
     };
 

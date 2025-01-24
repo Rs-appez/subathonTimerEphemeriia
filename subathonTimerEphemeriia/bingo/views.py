@@ -180,6 +180,7 @@ class BingoViewSet(viewsets.ModelViewSet):
         show_bingo = request.data.get("show")
 
         user_name = bleach.clean(user)
+
         channel_layer = channels.layers.get_channel_layer()
 
         if channel_layer is None:
@@ -191,6 +192,7 @@ class BingoViewSet(viewsets.ModelViewSet):
                 "type": "new_ticks",
                 "content": json.dumps(
                     {
+                        "type": "display_bingo_widget",
                         "user": user_name,
                         "show": show_bingo,
                     }
@@ -282,11 +284,29 @@ class BingoItemUserViewSet(viewsets.ModelViewSet):
         bingo_item.check_item()
 
         bingo_items = BingoItemUser.objects.filter(user=user)
+        bingo_items_data = BingoItemUserSerializer(bingo_items, many=True).data
 
+        channel_layer = channels.layers.get_channel_layer()
+
+        if channel_layer is None:
+            return Response({"status": "Channel layer not found"}, status=400)
+
+        async_to_sync(channel_layer.group_send)(
+            settings.BINGO_GROUP_NAME,
+            {
+                "type": "new_ticks",
+                "content": json.dumps(
+                    {
+                        "type": "refresh",
+                        "bingo_items": bingo_items_data,
+                    }
+                ),
+            },
+        )
         return Response(
             {
                 "status": "Bingo item checked",
-                "bingo_items": BingoItemUserSerializer(bingo_items, many=True).data,
+                "bingo_items": bingo_items_data,
             }
         )
 
