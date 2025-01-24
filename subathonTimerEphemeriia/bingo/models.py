@@ -109,7 +109,11 @@ class BingoItemUser(models.Model):
         # return self.is_checked
 
         if not self.is_checked:
+            print(f"Checking item {self.bingo_item.name} for user {self.user.name}")
             self.is_checked = self.bingo_item.is_active
+            print(
+                f"Item {self.bingo_item.name} for user {self.user.name} is {self.is_checked}"
+            )
             self.save()
         return self.is_checked
 
