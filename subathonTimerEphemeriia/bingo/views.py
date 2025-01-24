@@ -179,7 +179,6 @@ class BingoViewSet(viewsets.ModelViewSet):
         user = request.data.get("user")
         show_bingo = request.data.get("show")
 
-        print(user, show_bingo)
         user_name = bleach.clean(user)
         channel_layer = channels.layers.get_channel_layer()
 
