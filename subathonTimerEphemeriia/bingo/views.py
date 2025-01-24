@@ -229,7 +229,6 @@ class BingoItemUserViewSet(viewsets.ModelViewSet):
         try:
             decoded_token = validate_jwt_token(token)
             user_id = decoded_token.get("user_id")
-            print(user_id)
             user = User.objects.filter(id_twitch=user_id).first()
             if not user:
                 return Response({"status": "User not found"}, status=400)
