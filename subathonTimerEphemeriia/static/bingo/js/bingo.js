@@ -52,7 +52,7 @@ function connect() {
 
     ws.onclose = function(event) {
         console.log("Connection closed");
-        //connect();
+        connect();
     };
 
     ws.onerror = function(event) {
