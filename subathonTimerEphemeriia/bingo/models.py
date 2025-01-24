@@ -33,9 +33,9 @@ class BingoItem(models.Model):
     def __str__(self):
         return self.name
 
-    def save(self):
+    def save(self, **kwargs):
         self.name = bleach.clean(self.name).upper()
-        return super().save()
+        return super().save(**kwargs)
 
     def activate_item(self):
         self.is_active = True
@@ -64,9 +64,9 @@ class User(models.Model):
     def __str__(self):
         return str(self.name)
 
-    def save(self):
+    def save(self, **kwargs):
         self.name = bleach.clean(self.name)
-        return super().save()
+        return super().save(**kwargs)
 
     @staticmethod
     def create_with_bingoIteam(name, id_twitch, bingo):
