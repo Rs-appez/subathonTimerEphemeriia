@@ -14,7 +14,7 @@ class Bingo(models.Model):
     is_active = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.name
+        return str(self.name)
 
     def reset_all_items(self):
         bingo_items = BingoItem.objects.filter(bingo=self)
