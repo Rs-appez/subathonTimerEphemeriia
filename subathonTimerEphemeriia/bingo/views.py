@@ -246,8 +246,8 @@ class BingoItemUserViewSet(viewsets.ModelViewSet):
             bingo_finished = bingo_item.check_bingo()
 
             if bingo_finished and not user.has_won:
-                send_chat_message(f"{user.name} has finished the bingo!", token)
                 user.win()
+                send_chat_message(f"{user.name} has finished the bingo!", token)
 
             bingo_items = BingoItemUser.objects.filter(user=user)
 
