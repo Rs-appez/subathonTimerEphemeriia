@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect
 from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
@@ -56,7 +56,7 @@ def oauth(request):
 
     return render(
         request,
-        "oauth.html",
+        "oauth/oauth.html",
         {
             "twitch_connected": twitch_connected,
             "twitch_user": twitch_user,
@@ -67,7 +67,7 @@ def oauth(request):
 
 
 def error(request):
-    return render(request, "error.html")
+    return render(request, "oauth/error.html")
 
 
 def authorizeTwich(request):
@@ -193,12 +193,12 @@ class TwitchAuthView(viewsets.ModelViewSet):
         else:
             return Response({"error": "No Twitch Auth"})
 
-    # @action(detail=False, methods=['post'], permission_classes=[IsAuthenticated])
-    # def refresh(self, request, pk=None):
-    #     ta = TwitchAuth.objects.first()
-    #     refresh = ta.refresh()
+    @action(detail=True, methods=['post'], permission_classes=[IsAdminUser])
+    def refresh(self, request, pk=None):
+        ta = self.get_object()
+        refresh = ta.refresh()
 
-    #     return Response({'refreshed': refresh})
+        return Response({'refreshed': refresh})
 
 
 class StreamlabsAuthView(viewsets.ModelViewSet):

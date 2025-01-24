@@ -1,0 +1,28 @@
+body {
+    background-color:rgb(20, 20, 24);
+    color:rgb(197, 186, 172);
+}
+.item {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(15%, 1fr));  /* Adjust the number of columns as needed */
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    gap: 10px; /* Adjust the gap as needed */
+    justify-items: start;
+}
+
+.item p {
+    margin: 0;
+    text-align: left;
+}
+.item.alternate {
+    background-color: rgba(255, 255, 255, 0.1); /* Adjust color as needed */
+}
+
+.active {
+    color: green;
+}
+
+.inactive {
+    color: red;
+}

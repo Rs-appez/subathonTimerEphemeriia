@@ -32,6 +32,8 @@ ALLOWED_HOSTS = [config("BACKEND_HOST", default="127.0.0.1")]
 
 CSRF_TRUSTED_ORIGINS = ["https://" + config("BACKEND_HOST", default="")]
 
+CORS_ALLOWED_ORIGINS = [config("FRONTEND_HOST", default="http://localhost:4321")]
+
 
 # Application definition
 
@@ -43,13 +45,14 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    'whitenoise.runserver_nostatic',
+    "whitenoise.runserver_nostatic",
     "rest_framework",
-    'rest_framework.authtoken',
+    "rest_framework.authtoken",
     "subathonTimer",
     "oauth",
+    "bingo",
     "channels",
-
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
@@ -60,13 +63,14 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    'whitenoise.middleware.WhiteNoiseMiddleware'
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
 ]
 
 ROOT_URLCONF = "subathonTimerEphemeriia.urls"
 
 STATIC_ROOT = BASE_DIR / "staticfiles"
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 TEMPLATES = [
     {
@@ -92,18 +96,20 @@ WSGI_APPLICATION = "subathonTimerEphemeriia.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    'default': dj_database_url.config(
-        default=config('DATABASE_URL'),
-        conn_max_age=600,
-        conn_health_checks=True
-    ),
-} if not DEBUG else {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+DATABASES = (
+    {
+        "default": dj_database_url.config(
+            default=config("DATABASE_URL"), conn_max_age=600, conn_health_checks=True
+        ),
     }
-}
+    if not DEBUG
+    else {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
+)
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -156,10 +162,10 @@ CHANNEL_LAYERS = {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
             "hosts": [
-               {
-                    "host" : config("REDIS_HOST", default="127.0.0.1"),
-                    "port" : config("REDIS_PORT", default=6379),
-                    "password" : config("REDIS_PASSWORD", default=""),
+                {
+                    "host": config("REDIS_HOST", default="127.0.0.1"),
+                    "port": config("REDIS_PORT", default=6379),
+                    "password": config("REDIS_PASSWORD", default=""),
                 }
             ],
         },
@@ -167,21 +173,22 @@ CHANNEL_LAYERS = {
 }
 
 TICKS_GROUP_NAME = "ticks"
+BINGO_GROUP_NAME = "bingo"
 
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.TokenAuthentication'
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.BasicAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework.authentication.TokenAuthentication",
     ],
-     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticated",
     ],
 }
 
 CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+    "default": {
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
     }
 }

@@ -39,7 +39,7 @@ def index(request):
 
     return render(
         request,
-        "index.html",
+        "subathonTimer/index.html",
         {
             "time": time,
             "started": started,
@@ -82,7 +82,7 @@ def add_time(request):
         if not request.user.is_authenticated:
             return HttpResponseRedirect("/admin_django/login/?next=/add_time/")
         timer = Timer.objects.last()
-        return render(request, "addTime.html", {"logs": __get_logs(), 'timer_paused': timer.timer_paused})
+        return render(request, "subathonTimer/addTime.html", {"logs": __get_logs(), 'timer_paused': timer.timer_paused})
 
 
 def add_time_success(request):
@@ -91,7 +91,7 @@ def add_time_success(request):
     timer = Timer.objects.last()
     return render(
         request,
-        "addTime.html",
+        "subathonTimer/addTime.html",
         {
             "message": request.GET.get("message", ""),
             "status": request.GET.get("status"),
@@ -138,7 +138,7 @@ def tip_progress(request):
     timer = Timer.objects.last()
     last_goal = timer.get_last_tip_goal()
 
-    return render(request, "tipProgress.html",{"total_tips": timer.timer_total_donations,"last_goal": last_goal.goal_amount})
+    return render(request, "subathonTimer/tipProgress.html",{"total_tips": timer.timer_total_donations,"last_goal": last_goal.goal_amount})
 
 
 class TimerViewSet(viewsets.ModelViewSet):

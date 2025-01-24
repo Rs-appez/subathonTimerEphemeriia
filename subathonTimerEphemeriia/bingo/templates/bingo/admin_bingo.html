@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bingo Admin</title>
+    <link rel='icon' href="{% static 'bingo/images/cacatchu.png' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'bingo/css/bingo.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'bingo/css/admin_bingo.css' %}" />
+</head>
+
+<body>
+        
+    <div class="container">
+                {% include "./bingo_template.html" %}
+            <div>
+                <div>
+                <button id="showBingo" class="button b1">Show Bingo</button>
+                </div>
+
+                <div>
+                <button id="hideBingo" class="button b2">Hide Bingo</button>
+                </div>
+            </div>
+    </div>
+
+</body>
+
+</html>
+
+<script src="{% static 'bingo/js/admin_bingo.js' %}" data-bingo_items="{{ bingo_items_data }}"></script>
