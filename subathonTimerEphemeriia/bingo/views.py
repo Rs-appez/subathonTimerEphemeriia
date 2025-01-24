@@ -264,6 +264,8 @@ class BingoItemUserViewSet(viewsets.ModelViewSet):
             )
         except InvalidTokenError:
             return Response({"status": "Invalid token"}, status=400)
+        except Exception as e:
+            return Response({"status": str(e)}, status=400)
 
     @action(detail=False, methods=["post"], permission_classes=[IsAdminUser])
     def check_item_admin(self, request):
