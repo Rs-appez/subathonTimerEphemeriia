@@ -39,8 +39,8 @@ function getCookie(name) {
 function makeBingoBoard() {
     var board = document.getElementById("bingoCard");
     board.innerHTML = "";
-    length = Math.sqrt(bingo_items.length);
-    board.style.gridTemplateColumns = "repeat(" + length + ", 1fr)";
+    //length = Math.sqrt(bingo_items.length);
+    //board.style.gridTemplateColumns = "repeat(" + length + ", 1fr)";
 
     for (var i = 0; i < bingo_items.length; i++) {
         item = bingo_items[i];
