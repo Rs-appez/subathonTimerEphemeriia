@@ -250,6 +250,7 @@ class BingoItemUserViewSet(viewsets.ModelViewSet):
                 send_chat_message(f"{user.name} has finished the bingo!", token)
 
             bingo_items = BingoItemUser.objects.filter(user=user)
+            print(bingo_items)
 
             return Response(
                 {
