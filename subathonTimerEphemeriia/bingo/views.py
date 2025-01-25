@@ -40,7 +40,7 @@ def index(request):
         else:
             user = user.first()
 
-        bingo_items = BingoItemUser.objects.filter(user=user)
+        bingo_items = BingoItemUser.objects.filter(user=user).order_by("id")
         bingo_lenght = sqrt(len(bingo_items))
 
         return render(
@@ -62,7 +62,7 @@ def admin_bingo(request):
         return HttpResponseRedirect("/admin_django/login/?next=/bingo/admin/")
 
     user = User.objects.get(name="Ephemeriia")
-    bingo_items = BingoItemUser.objects.filter(user=user)
+    bingo_items = BingoItemUser.objects.filter(user=user).order_by("id")
     bingo_lenght = sqrt(len(bingo_items))
 
     return render(
@@ -160,7 +160,7 @@ class BingoViewSet(viewsets.ModelViewSet):
             else:
                 user = user.first()
 
-            bingo_items = BingoItemUser.objects.filter(user=user)
+            bingo_items = BingoItemUser.objects.filter(user=user).order_by("id")
 
             return Response(
                 {"bingo_items": BingoItemUserSerializer(bingo_items, many=True).data}
@@ -321,7 +321,7 @@ class BingoItemUserViewSet(viewsets.ModelViewSet):
 
         bingo_item.check_item()
 
-        bingo_items = BingoItemUser.objects.filter(user=user)
+        bingo_items = BingoItemUser.objects.filter(user=user).order_by("id")
         bingo_items_data = BingoItemUserSerializer(bingo_items, many=True).data
 
         channel_layer = channels.layers.get_channel_layer()
