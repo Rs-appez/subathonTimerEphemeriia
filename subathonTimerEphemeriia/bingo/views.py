@@ -234,6 +234,12 @@ class BingoItemUserViewSet(viewsets.ModelViewSet):
                 return Response({"status": "User not found"}, status=400)
 
             bingo_item_name = request.data.get("bingo_item")
+            bingo_items = BingoItemUser.objects.filter(user=user)
+            print(
+                "0",
+                bingo_items,
+                "\n------------------------------------------------------------",
+            )
             bingo_item = BingoItemUser.objects.filter(
                 bingo_item__name=bingo_item_name,
                 user=user,
