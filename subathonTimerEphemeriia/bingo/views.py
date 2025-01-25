@@ -136,7 +136,10 @@ class BingoViewSet(viewsets.ModelViewSet):
         token = request.data.get("token")
         try:
             decoded_token = validate_jwt_token(token)
-            user_id = decoded_token.get("user_id")
+            print(decoded_token)
+            user_id = decoded_token.get("opaque_user_id")
+
+            print(user_id)
 
             bingo = Bingo.objects.filter(is_active=True).last()
 
@@ -149,6 +152,7 @@ class BingoViewSet(viewsets.ModelViewSet):
                         "Authorization": f"Bearer {get_twitch_access_token()}",
                     },
                 )
+                print(res.json())
                 username = res.json()["data"][0]["login"]
                 user = User.create_with_bingoIteam(
                     name=username, id_twitch=user_id, bingo=bingo
@@ -234,7 +238,7 @@ class BingoItemUserViewSet(viewsets.ModelViewSet):
                 return Response({"status": "User not found"}, status=400)
 
             bingo_item_name = request.data.get("bingo_item")
-            bingo_items = BingoItemUser.objects.filter(user=user)
+            bingo_items = BingoItemUser.objects.filter(user=user).order_by("id")
             print(
                 "0",
                 bingo_items,
@@ -275,7 +279,7 @@ class BingoItemUserViewSet(viewsets.ModelViewSet):
                 bingo_items,
                 "\n------------------------------------------------------------",
             )
-            bingo_items = BingoItemUser.objects.filter(user=user)
+            bingo_items = BingoItemUser.objects.filter(user=user).order_by("id")
             print(
                 "5",
                 bingo_items,
