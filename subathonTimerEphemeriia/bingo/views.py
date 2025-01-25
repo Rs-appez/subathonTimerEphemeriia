@@ -137,7 +137,7 @@ class BingoViewSet(viewsets.ModelViewSet):
         try:
             decoded_token = validate_jwt_token(token)
             print(decoded_token)
-            user_id = decoded_token.get("opaque_user_id")
+            user_id = decoded_token.get("user_id")
 
             print(user_id)
 
