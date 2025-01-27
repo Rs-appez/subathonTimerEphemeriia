@@ -238,12 +238,6 @@ class BingoItemUserViewSet(viewsets.ModelViewSet):
                 return Response({"status": "User not found"}, status=400)
 
             bingo_item_name = request.data.get("bingo_item")
-            bingo_items = BingoItemUser.objects.filter(user=user).order_by("id")
-            print(
-                "0",
-                bingo_items,
-                "\n------------------------------------------------------------",
-            )
             bingo_item = BingoItemUser.objects.filter(
                 bingo_item__name=bingo_item_name,
                 user=user,
@@ -251,40 +245,15 @@ class BingoItemUserViewSet(viewsets.ModelViewSet):
             if not bingo_item:
                 return Response({"status": "Bingo item not found"}, status=400)
 
-            print(
-                "1",
-                bingo_items,
-                "\n------------------------------------------------------------",
-            )
             bingo_item.check_item()
 
-            print(
-                "2",
-                bingo_items,
-                "\n------------------------------------------------------------",
-            )
             bingo_finished = bingo_item.check_bingo()
 
-            print(
-                "3",
-                bingo_items,
-                "\n------------------------------------------------------------",
-            )
             if bingo_finished and not user.has_won:
                 user.win()
                 send_chat_message(f"{user.name} has finished the bingo!", token)
 
-            print(
-                "4",
-                bingo_items,
-                "\n------------------------------------------------------------",
-            )
             bingo_items = BingoItemUser.objects.filter(user=user).order_by("id")
-            print(
-                "5",
-                bingo_items,
-                "\n------------------------------------------------------------",
-            )
 
             return Response(
                 {
