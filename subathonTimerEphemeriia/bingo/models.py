@@ -110,7 +110,7 @@ class BingoItemUser(models.Model):
         return self.is_checked
 
     def check_bingo(self):
-        bingo_items = BingoItemUser.objects.filter(user=self.user)
+        bingo_items = BingoItemUser.objects.filter(user=self.user).order_by("id")
 
         size = int(math.sqrt(len(bingo_items)))
 
