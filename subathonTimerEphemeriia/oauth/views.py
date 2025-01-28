@@ -246,7 +246,7 @@ def authorizeChatbot(request):
         if res.status_code != 200:
             return redirect("error")
 
-        TwitchAuth.objects.create(
+        ChatbotAuth.objects.create(
             access_token=res.json()["access_token"],
             refresh_token=res.json()["refresh_token"],
             expires_in=res.json()["expires_in"],
