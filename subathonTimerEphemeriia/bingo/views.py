@@ -136,10 +136,7 @@ class BingoViewSet(viewsets.ModelViewSet):
         token = request.data.get("token")
         try:
             decoded_token = validate_jwt_token(token)
-            print(decoded_token)
             user_id = decoded_token.get("user_id")
-
-            print(user_id)
 
             bingo = Bingo.objects.filter(is_active=True).last()
 
@@ -152,7 +149,6 @@ class BingoViewSet(viewsets.ModelViewSet):
                         "Authorization": f"Bearer {get_twitch_access_token()}",
                     },
                 )
-                print(res.json())
                 username = res.json()["data"][0]["login"]
                 user = User.create_with_bingoIteam(
                     name=username, id_twitch=user_id, bingo=bingo

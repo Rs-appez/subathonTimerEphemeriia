@@ -32,7 +32,7 @@ def index(request):
         for goal in timer.get_tip_goal():
             tip_images.append(goal.get_image())
             tip_goals_values.append(goal.goal_amount)
-        
+
         for goal in timer.get_sub_goal():
             sub_images.append(goal.get_image())
             sub_goals_values.append(goal.goal_amount)
@@ -49,7 +49,7 @@ def index(request):
             "sub_images": sub_images,
             "sub_goals_values": sub_goals_values,
             "total_subs": timer.timer_total_subscriptions,
-            'timer_paused': timer.timer_paused,
+            "timer_paused": timer.timer_paused,
             "paused_time": timer.display_paused_time(),
         },
     )
@@ -82,7 +82,11 @@ def add_time(request):
         if not request.user.is_authenticated:
             return HttpResponseRedirect("/admin_django/login/?next=/add_time/")
         timer = Timer.objects.last()
-        return render(request, "subathonTimer/addTime.html", {"logs": __get_logs(), 'timer_paused': timer.timer_paused})
+        return render(
+            request,
+            "subathonTimer/addTime.html",
+            {"logs": __get_logs(), "timer_paused": timer.timer_paused},
+        )
 
 
 def add_time_success(request):
@@ -96,7 +100,7 @@ def add_time_success(request):
             "message": request.GET.get("message", ""),
             "status": request.GET.get("status"),
             "logs": __get_logs(),
-            'timer_paused': timer.timer_paused,
+            "timer_paused": timer.timer_paused,
         },
     )
 
@@ -113,10 +117,11 @@ def start_timer(request):
         timer = Timer.objects.last()
         timer.start_timer()
         return redirect("index")
-    
+
+
 def pause_timer(request):
     if not request.user.is_authenticated:
-            return HttpResponseRedirect("/admin_django/login/?next=/add_time/")
+        return HttpResponseRedirect("/admin_django/login/?next=/add_time/")
     if request.method == "POST":
 
         req = HttpRequest()
@@ -126,19 +131,24 @@ def pause_timer(request):
         tvs = TimerViewSet()
         if request.POST.get("pause") == "true":
             res = tvs.pause(req)
-        
+
         else:
             res = tvs.resume(req)
 
         return redirect(
             f"/add_time_success?message={res.data['message']}&status={res.data['status']}"
         )
-    
+
+
 def tip_progress(request):
     timer = Timer.objects.last()
     last_goal = timer.get_last_tip_goal()
 
-    return render(request, "subathonTimer/tipProgress.html",{"total_tips": timer.timer_total_donations,"last_goal": last_goal.goal_amount})
+    return render(
+        request,
+        "subathonTimer/tipProgress.html",
+        {"total_tips": timer.timer_total_donations, "last_goal": last_goal.goal_amount},
+    )
 
 
 class TimerViewSet(viewsets.ModelViewSet):
@@ -164,9 +174,6 @@ class TimerViewSet(viewsets.ModelViewSet):
         id = request.data["id"]
         gifter = request.data["gifter"] if "gifter" in request.data else ""
 
-        print('Start sub :', id)
-
-
         if gifter is None:
             gifter = ""
 
@@ -182,16 +189,14 @@ class TimerViewSet(viewsets.ModelViewSet):
 
             if not timer.new_sub(tier):
                 raise Exception
-            
+
             with self.cache_lock:
 
                 last_gifters = cache.get("last_gifter", [])
 
-                print(f'Cache for {id} :', last_gifters)
-                
                 last_gifter = [x for x in last_gifters if x[0] == gifter]
                 last_gifter = last_gifter[0] if last_gifter else ("", 0, 0)
-                
+
                 if (
                     gifter != ""
                     and gifter == last_gifter[0]
@@ -215,10 +220,6 @@ class TimerViewSet(viewsets.ModelViewSet):
                     last_gifters.append(update_gifter)
 
                 cache.set("last_gifter", last_gifters)
-
-                print(f'Cache after {id} :', last_gifters)
-
-            print('End sub :', id)
 
         except Exception as e:
             return Response({"message": "Invalid tier", "status": 400})
@@ -306,21 +307,21 @@ class TimerViewSet(viewsets.ModelViewSet):
         write_log(f"{username} added time: {time} seconds")
 
         return Response({"message": "Time added", "status": 200})
-    
+
     @action(detail=False, methods=["post"], permission_classes=[IsAdminUser])
     def pause(self, request, pk=None):
         timer = Timer.objects.last()
         user = request.user
-        if timer.pause_timer(user.username) :
+        if timer.pause_timer(user.username):
             timer.send_ticket()
             return Response({"message": "Timer paused", "status": 200})
         return Response({"message": "Timer already paused", "status": 400})
-    
+
     @action(detail=False, methods=["post"], permission_classes=[IsAdminUser])
     def resume(self, request, pk=None):
         timer = Timer.objects.last()
         user = request.user
-        if timer.resume_timer(user.username) :
+        if timer.resume_timer(user.username):
             timer.send_ticket()
             return Response({"message": "Timer resumed", "status": 200})
         return Response({"message": "Timer not paused", "status": 400})
