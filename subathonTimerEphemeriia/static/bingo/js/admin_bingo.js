@@ -65,7 +65,7 @@ function clickCell() {
 
     var csrftoken = getCookie("csrftoken");
 
-    fetch("http://" + backend + "/bingo/api/bingo_item_user/check_item_admin/", {
+    fetch("https://" + backend + "/bingo/api/bingo_item_user/check_item_admin/", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -85,10 +85,9 @@ function clickCell() {
 }
 
 function sendToWidget(show) {
-    console.log(show);
     var csrftoken = getCookie("csrftoken");
 
-    fetch("http://" + backend + "/bingo/api/bingo/display_bingo_widget/", {
+    fetch("https://" + backend + "/bingo/api/bingo/display_bingo_widget/", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
