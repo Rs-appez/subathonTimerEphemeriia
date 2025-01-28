@@ -222,7 +222,7 @@ def authorizeChatbot(request):
                 "client_id": config("TWITCH_APP_ID"),
                 "redirect_uri": redirect_uri,
                 "response_type": "code",
-                "scope": "user:read:chat user:write:chat, user:bot",
+                "scope": "user:read:chat user:write:chat user:bot",
                 "state": state,
             },
         )
