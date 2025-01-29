@@ -35,7 +35,7 @@ class Bot(models.Model):
         token = self.get_token()
 
         res = requests.post(
-            f"https://api.twitch.tv/helix/chat/message",
+            f"https://api.twitch.tv/helix/chat/messages",
             headers={
                 "Content-Type": "application/json",
                 "Client-ID": config("TWITCH_APP_ID"),
