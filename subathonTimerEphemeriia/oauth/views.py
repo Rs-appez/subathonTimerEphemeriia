@@ -8,6 +8,8 @@ import requests
 from decouple import config
 import uuid
 
+from subathonTimerEphemeriia.chatbot.models import Bot
+
 from .models import TwitchAuth, StreamlabsAuth, ChatbotAuth
 from .serializers import (
     TwitchAuthSerializer,
@@ -246,7 +248,20 @@ def authorizeChatbot(request):
         if res.status_code != 200:
             return redirect("error")
 
+        res2 = requests.get(
+            "https://id.twitch.tv/oauth2/validate",
+            headers={"Authorization": f"OAuth {res.json()['access_token']}"},
+        )
+
+        if res2.status_code != 200:
+            chatbot_name = "Chatbot"
+
+        else:
+            chatbot_name = res2.json()["login"]
+            Bot.objects.create(name=chatbot_name)
+
         TwitchAuth.objects.create(
+            chatbot_name=chatbot_name,
             access_token=res.json()["access_token"],
             refresh_token=res.json()["refresh_token"],
             expires_in=res.json()["expires_in"],
@@ -298,15 +313,6 @@ class ChatbotAuthView(viewsets.ModelViewSet):
     permission_classes = [IsAdminUser]
     queryset = ChatbotAuth.objects.all()
     serializer_class = ChatbotAuthSerializer
-
-    @action(detail=False, methods=["get"], permission_classes=[IsAdminUser])
-    def first(self, request, pk=None):
-        ca = ChatbotAuth.objects.first()
-        if ca:
-            serializer = self.get_serializer(ca)
-            return Response(serializer.data)
-        else:
-            return Response({"error": "No Chatbot Auth"})
 
     @action(detail=True, methods=["post"], permission_classes=[IsAdminUser])
     def refresh(self, request, pk=None):
