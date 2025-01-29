@@ -57,7 +57,7 @@ class StreamlabsAuth(models.Model):
 
 
 class ChatbotAuth(models.Model):
-    bot_name = models.CharField(max_length=255, default="Chatbot")
+    bot_name = models.CharField(max_length=255)
     access_token = models.CharField(max_length=2083)
     refresh_token = models.CharField(max_length=2083)
     expires_in = models.IntegerField()
