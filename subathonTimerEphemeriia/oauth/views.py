@@ -8,7 +8,7 @@ import requests
 from decouple import config
 import uuid
 
-from subathonTimerEphemeriia.chatbot.models import Bot
+from chatbot.models import Bot
 
 from .models import TwitchAuth, StreamlabsAuth, ChatbotAuth
 from .serializers import (
