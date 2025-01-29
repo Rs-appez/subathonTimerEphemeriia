@@ -4,6 +4,7 @@ from rest_framework.decorators import action
 from rest_framework.permissions import IsAdminUser, AllowAny
 from rest_framework.response import Response
 
+from chatbot.models import Bot
 from .models import Bingo, BingoItem, BingoItemUser, User
 from .serializers import (
     BingoSerializer,
@@ -12,7 +13,7 @@ from .serializers import (
     UserSerializer,
 )
 
-from .utils import validate_jwt_token, get_twitch_access_token, send_chat_message
+from .utils import validate_jwt_token, get_twitch_access_token
 from jwt import ExpiredSignatureError, InvalidTokenError
 
 import requests
@@ -247,7 +248,11 @@ class BingoItemUserViewSet(viewsets.ModelViewSet):
 
             if bingo_finished and not user.has_won:
                 user.win()
-                send_chat_message(f"{user.name} has finished the bingo!", token)
+                bot = Bot.objects.get(name="appez_ricube")
+                bot.send_message(
+                    f"ephemerGG {user.name} has finished the bingo! ephemerGG",
+                    decoded_token.get("channel_id"),
+                )
 
             bingo_items = BingoItemUser.objects.filter(user=user).order_by("id")
 
