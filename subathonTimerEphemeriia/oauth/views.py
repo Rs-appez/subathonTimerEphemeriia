@@ -261,7 +261,7 @@ def authorizeChatbot(request):
             Bot.objects.create(name=chatbot_name)
 
         ChatbotAuth.objects.create(
-            chatbot_name=chatbot_name,
+            bot_name=chatbot_name,
             access_token=res.json()["access_token"],
             refresh_token=res.json()["refresh_token"],
             expires_in=res.json()["expires_in"],
