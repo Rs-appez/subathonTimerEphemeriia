@@ -2,7 +2,7 @@ from django.db import models
 import requests
 from decouple import config
 
-from ..oauth.models import ChatbotAuth
+from subathonTimerEphemeriia.oauth.models import ChatbotAuth
 
 
 # Create your models here.
