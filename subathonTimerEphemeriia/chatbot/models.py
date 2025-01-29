@@ -8,6 +8,7 @@ from oauth.models import ChatbotAuth
 # Create your models here.
 class Bot(models.Model):
     name = models.CharField(max_length=255)
+    twitch_id = models.CharField(max_length=255)
 
     def __str__(self):
         return str(self.name)
@@ -30,20 +31,20 @@ class Bot(models.Model):
 
             return token
 
-    def send_message(self, message):
+    def send_message(self, message, broadcaster_id):
         token = self.get_token()
 
         res = requests.post(
-            f"https://api.twitch.tv/helix/chat/messages",
+            f"https://api.twitch.tv/helix/chat/message",
             headers={
                 "Content-Type": "application/json",
                 "Client-ID": config("TWITCH_APP_ID"),
                 "Authorization": f"Bearer {token}",
             },
             params={
-                "text": message,
-                "extension_id": config("TWITCH_APP_ID"),
-                "extension_version": "0.0.1",
+                "message": message,
+                "sender_id": self.twitch_id,
+                "broadcaster_id": broadcaster_id,
             },
         )
 

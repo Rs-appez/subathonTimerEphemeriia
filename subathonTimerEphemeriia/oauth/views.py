@@ -255,10 +255,12 @@ def authorizeChatbot(request):
 
         if res2.status_code != 200:
             chatbot_name = "Chatbot"
+            twitch_id = None
 
         else:
             chatbot_name = res2.json()["login"]
-            Bot.objects.create(name=chatbot_name)
+            twitch_id = res2.json()["user_id"]
+            Bot.objects.create(name=chatbot_name, twitch_id=twitch_id)
 
         ChatbotAuth.objects.create(
             bot_name=chatbot_name,
