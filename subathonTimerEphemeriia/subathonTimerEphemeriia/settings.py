@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     "subathonTimer",
     "oauth",
     "bingo",
+    "chatbot",
     "channels",
     "corsheaders",
 ]
