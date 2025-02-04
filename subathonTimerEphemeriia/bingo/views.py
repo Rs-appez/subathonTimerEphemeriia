@@ -28,7 +28,7 @@ import channels.layers
 
 
 def index(request):
-    bingo = Bingo.objects.last()
+    bingo = Bingo.objects.filter(is_active=True).last()
 
     user_name = request.GET.get("user")
     show_bingo = request.GET.get("show") != "false"
