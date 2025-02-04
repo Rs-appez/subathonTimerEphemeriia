@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "whitenoise.runserver_nostatic",
     "rest_framework",
     "rest_framework.authtoken",
+    "administrative",
     "subathonTimer",
     "oauth",
     "bingo",
