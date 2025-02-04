@@ -58,7 +58,7 @@ def index(request):
 def add_time(request):
     if request.method == "POST":
         if not request.user.is_authenticated:
-            return HttpResponseRedirect("/admin_django/login/?next=/add_time")
+            return HttpResponseRedirect("/admin_django/login/?next=/timer/add_time")
 
         user = request.user
 
@@ -91,7 +91,7 @@ def add_time(request):
 
 def add_time_success(request):
     if not request.user.is_authenticated:
-        return HttpResponseRedirect("/admin_django/login/?next=/add_time/")
+        return HttpResponseRedirect("/admin_django/login/?next=/timer/add_time/")
     timer = Timer.objects.last()
     return render(
         request,
@@ -121,7 +121,7 @@ def start_timer(request):
 
 def pause_timer(request):
     if not request.user.is_authenticated:
-        return HttpResponseRedirect("/admin_django/login/?next=/add_time/")
+        return HttpResponseRedirect("/admin_django/login/?next=/timer/add_time/")
     if request.method == "POST":
 
         req = HttpRequest()
