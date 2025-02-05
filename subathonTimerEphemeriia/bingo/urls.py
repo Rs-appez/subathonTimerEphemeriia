@@ -1,7 +1,7 @@
 from django.urls import path, include
 
 from .views import index, admin, activate_item, admin_bingo, reset_bingo
-from .views import BingoViewSet, BingoItemViewSet, BingoItemUserViewSet, UserViewSet
+from .views_api import BingoViewSet, BingoItemViewSet, BingoItemUserViewSet, UserViewSet
 
 from rest_framework.routers import DefaultRouter
 
