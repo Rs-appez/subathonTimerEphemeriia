@@ -5,7 +5,6 @@ import math
 import bleach
 
 
-# Create your models here.
 class Bingo(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
@@ -22,7 +21,7 @@ class Bingo(models.Model):
         for bingo_item in bingo_items:
             bingo_item.desactivate_item()
         for user in users:
-            user.reset_all_items()
+            user.reset_all_items(self)
 
 
 class BingoItem(models.Model):
@@ -75,16 +74,29 @@ class User(models.Model):
 
         return user
 
+    def get_bingo_items(self, bingo):
+
+        bingo_items = BingoItemUser.objects.filter(
+            user=self, bingo_item__bingo=bingo
+        ).order_by("id")
+
+        if not bingo_items:
+            self.get_new_items(bingo)
+            bingo_items = BingoItemUser.objects.filter(
+                user=self, bingo_item__bingo=bingo
+            ).order_by("id")
+
+        return bingo_items
+
     def get_new_items(self, bingo):
         bingo_default_items = BingoItem.objects.filter(bingo=bingo).order_by("?")
-        BingoItemUser.objects.filter(user=self).delete()
+        BingoItemUser.objects.filter(user=self, bingo_item__bingo=bingo).delete()
         for bingo_item in bingo_default_items:
             BingoItemUser.objects.create(user=self, bingo_item=bingo_item)
         self.save()
 
-    def reset_all_items(self):
-        bingo = Bingo.objects.filter(is_active=True).last()
-        self.get_new_items(bingo)
+    def reset_all_items(self, bingo):
+        BingoItemUser.objects.filter(user=self, bingo_item__bingo=bingo).delete()
 
         self.has_won = False
         self.save()
