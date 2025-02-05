@@ -5,10 +5,22 @@ body {
     /* Lighter text color for better contrast */
 }
 
+.active-bingo {
+    border: 2px solid #e0e0e0;
+    /* Green border */
+    border-radius: 10px;
+    /* Rounded corners */
+    padding: 10px;
+    /* Some padding */
+    margin: 10px 0;
+    /* Some margin */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow */
+}
+
 .item {
     display: grid;
-    grid-template-columns: repeat(auto-fill,
-            minmax(15%, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(15%, 1fr));
     /* Adjust the number of columns as needed */
     padding: 10px;
     border-bottom: 1px solid #444;
@@ -21,6 +33,39 @@ body {
 .item p {
     margin: 0;
     text-align: left;
+    align-self: center;
+}
+
+.div-clickable {
+    cursor: pointer;
+    text-decoration: none;
+    /* Remove underline from links */
+    color: inherit;
+    /* Inherit text color */
+}
+
+button {
+    background-color: #5a4bc4;
+    /* Green background */
+    border: none;
+    /* Remove borders */
+    color: #e0e0e0;
+    /* White text */
+    padding: 5px 20px;
+    /* Some padding */
+    text-decoration: none;
+    /* Remove underline */
+    margin: 4px 2px;
+    /* Add some margin */
+    cursor: pointer;
+    /* Add a pointer cursor on hover */
+    border-radius: 8px;
+    /* Rounded corners */
+}
+
+button:hover {
+    background-color: #4938bf;
+    /* Darker green on hover */
 }
 
 .item.alternate {
@@ -42,4 +87,15 @@ body {
 .item:hover {
     background-color: rgba(255, 255, 255, 0.1);
     /* Slightly lighter on hover */
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.btn-group {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
 }

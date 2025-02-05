@@ -9,13 +9,44 @@
 </head>
 
 <body>
-    {% for bingo in bingos %}
-    <div class="bingo">
-        <h2>{{ bingo.name }}</h2>
-        <p>{{ bingo.description }}</p>
-        <a href="{% url 'admin_arg' bingo.id %}">Items</a>
-    </div>
-    {% endfor %}
+
+    <div>
+        <h1>Active Bingo</h1>
+        <div class="active-bingo">
+            <h2>{{ active_bingo.name }}</h2>
+            <p>{{ active_bingo.description }}</p>
+
+        </div>
+        <div>
+            <h1>List Bingos</h1>
+
+            <div class="item">
+                <p class="bold">Name</p>
+                <p class="bold">Description</p>
+                <p class="bold">Items</p>
+                <p class="bold">Activate</p>
+                <p class="bold">Reset</p>
+            </div>
+
+            {% for bingo in bingos %}
+            <a href="{% url 'admin_arg' bingo.id %}" class="div-clickable">
+                <div class="item {% if forloop.counter|divisibleby:2 %}alternate{% endif %}">
+                    <p class="bold">{{ bingo.name }}</p>
+                    <p>{{ bingo.description }}</p>
+                    <button type="button">Items</button>
+                    <form action="{% url 'activate_bingo' bingo.id %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit">Activate</button>
+                    </form>
+                    <form action="{% url 'reset_bingo' bingo.id %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit">Reset</button>
+                    </form>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+
 
 </body>
 
