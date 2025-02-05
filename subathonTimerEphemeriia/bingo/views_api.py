@@ -146,6 +146,7 @@ class BingoItemUserViewSet(viewsets.ModelViewSet):
                 bingo_item__bingo=bingo,
                 user=user,
             ).first()
+            bingo_finished = False
             if bingo_item:
                 bingo_item.check_item()
 
