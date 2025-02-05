@@ -92,3 +92,10 @@ button:hover {
 .bold {
     font-weight: bold;
 }
+
+.btn-group {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}

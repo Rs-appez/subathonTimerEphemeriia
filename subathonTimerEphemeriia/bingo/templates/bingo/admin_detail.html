@@ -34,6 +34,7 @@
         {% endfor %}
     </div>
 
+        <div class='btn-group'>
     <div style="padding: 5px">
         <form action="/bingo/reset/{{ bingo.id }}/" method="POST">
             {% csrf_token %}
@@ -46,6 +47,8 @@
             <button>Activate bingo</button>
         </form>
     </div>
+    </div>
+
 </body>
 
 </html>
