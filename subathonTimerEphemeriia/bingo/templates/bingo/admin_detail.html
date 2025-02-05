@@ -38,6 +38,12 @@
             <button>Reset all</button>
         </form>
     </div>
+    <div style="padding: 5px">
+        <form action="/bingo/activate/{{ bingo.id }}/" method="POST">
+            {% csrf_token %}
+            <button>Activate bingo</button>
+        </form>
+    </div>
 </body>
 
 </html>
