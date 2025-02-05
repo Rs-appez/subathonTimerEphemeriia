@@ -25,6 +25,7 @@
                 <p class="bold">Description</p>
                 <p class="bold">Items</p>
                 <p class="bold">Activate</p>
+                <p class="bold">Reset</p>
             </div>
 
             {% for bingo in bingos %}
@@ -33,6 +34,7 @@
                 <p>{{ bingo.description }}</p>
                 <a href="{% url 'admin_arg' bingo.id %}">Items</a>
                 <a href="{% url 'activate_bingo' bingo.id %}">Activate</a>
+                <a href="{% url 'reset_bingo' bingo.id %}">Reset</a>
             </div>
             {% endfor %}
         </div>

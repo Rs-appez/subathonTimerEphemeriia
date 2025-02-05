@@ -102,7 +102,7 @@ def reset_bingo(request, bingo_id):
     bingo = Bingo.objects.get(id=bingo_id)
     bingo.reset_all_items()
 
-    return HttpResponseRedirect(f"/bingo/admin/{bingo_id}/")
+    return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
 
 
 def activate_bingo(request, bingo_id):
