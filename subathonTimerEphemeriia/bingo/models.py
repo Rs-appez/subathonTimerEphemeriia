@@ -23,6 +23,20 @@ class Bingo(models.Model):
         for user in users:
             user.reset_all_items(self)
 
+    def activate_bingo(self):
+
+        old_bingos = Bingo.objects.filter(is_active=True)
+        for bingo in old_bingos:
+            bingo.desactivate_bingo()
+
+        self.is_active = True
+        self.save()
+
+    def desactivate_bingo(self):
+        self.is_active = False
+        self.save()
+        return self.is_active
+
 
 class BingoItem(models.Model):
     name = models.CharField(max_length=100)

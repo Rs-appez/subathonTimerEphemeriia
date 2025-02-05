@@ -100,3 +100,13 @@ def reset_bingo(request, bingo_id):
     bingo.reset_all_items()
 
     return HttpResponseRedirect(f"/bingo/admin/{bingo_id}/")
+
+
+def activate_bingo(request, bingo_id):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect("/admin_django/login/?next=/bingo/admin/")
+
+    bingo = Bingo.objects.get(id=bingo_id)
+    bingo.activate_bingo()
+
+    return HttpResponseRedirect(f"/bingo/admin/{bingo_id}/")

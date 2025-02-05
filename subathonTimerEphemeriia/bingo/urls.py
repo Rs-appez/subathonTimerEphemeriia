@@ -1,6 +1,6 @@
 from django.urls import path, include
 
-from .views import index, admin, activate_item, admin_bingo, reset_bingo
+from .views import activate_bingo, index, admin, activate_item, admin_bingo, reset_bingo
 from .views_api import BingoViewSet, BingoItemViewSet, BingoItemUserViewSet, UserViewSet
 
 from rest_framework.routers import DefaultRouter
@@ -15,6 +15,7 @@ urlpatterns = [
     path("api/", include(router.urls)),
     path("", index, name="index"),
     path("reset/<int:bingo_id>/", reset_bingo, name="reset_bingo"),
+    path("activate/<int:bingo_id>/", activate_bingo, name="activate_bingo"),
     path("admin/", admin, name="admin"),
     path("admin/bingo/", admin_bingo, name="admin_bingo"),
     path("admin/<int:bingo_id>/", admin, name="admin_arg"),
