@@ -66,7 +66,8 @@ class BingoViewSet(viewsets.ModelViewSet):
             bingo_items = user.get_bingo_items(bingo)
 
             return Response(
-                {"bingo_items": BingoItemUserSerializer(bingo_items, many=True).data}
+                {"bingo_items": BingoItemUserSerializer(
+                    bingo_items, many=True).data}
             )
 
         except ExpiredSignatureError:
@@ -192,7 +193,8 @@ class BingoItemUserViewSet(viewsets.ModelViewSet):
         if not bingo_item:
             return Response({"status": "Bingo item not found"}, status=400)
 
-        bingo_item_original = BingoItem.objects.filter(name=bingo_item_name).first()
+        bingo_item_original = BingoItem.objects.filter(
+            name=bingo_item_name).first()
         bingo_item_original.activate_item()
 
         bingo_item.check_item()
@@ -247,7 +249,8 @@ class UserViewSet(viewsets.ModelViewSet):
         )
         id_twitch = res.json()["data"][0]["id"]
 
-        user = User.create_with_bingoIteam(name=name, id_twitch=id_twitch, bingo=bingo)
+        user = User.create_with_bingoIteam(
+            name=name, id_twitch=id_twitch, bingo=bingo)
 
         return Response({"status": "User created", "user": UserSerializer(user).data})
 
