@@ -5,10 +5,22 @@ body {
     /* Lighter text color for better contrast */
 }
 
+.active-bingo {
+    border: 2px solid #e0e0e0;
+    /* Green border */
+    border-radius: 10px;
+    /* Rounded corners */
+    padding: 10px;
+    /* Some padding */
+    margin: 10px 0;
+    /* Some margin */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow */
+}
+
 .item {
     display: grid;
-    grid-template-columns: repeat(auto-fill,
-            minmax(15%, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(15%, 1fr));
     /* Adjust the number of columns as needed */
     padding: 10px;
     border-bottom: 1px solid #444;
@@ -42,4 +54,8 @@ body {
 .item:hover {
     background-color: rgba(255, 255, 255, 0.1);
     /* Slightly lighter on hover */
+}
+
+.bold {
+    font-weight: bold;
 }

@@ -78,8 +78,11 @@ def admin(request, bingo_id=None):
         )
 
     bingos = Bingo.objects.all()
+    active_bingo = Bingo.objects.filter(is_active=True).last()
 
-    return render(request, "bingo/admin.html", {"bingos": bingos})
+    return render(
+        request, "bingo/admin.html", {"bingos": bingos, "active_bingo": active_bingo}
+    )
 
 
 def activate_item(request, bingo_id, item_id):
@@ -109,4 +112,4 @@ def activate_bingo(request, bingo_id):
     bingo = Bingo.objects.get(id=bingo_id)
     bingo.activate_bingo()
 
-    return HttpResponseRedirect(f"/bingo/admin/{bingo_id}/")
+    return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
