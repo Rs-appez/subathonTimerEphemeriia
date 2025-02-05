@@ -91,7 +91,9 @@ def admin(request, bingo_id=None):
         bingo_items = BingoItem.objects.filter(bingo=bingo)
 
         return render(
-            request, "bingo/admin.html", {"bingo": bingo, "bingo_items": bingo_items}
+            request,
+            "bingo/admin_detail.html",
+            {"bingo": bingo, "bingo_items": bingo_items},
         )
 
     bingos = Bingo.objects.all()
