@@ -24,7 +24,6 @@ class Bingo(models.Model):
             user.reset_all_items(self)
 
     def activate_bingo(self):
-
         old_bingos = Bingo.objects.filter(is_active=True)
         for bingo in old_bingos:
             bingo.desactivate_bingo()
@@ -47,7 +46,7 @@ class BingoItem(models.Model):
         return self.name
 
     def save(self, **kwargs):
-        self.name = bleach.clean(self.name).upper()
+        self.name = bleach.clean(self.name, tags={"br"}).upper()
         return super().save(**kwargs)
 
     def activate_item(self):
@@ -89,7 +88,6 @@ class User(models.Model):
         return user
 
     def get_bingo_items(self, bingo):
-
         bingo_items = BingoItemUser.objects.filter(
             user=self, bingo_item__bingo=bingo
         ).order_by("id")
@@ -129,7 +127,6 @@ class BingoItemUser(models.Model):
         return f"{self.bingo_item}"
 
     def check_item(self):
-
         if not self.is_checked:
             self.is_checked = self.bingo_item.is_active
             self.save()

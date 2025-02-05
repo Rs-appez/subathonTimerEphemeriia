@@ -2,7 +2,7 @@
     <div class="bingo-card" id="bingoCard">
         {% for item in bingo_items %}
         <div class="bingo-cell {% if item.is_checked %}bingo-cell-checked{% endif %}">
-            {{ item }}
+            {{ item | safe }}
         </div>
         {% endfor %}
     </div>
