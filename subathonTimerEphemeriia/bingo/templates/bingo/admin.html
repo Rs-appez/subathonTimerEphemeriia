@@ -29,13 +29,21 @@
             </div>
 
             {% for bingo in bingos %}
-            <div class="item {% if forloop.counter|divisibleby:2 %}alternate{% endif %}">
-                <p class="bold">{{ bingo.name }}</p>
-                <p>{{ bingo.description }}</p>
-                <a href="{% url 'admin_arg' bingo.id %}">Items</a>
-                <a href="{% url 'activate_bingo' bingo.id %}">Activate</a>
-                <a href="{% url 'reset_bingo' bingo.id %}">Reset</a>
-            </div>
+            <a href="{% url 'admin_arg' bingo.id %}" class="div-clickable">
+                <div class="item {% if forloop.counter|divisibleby:2 %}alternate{% endif %}">
+                    <p class="bold">{{ bingo.name }}</p>
+                    <p>{{ bingo.description }}</p>
+                    <button type="button">Items</button>
+                    <form action="{% url 'activate_bingo' bingo.id %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit">Activate</button>
+                    </form>
+                    <form action="{% url 'reset_bingo' bingo.id %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit">Reset</button>
+                    </form>
+                </div>
+            </a>
             {% endfor %}
         </div>
 

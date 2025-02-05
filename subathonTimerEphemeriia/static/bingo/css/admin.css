@@ -33,6 +33,39 @@ body {
 .item p {
     margin: 0;
     text-align: left;
+    align-self: center;
+}
+
+.div-clickable {
+    cursor: pointer;
+    text-decoration: none;
+    /* Remove underline from links */
+    color: inherit;
+    /* Inherit text color */
+}
+
+button {
+    background-color: #5a4bc4;
+    /* Green background */
+    border: none;
+    /* Remove borders */
+    color: #e0e0e0;
+    /* White text */
+    padding: 5px 20px;
+    /* Some padding */
+    text-decoration: none;
+    /* Remove underline */
+    margin: 4px 2px;
+    /* Add some margin */
+    cursor: pointer;
+    /* Add a pointer cursor on hover */
+    border-radius: 8px;
+    /* Rounded corners */
+}
+
+button:hover {
+    background-color: #4938bf;
+    /* Darker green on hover */
 }
 
 .item.alternate {
