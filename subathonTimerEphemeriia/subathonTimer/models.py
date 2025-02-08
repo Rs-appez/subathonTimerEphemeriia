@@ -24,6 +24,7 @@ class BonusTime(models.Model):
 
 
 class TipGoal(models.Model):
+    timer = models.ForeignKey("Timer", on_delete=models.CASCADE)
     goal_name = models.CharField(max_length=100)
     goal_amount = models.FloatField()
     goal_image = models.ImageField(
@@ -38,6 +39,7 @@ class TipGoal(models.Model):
 
 
 class SubGoal(models.Model):
+    timer = models.ForeignKey("Timer", on_delete=models.CASCADE)
     goal_name = models.CharField(max_length=100)
     goal_amount = models.FloatField()
     goal_image = models.ImageField(
@@ -139,17 +141,21 @@ class Timer(models.Model):
 
     def get_tip_goal(self):
         return (
-            TipGoal.objects.filter(goal_amount__gt=self.timer_total_donations)
+            TipGoal.objects.filter(
+                goal_amount__gt=self.timer_total_donations, timer=self
+            )
             .all()
             .order_by("goal_amount")
         )
 
     def get_last_tip_goal(self):
-        return TipGoal.objects.all().order_by("goal_amount").last()
+        return TipGoal.objects.filter(timer=self).all().order_by("goal_amount").last()
 
     def get_sub_goal(self):
         return (
-            SubGoal.objects.filter(goal_amount__gt=self.timer_total_subscriptions)
+            SubGoal.objects.filter(
+                goal_amount__gt=self.timer_total_subscriptions, timer=self
+            )
             .all()
             .order_by("goal_amount")
         )
