@@ -75,12 +75,12 @@ def add_time(request):
         res = tvs.add_time(req)
 
         return redirect(
-            f"/add_time_success?message={res.data['message']}&status={res.data['status']}"
+            f"/timer/add_time_success?message={res.data['message']}&status={res.data['status']}"
         )
 
     elif request.method == "GET":
         if not request.user.is_authenticated:
-            return HttpResponseRedirect("/admin_django/login/?next=/add_time/")
+            return HttpResponseRedirect("/admin_django/login/?next=/timer/add_time/")
         timer = Timer.objects.last()
         return render(
             request,
@@ -123,7 +123,6 @@ def pause_timer(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect("/admin_django/login/?next=/timer/add_time/")
     if request.method == "POST":
-
         req = HttpRequest()
         req.method = "POST"
         req.user = request.user
@@ -136,7 +135,7 @@ def pause_timer(request):
             res = tvs.resume(req)
 
         return redirect(
-            f"/add_time_success?message={res.data['message']}&status={res.data['status']}"
+            f"/timer/add_time_success?message={res.data['message']}&status={res.data['status']}"
         )
 
 
@@ -191,7 +190,6 @@ class TimerViewSet(viewsets.ModelViewSet):
                 raise Exception
 
             with self.cache_lock:
-
                 last_gifters = cache.get("last_gifter", [])
 
                 last_gifter = [x for x in last_gifters if x[0] == gifter]
