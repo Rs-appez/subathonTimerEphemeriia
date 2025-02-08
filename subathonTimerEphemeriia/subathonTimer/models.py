@@ -94,7 +94,7 @@ class Timer(models.Model):
             return 0
 
         return self.timer_end.timestamp()
-    
+
     def display_paused_time(self):
         if self.paused_time is None:
             return 0
@@ -111,8 +111,7 @@ class Timer(models.Model):
 
         write_log("Subathon started")
 
-    def pause_timer(self, user : str):
-
+    def pause_timer(self, user: str):
         if self.timer_paused:
             return False
 
@@ -124,7 +123,7 @@ class Timer(models.Model):
 
         return True
 
-    def resume_timer(self, user : str):
+    def resume_timer(self, user: str):
         if self.paused_time is None:
             return False
 
@@ -144,14 +143,9 @@ class Timer(models.Model):
             .all()
             .order_by("goal_amount")
         )
-    
+
     def get_last_tip_goal(self):
-        return (
-            TipGoal.objects
-            .all()
-            .order_by("goal_amount")
-            .last()
-        )
+        return TipGoal.objects.all().order_by("goal_amount").last()
 
     def get_sub_goal(self):
         return (
