@@ -1,78 +1,80 @@
 @font-face {
-  font-family: "Century";
-  src: url('/static/subathonTimer/fonts/century.ttf') format("truetype");
+    font-family: "Century";
+    src: url("/static/subathonTimer/fonts/century.ttf") format("truetype");
 }
 
 .container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .time-container {
-  display: flex;
-  justify-content: left;
-  width: 100%;
+    display: flex;
+    justify-content: left;
+    width: 100%;
 }
 
 span.time {
-  font-size: 70px;
-  text-align: center;
-  /* border: 2px solid black; */
-  text-shadow: 3px 3px 5px #000000;
+    font-size: 70px;
+    text-align: center;
+    /* border: 2px solid black; */
+    text-shadow: 3px 3px 5px #000000;
 }
 
 body {
-  /* background-color: #5b00d3; */
+    /* background-color: #5b00d3; */
 }
 
 .tip-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 42%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 42%;
 }
 
 .image-column {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  overflow: hidden;
-  height: 450px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow: hidden;
+    height: 450px;
 }
+
 .image-column-sub {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  overflow: hidden;
-  height: 150px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow: hidden;
+    height: 450px;
 }
 
 .moving-image {
-  animation: moveVertical 2s ease-in;
+    animation: moveVertical 2s ease-in;
 }
 
 .number {
-  font-family: "Century";
-  color: white;
-  text-shadow: 3px 3px 5px #000000;
+    font-family: "Century";
+    color: white;
+    text-shadow: 3px 3px 5px #000000;
 }
 
-
 @keyframes moveVertical {
-  0% {
-    transform: translateY(0);
-  }
+    0% {
+        transform: translateY(0);
+    }
 
-  100% {
-    transform: translateY(-100%);
-  }
+    100% {
+        transform: translateY(-100%);
+    }
 }
 
 .tip_image_to_move,
 .sub_image_to_move {
-  height: 150px; /* Set the desired height */
-  object-fit: cover; /* Crop the image to fit the dimensions */
-  object-position: top; /* Position the image to crop from the bottom */
-
+    height: 150px;
+    /* Set the desired height */
+    object-fit: cover;
+    /* Crop the image to fit the dimensions */
+    object-position: top;
+    /* Position the image to crop from the bottom */
 }
