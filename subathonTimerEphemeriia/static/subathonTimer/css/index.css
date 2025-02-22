@@ -49,6 +49,13 @@ body {
     height: 450px;
 }
 
+.image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+}
+
 .moving-image {
     animation: moveVertical 2s ease-in;
 }

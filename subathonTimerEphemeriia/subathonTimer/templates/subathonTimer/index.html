@@ -22,20 +22,24 @@
       <div class="tip-wrapper">
         <div class="image-column-sub">
           {% for tip_image in tip_images %}
+        <div id='tip_image' class="tip_image_to_move">
           <img
             src="{% static tip_image %}"
             alt="Image"
-            class="tip_image_to_move"
+            class="image"
           />
+        </div>
           {% endfor %}
         </div>
         <div class="image-column">
           {% for sub_image in sub_images %}
+          <div id='sub_image' class="sub_image_to_move">
           <img
             src="{% static sub_image %}"
             alt="Image"
-            class="sub_image_to_move"
+            class="image"
           />
+                    </div>
           {% endfor %}
         </div>
       </div>
