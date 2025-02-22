@@ -24,6 +24,10 @@
           {% for tip_image in tip_images %}
         <div id='tip_image' class="tip_image_to_move">
             <div class='square'>
+                    <img
+                        class="validate"
+                        src="{% static 'subathonTimer/images/validation.png' %}"
+                    />
             </div>
           <img
             src="{% static tip_image %}"
