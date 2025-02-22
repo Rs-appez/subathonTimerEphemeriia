@@ -50,10 +50,21 @@ body {
 }
 
 .image {
+    display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: top;
+}
+
+.square {
+    box-sizing: border-box;
+    position: absolute;
+    top: 57px;
+    left: 75px;
+    width: 60px;
+    height: 60px;
+    border: 5px solid #5b00d3;
 }
 
 .moving-image {
@@ -78,10 +89,7 @@ body {
 
 .tip_image_to_move,
 .sub_image_to_move {
+    position: relative;
+    display: inline-block;
     height: 150px;
-    /* Set the desired height */
-    object-fit: cover;
-    /* Crop the image to fit the dimensions */
-    object-position: top;
-    /* Position the image to crop from the bottom */
 }
