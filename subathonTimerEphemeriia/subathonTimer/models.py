@@ -140,13 +140,17 @@ class Timer(models.Model):
         return True
 
     def get_tip_goal(self):
-        return (
-            TipGoal.objects.filter(
-                goal_amount__gt=self.timer_total_donations, timer=self
-            )
-            .all()
-            .order_by("goal_amount")
+        tip_goals = list(
+            TipGoal.objects.filter(timer=self).all().order_by("goal_amount")
         )
+
+        grouped_goals = [tip_goals[i : i + 3] for i in range(0, len(tip_goals), 3)]
+        goals = []
+        for goal in grouped_goals:
+            if goal[-1].goal_amount > self.timer_total_donations:
+                goals = goal
+                break
+        return goals
 
     def get_last_tip_goal(self):
         return TipGoal.objects.filter(timer=self).all().order_by("goal_amount").last()
