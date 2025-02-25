@@ -30,6 +30,7 @@ class TipGoal(models.Model):
     goal_image = models.ImageField(
         upload_to="subathonTimerEphemeriia/static/subathonTimer/images/tips/"
     )
+    validated = False
 
     def __str__(self):
         return self.goal_name
@@ -146,12 +147,15 @@ class Timer(models.Model):
 
         grouped_goals = [tip_goals[i : i + 3] for i in range(0, len(tip_goals), 3)]
         goals = []
-        for goal in grouped_goals:
+        for i, goal in enumerate(grouped_goals):
             if goal[-1].goal_amount > self.timer_total_donations:
-                goals = goal
+                goals = tip_goals[i * 3 :]
                 break
         for goal in goals:
-            goal.validated = goal.goal_amount <= self.timer_total_donations
+            if goal.goal_amount <= self.timer_total_donations:
+                goal.validated = True
+            else:
+                break
 
         return goals
 
