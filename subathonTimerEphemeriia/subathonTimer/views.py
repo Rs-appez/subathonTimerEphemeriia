@@ -17,11 +17,11 @@ import threading
 
 def index(request):
     timer = Timer.objects.last()
-    tip_images = []
     tip_goals_values = []
+    tips = []
 
-    sub_images = []
     sub_goals_values = []
+    subs = []
 
     if timer is None:
         time = "no timer"
@@ -29,12 +29,13 @@ def index(request):
         time = timer.display_time()
         started = timer.timer_active
 
-        for goal in timer.get_tip_goal():
-            tip_images.append(goal.get_image())
+        tips = timer.get_tip_goal()
+        subs = timer.get_sub_goal()
+
+        for goal in tips:
             tip_goals_values.append(goal.goal_amount)
 
-        for goal in timer.get_sub_goal():
-            sub_images.append(goal.get_image())
+        for goal in subs:
             sub_goals_values.append(goal.goal_amount)
 
     return render(
@@ -43,10 +44,10 @@ def index(request):
         {
             "time": time,
             "started": started,
-            "tip_images": tip_images,
+            "tips": tips,
             "tip_goals_values": tip_goals_values,
             "total_tips": timer.timer_total_donations,
-            "sub_images": sub_images,
+            "subs": subs,
             "sub_goals_values": sub_goals_values,
             "total_subs": timer.timer_total_subscriptions,
             "timer_paused": timer.timer_paused,

@@ -150,6 +150,9 @@ class Timer(models.Model):
             if goal[-1].goal_amount > self.timer_total_donations:
                 goals = goal
                 break
+        for goal in goals:
+            goal.validated = goal.goal_amount <= self.timer_total_donations
+
         return goals
 
     def get_last_tip_goal(self):

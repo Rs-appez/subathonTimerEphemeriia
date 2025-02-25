@@ -75,12 +75,17 @@ body {
 }
 
 .validate {
+    display: none;
     position: absolute;
     left: 5%;
     bottom: 0%;
 
     width: 130%;
     height: 130%;
+}
+
+.validated {
+    display: block;
 }
 
 .moving-image {
