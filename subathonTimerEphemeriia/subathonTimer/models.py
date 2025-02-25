@@ -46,6 +46,7 @@ class SubGoal(models.Model):
     goal_image = models.ImageField(
         upload_to="subathonTimerEphemeriia/static/subathonTimer/images/subs/"
     )
+    validated = False
 
     def __str__(self):
         return self.goal_name
@@ -163,13 +164,22 @@ class Timer(models.Model):
         return TipGoal.objects.filter(timer=self).all().order_by("goal_amount").last()
 
     def get_sub_goal(self):
-        return (
-            SubGoal.objects.filter(
-                goal_amount__gt=self.timer_total_subscriptions, timer=self
-            )
-            .all()
-            .order_by("goal_amount")
+        sub_goals = list(
+            SubGoal.objects.filter(timer=self).all().order_by("goal_amount")
         )
+        grouped_goals = [sub_goals[i : i + 3] for i in range(0, len(sub_goals), 3)]
+        goals = []
+        for i, goal in enumerate(grouped_goals):
+            if goal[-1].goal_amount > self.timer_total_subscriptions:
+                goals = sub_goals[i * 3 :]
+                break
+        for goal in goals:
+            if goal.goal_amount <= self.timer_total_subscriptions:
+                goal.validated = True
+            else:
+                break
+
+        return goals
 
     def new_sub(self, tier: int):
         self.timer_total_subscriptions = F("timer_total_subscriptions") + 1
