@@ -18,9 +18,9 @@
       </div>
     </div>
     <div class="tip-wrapper">
-      <div class="image-column-sub">
+      <div class="image-column-sub" id="tips">
         {% for tip in tips %}
-        <div id='tip_image' class="tip_image_to_move">
+                    <div id='{{tip.goal_name}}' class="tip_image_to_move">
           <div class='square'>
             <img class="{% if tip.validated %}validate validated{% else %}validate{% endif %}"
               src="{% static 'subathonTimer/images/validation.png' %}" />
@@ -29,9 +29,9 @@
         </div>
         {% endfor %}
       </div>
-      <div class="image-column">
+      <div class="image-column" id='subs'>
         {% for sub in subs %}
-        <div id='sub_image' class="sub_image_to_move">
+            <div id='{{sub.goal_name}}' class="sub_image_to_move">
           <div class='square'>
             <img class="{% if sub.validated %}validate validated{% else %}validate{% endif %}"
               src="{% static 'subathonTimer/images/validation.png' %}" />
@@ -62,6 +62,6 @@
 <link rel="stylesheet" type="text/css" href="{% static 'subathonTimer/css/index.css' %}" />
 
 <script src="{% static 'subathonTimer/js/update_timer.js' %}" defer data-time_left="{{ time }}" defer
-  data-tip_goal_values="{{ tip_goals_values|safe|escapejs }}" data-total_tips="{{ total_tips }}"
-  data-sub_goals_values="{{ sub_goals_values|safe|escapejs }}" data-total_subs="{{ total_subs }}"
+data-tip_goal_values="{{ tip_goals_values|safe|escapejs }}" data-tip_validated="{{ tip_validated }}" data-total_tips="{{ total_tips }}"
+  data-sub_goals_values="{{ sub_goals_values|safe|escapejs }}" data-sub_validated="{{ sub_validated }}" data-total_subs="{{ total_subs }}"
   data-timer_paused="{{ timer_paused }}" data-paused_time="{{ paused_time }}"></script>

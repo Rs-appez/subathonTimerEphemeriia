@@ -18,9 +18,11 @@ import threading
 def index(request):
     timer = Timer.objects.last()
     tip_goals_values = []
+    tip_validated = []
     tips = []
 
     sub_goals_values = []
+    sub_validated = []
     subs = []
 
     if timer is None:
@@ -33,9 +35,11 @@ def index(request):
         subs = timer.get_sub_goal()
 
         for goal in tips:
+            tip_validated.append(goal.validated)
             tip_goals_values.append(goal.goal_amount)
 
         for goal in subs:
+            sub_validated.append(goal.validated)
             sub_goals_values.append(goal.goal_amount)
 
     return render(
@@ -46,9 +50,11 @@ def index(request):
             "started": started,
             "tips": tips,
             "tip_goals_values": tip_goals_values,
+            "tip_validated": tip_validated[:3],
             "total_tips": timer.timer_total_donations,
             "subs": subs,
             "sub_goals_values": sub_goals_values,
+            "sub_validated": sub_validated[:3],
             "total_subs": timer.timer_total_subscriptions,
             "timer_paused": timer.timer_paused,
             "paused_time": timer.display_paused_time(),
