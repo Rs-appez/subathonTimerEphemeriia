@@ -5,6 +5,7 @@ from .views import (
     add_time,
     add_time_success,
     tip_progress,
+    sub_progress,
     pause_timer,
     global_timer,
 )
@@ -22,6 +23,7 @@ urlpatterns = [
     path("add_time/", add_time, name="add_time"),
     path("add_time_success/", add_time_success, name="add_time_success"),
     path("tip_progress", tip_progress, name="tip_progress"),
+    path("sub_progress", sub_progress, name="sub_progress"),
     path("pause_timer", pause_timer, name="pause_timer"),
     path("global_timer", global_timer, name="global_timer"),
 ]

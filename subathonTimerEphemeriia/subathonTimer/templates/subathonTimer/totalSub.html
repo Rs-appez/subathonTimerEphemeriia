@@ -1,0 +1,16 @@
+{% load static %}
+<!doctype html>
+<html>
+
+<head>
+    <title>Subathon Timer</title>
+</head>
+
+<body>
+    <p><span class="time number" id="subs">{{ total_subs }}</span></p>
+</body>
+
+</html>
+
+<link rel="stylesheet" type="text/css" href="{% static 'subathonTimer/css/globalTimer.css' %}" />
+<script src="{% static 'subathonTimer/js/totalSub.js' %}" data-total_subs="{{ total_subs }}"></script>

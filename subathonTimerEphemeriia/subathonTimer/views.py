@@ -141,6 +141,15 @@ def tip_progress(request):
         {"total_tips": timer.timer_total_donations, "last_goal": last_goal.goal_amount},
     )
 
+def sub_progress(request):
+    timer = Timer.objects.last()
+    total_subs = timer.timer_total_subscriptions
+
+    return render(
+        request,
+        "subathonTimer/totalSub.html",
+        {"total_subs": total_subs},
+    )
 
 def global_timer(request):
     timer = Timer.objects.last()
