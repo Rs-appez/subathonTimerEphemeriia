@@ -19,18 +19,3 @@
 
 <link rel="stylesheet" type="text/css" href="{% static 'subathonTimer/css/tipProgress.css' %}">
 <script src="{% static 'subathonTimer/js/update_tip_progress.js' %}" data-total_tips="{{ total_tips }}" data-last_goal="{{ last_goal }}"></script>
-
-<!-- <script>
-    // Assuming you have a function to update the progress bar value
-    function updateProgressBar(newValue) {
-        const progressBar = document.getElementById('progress-tip');
-        progressBar.value = newValue;
-    }
-    var v = 0;
-    // Example usage
-    setInterval(() => {
-        v = (v + 10) % 101;
-        updateProgressBar(v);
-    }, 1000);
-    // // updateProgressBar(60); // This will trigger the transition effect
-</script> -->
