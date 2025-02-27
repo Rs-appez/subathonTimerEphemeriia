@@ -121,6 +121,8 @@ class Timer(models.Model):
 
         write_log("Subathon started")
 
+        self.send_ticket_start()
+
     def pause_timer(self, user: str):
         if self.timer_paused:
             return False
@@ -273,6 +275,21 @@ class Timer(models.Model):
                         "total_subscriptions": self.timer_total_subscriptions,
                         "timer_paused": self.timer_paused,
                         "paused_time": paused_time,
+                    }
+                ),
+            },
+        )
+
+    def send_ticket_start(self):
+        time = self.started_time()
+        channel_layer = channels.layers.get_channel_layer()
+        async_to_sync(channel_layer.group_send)(
+            "global",
+            {
+                "type": "new_ticks",
+                "content": json.dumps(
+                    {
+                        "time": time,
                     }
                 ),
             },
