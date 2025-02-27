@@ -20,11 +20,13 @@
     <div class="tip-wrapper">
       <div class="image-column-sub" id="tips">
         {% for tip in tips %}
-                    <div id='{{tip.goal_name}}' class="tip_image_to_move">
-          <div class='square'>
+                <div id='{{tip.goal_name}}' class="tip_image_to_move">
+        <video muted class='butterfly_animation'> 
+            <source src="{% static 'subathonTimer/images/animation.webm' %}" type="video/webm">
+            Your browser does not support the video tag.
+        </video>
             <img class="{% if tip.validated %}validate validated{% else %}validate{% endif %}"
               src="{% static 'subathonTimer/images/validation.png' %}" />
-          </div>
           <img src="{% static tip.get_image %}" alt="Image" class="image" />
         </div>
         {% endfor %}

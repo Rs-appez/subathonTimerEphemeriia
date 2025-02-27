@@ -61,31 +61,26 @@ body {
     object-position: top;
 }
 
-.square {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-sizing: border-box;
-    position: absolute;
-    top: 57px;
-    left: 75px;
-    width: 60px;
-    height: 60px;
-    border: 5px solid white;
-}
-
 .validate {
     display: none;
     position: absolute;
-    left: 5%;
-    bottom: 0%;
-
-    width: 130%;
-    height: 130%;
+    left: -2.1% !important;
+    bottom: -21% !important;
 }
 
 .validated {
     display: block;
+}
+
+.butterfly_animation {
+    display: none;
+    position: absolute;
+    top: -4.66667% !important;
+    left: -1.00418% !important;
+
+    object-fit: cover;
+    object-position: top;
+    width: 100%;
 }
 
 .moving-image {

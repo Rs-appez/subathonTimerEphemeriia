@@ -208,8 +208,17 @@ function checkSubGoal() {
 // Goal validation
 function validateGoal(goalId) {
     const goalSquare = document.querySelector(`[id="${goalId}"] .validate`);
-    if (goalSquare) {
-        goalSquare.classList.add("validated");
+    const animation = document.querySelector(
+        `[id="${goalId}"] .butterfly_animation`,
+    );
+    if (goalSquare && animation) {
+        animation.style.display = "block";
+        animation.play();
+        console.log("Goal square found for ID:", goalId);
+        setTimeout(() => {
+            goalSquare.classList.add("validated");
+            animation.style.display = "none";
+        }, 3550);
     } else {
         console.log("Goal square not found for ID:", goalId);
     }
