@@ -1,6 +1,5 @@
 from django.urls import path, include
 from .views import (
-    TimerViewSet,
     index,
     start_timer,
     add_time,
@@ -8,6 +7,7 @@ from .views import (
     tip_progress,
     pause_timer,
 )
+from .views_api import TimerViewSet
 
 from rest_framework.routers import DefaultRouter
 
