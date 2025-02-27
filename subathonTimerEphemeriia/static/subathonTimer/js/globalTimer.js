@@ -26,4 +26,28 @@ function formatTime(seconds) {
     return `${hours}:${minutes}:${seconds}`;
 }
 
-update();
+// Websocket
+var ws_url = "wss://" + window.location.host + "/ws/global/";
+
+function connect() {
+    var ws = new WebSocket(ws_url);
+
+    ws.onmessage = function(event) {
+        var data_ws = JSON.parse(event.data);
+        startedTime = data_ws.time;
+
+        update();
+    };
+
+    ws.onclose = function(event) {
+        console.log("Connection closed");
+        connect();
+    };
+
+    ws.onerror = function(event) {
+        console.log("Error");
+        ws.close();
+    };
+}
+
+connect();
