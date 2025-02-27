@@ -104,13 +104,6 @@ def add_time_success(request):
     )
 
 
-def __get_logs():
-    path = "/logs/log.txt" if not settings.DEBUG else "log.txt"
-    with open(path, "r") as f:
-        lines = f.readlines()
-    return lines[::-1]
-
-
 def start_timer(request):
     if request.method == "POST":
         timer = Timer.objects.last()
@@ -147,3 +140,10 @@ def tip_progress(request):
         "subathonTimer/tipProgress.html",
         {"total_tips": timer.timer_total_donations, "last_goal": last_goal.goal_amount},
     )
+
+
+def __get_logs():
+    path = "/logs/log.txt" if not settings.DEBUG else "log.txt"
+    with open(path, "r") as f:
+        lines = f.readlines()
+    return lines[::-1]
