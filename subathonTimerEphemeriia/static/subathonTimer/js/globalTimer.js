@@ -2,10 +2,16 @@ const data = document.currentScript.dataset;
 var startedTime = data.time;
 
 function update() {
+    console.log(startedTime);
     const timeElement = document.getElementById("time");
-    if (timeElement) {
+    if (!timeElement) {
+        return;
+    }
+    if (startedTime !== "0") {
         remainingTime = new Date().getTime() / 1000 - startedTime;
         timeElement.innerHTML = formatTime(remainingTime);
+    } else {
+        timeElement.innerHTML = "SOON !!!!!";
     }
 }
 setInterval(update, 1000);
@@ -19,3 +25,5 @@ function formatTime(seconds) {
 
     return `${hours}:${minutes}:${seconds}`;
 }
+
+update();
