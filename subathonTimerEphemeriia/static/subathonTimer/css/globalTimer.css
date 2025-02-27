@@ -1,0 +1,17 @@
+@font-face {
+    font-family: "Century";
+    src: url("/static/subathonTimer/fonts/century.ttf") format("truetype");
+}
+
+.number {
+    font-family: "Century";
+    color: white;
+    text-shadow: 3px 3px 5px #000000;
+}
+
+span.time {
+    font-size: 70px;
+    text-align: center;
+    /* border: 2px solid black; */
+    text-shadow: 3px 3px 5px #000000;
+}

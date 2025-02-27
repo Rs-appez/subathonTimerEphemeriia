@@ -1,0 +1,18 @@
+{% load static %}
+<!doctype html>
+<html>
+
+<head>
+    <title>Subathon Timer</title>
+</head>
+
+<body>
+    <div class="time-container">
+        <p><span class="time number" id="time"></span></p>
+    </div>
+</body>
+
+</html>
+
+<link rel="stylesheet" type="text/css" href="{% static 'subathonTimer/css/globalTimer.css' %}" />
+<script src="{% static 'subathonTimer/js/globalTimer.js' %}" data-time="{{ time }}"></script>

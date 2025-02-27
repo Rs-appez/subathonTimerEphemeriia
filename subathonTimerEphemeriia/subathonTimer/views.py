@@ -142,6 +142,15 @@ def tip_progress(request):
     )
 
 
+def global_timer(request):
+    timer = Timer.objects.last()
+    return render(
+        request,
+        "subathonTimer/globalTimer.html",
+        {"time": timer.started_time()},
+    )
+
+
 def __get_logs():
     path = "/logs/log.txt" if not settings.DEBUG else "log.txt"
     with open(path, "r") as f:
