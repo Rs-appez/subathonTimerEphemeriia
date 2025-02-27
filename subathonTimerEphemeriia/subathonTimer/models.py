@@ -105,6 +105,12 @@ class Timer(models.Model):
 
         return self.paused_time.timestamp()
 
+    def started_time(self):
+        if self.timer_start is None:
+            return 0
+
+        return self.timer_start.timestamp()
+
     def start_timer(self):
         self.timer_start = timezone.now()
         self.timer_end = self.timer_start + timezone.timedelta(
