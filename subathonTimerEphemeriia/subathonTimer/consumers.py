@@ -1,29 +1,29 @@
-from django.conf import settings
 from asgiref.sync import async_to_sync
 from channels.consumer import SyncConsumer
 
+
 class TicksSyncConsumer(SyncConsumer):
+    def __get_group_name(self):
+        return self.scope["url_route"]["kwargs"]["group_name"]
 
     def websocket_connect(self, event):
-        self.send({
-            'type': 'websocket.accept'
-        })
+        self.send({"type": "websocket.accept"})
 
         # Join ticks group
         async_to_sync(self.channel_layer.group_add)(
-            settings.TICKS_GROUP_NAME,
-            self.channel_name
+            self.__get_group_name(), self.channel_name
         )
 
     def websocket_disconnect(self, event):
         # Leave ticks group
         async_to_sync(self.channel_layer.group_discard)(
-            settings.TICKS_GROUP_NAME,
-            self.channel_name
+            self.__get_group_name(), self.channel_name
         )
 
     def new_ticks(self, event):
-        self.send({
-            'type': 'websocket.send',
-            'text': event['content'],
-        })
+        self.send(
+            {
+                "type": "websocket.send",
+                "text": event["content"],
+            }
+        )
