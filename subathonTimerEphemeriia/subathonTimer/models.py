@@ -30,10 +30,23 @@ class TipGoal(models.Model):
     goal_image = models.ImageField(
         upload_to="subathonTimerEphemeriia/static/subathonTimer/images/tips/"
     )
+    goal_image_validated = models.ImageField(
+        upload_to="subathonTimerEphemeriia/static/subathonTimer/images/tips/validated/",
+        null=True,
+        blank=True,
+    )
     validated = False
+
+    def save(self, *args, **kwargs):
+        if not self.goal_image_validated:
+            self.goal_image_validated = self.goal_image
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.goal_name
+
+    def get_image_validated(self):
+        return self.goal_image_validated.url[32:]
 
     def get_image(self):
         return self.goal_image.url[32:]
