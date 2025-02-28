@@ -72,6 +72,10 @@ body {
     display: block;
 }
 
+.hidden {
+    display: none;
+}
+
 .butterfly_animation {
     display: none;
     position: absolute;

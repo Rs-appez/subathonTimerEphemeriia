@@ -211,7 +211,12 @@ function validateGoal(goalId) {
     const animation = document.querySelector(
         `[id="${goalId}"] .butterfly_animation`,
     );
-    if (goalSquare && animation) {
+    const image = document.querySelector(`[id="${goalId}"] #default`);
+    const validatedImage = document.querySelector(`[id="${goalId}"] #validated`);
+
+    if (goalSquare && animation && image && validatedImage) {
+        image.classList.add("hidden");
+        validatedImage.classList.remove("hidden");
         animation.style.display = "block";
         animation.play();
         console.log("Goal square found for ID:", goalId);

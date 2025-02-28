@@ -27,7 +27,8 @@
         </video>
             <img class="{% if tip.validated %}validate validated{% else %}validate{% endif %}"
               src="{% static 'subathonTimer/images/validation.png' %}" />
-          <img src="{% static tip.get_image %}" alt="Image" class="image" />
+                        <img src="{% static tip.get_image_validated %}" id='validated' class="image {% if not tip.validated %}hidden{% endif %}" alt='Image validated' />
+          <img src="{% static tip.get_image %}" id='default' alt="Image{% if tip.validated %}hidden{% endif %}" class="image" />
         </div>
         {% endfor %}
       </div>
