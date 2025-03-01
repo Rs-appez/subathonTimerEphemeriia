@@ -157,7 +157,7 @@ class BingoItemUserViewSet(viewsets.ModelViewSet):
                     user.win()
                     bot = Bot.objects.get(name="appez_ricube")
                     bot.send_message(
-                        f"ephemerGG {user.name} has finished the bingo! ephemerGG",
+                        f"ephemerGG_HF {user.name} has finished the bingo! ephemerGG",
                         decoded_token.get("channel_id"),
                     )
 
