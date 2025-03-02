@@ -94,7 +94,7 @@ function removeFirstTreeTip() {
         }
         skip_tip_animation = false;
         checkTipGoal();
-    }, 6500);
+    }, 7000);
 }
 
 function validateTipGoal() {
@@ -112,7 +112,7 @@ function validateTipGoal() {
                 setTimeout(function() {
                     skip_tip_animation = false;
                     checkTipGoal();
-                }, 2001);
+                }, 2201);
             }
         }
     });
