@@ -4,6 +4,7 @@ from .models import Timer, BonusTime, TipGoal, SubGoal
 
 
 class GoalAdmin(admin.ModelAdmin):
+    save_as = True
     list_display = ("goal_name", "goal_amount")
 
 
