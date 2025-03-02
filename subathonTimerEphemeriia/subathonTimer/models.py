@@ -59,6 +59,11 @@ class SubGoal(models.Model):
     goal_image = models.ImageField(
         upload_to="subathonTimerEphemeriia/static/subathonTimer/images/subs/"
     )
+    goal_image_validated = models.ImageField(
+        upload_to="subathonTimerEphemeriia/static/subathonTimer/images/subs/validated/",
+        null=True,
+        blank=True,
+    )
     validated = False
 
     def __str__(self):
