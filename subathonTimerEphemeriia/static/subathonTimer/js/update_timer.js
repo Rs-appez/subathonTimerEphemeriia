@@ -73,7 +73,7 @@ function removeFirstImageTip() {
 
 function updateTipGoal() {
     triggerAnimationTip();
-    setTimeout(removeFirstImageTip, 1999);
+    setTimeout(removeFirstImageTip, 2000);
 }
 function removeFirstTreeTip() {
     skip_tip_animation = true;
@@ -82,8 +82,8 @@ function removeFirstTreeTip() {
         updateTipGoal();
         setTimeout(() => {
             updateTipGoal();
-        }, 2001);
-    }, 2001);
+        }, 2201);
+    }, 2201);
 
     setTimeout(function() {
         tip_validated = [false, false, false];
@@ -94,16 +94,18 @@ function removeFirstTreeTip() {
         }
         skip_tip_animation = false;
         checkTipGoal();
-    }, 6003);
+    }, 6500);
 }
 
 function validateTipGoal() {
     let tips = document.querySelector("#tips").children;
     let firstThreeElements = Array.prototype.slice.call(tips, 0, 3);
     firstThreeElements.forEach((element, index) => {
-        if (tip_validated[index] == false) {
+        console.log("Checking tip goal " + element.id);
+        if (tip_validated[index] == false && skip_tip_animation == false) {
             if (total_tips >= tip_goal_values[index]) {
                 skip_tip_animation = true;
+                console.log("Validating tip goal " + element.id);
                 tip_validated[index] = true;
                 validateGoal(element.id);
 
@@ -116,12 +118,17 @@ function validateTipGoal() {
     });
 }
 function checkTipGoal() {
+    console.log("Checking tip goal");
     if (skip_tip_animation) {
+        console.log("Skipping tip animation");
         return;
     }
+    console.log("Checking tip animation");
     if (tip_validated.every((value) => value == true)) {
+        console.log("Removing first tree tip");
         removeFirstTreeTip();
     } else {
+        console.log("Validating tip goal");
         validateTipGoal();
     }
 }
@@ -150,7 +157,7 @@ function removeFirstImageSub() {
 
 function updateSubGoal() {
     triggerAnimationSub();
-    setTimeout(removeFirstImageSub, 1999);
+    setTimeout(removeFirstImageSub, 2000);
 }
 
 function removeFirstTreeSub() {
@@ -160,8 +167,8 @@ function removeFirstTreeSub() {
         updateSubGoal();
         setTimeout(() => {
             updateSubGoal();
-        }, 2001);
-    }, 2001);
+        }, 2201);
+    }, 2201);
 
     setTimeout(function() {
         sub_validated = [false, false, false];
@@ -172,14 +179,14 @@ function removeFirstTreeSub() {
         }
         skip_sub_animation = false;
         checkSubGoal();
-    }, 6003);
+    }, 6500);
 }
 
 function validateSubGoal() {
     let subs = document.querySelector("#subs").children;
     let firstThreeElements = Array.prototype.slice.call(subs, 0, 3);
     firstThreeElements.forEach((element, index) => {
-        if (sub_validated[index] == false) {
+        if (sub_validated[index] == false && skip_sub_animation == false) {
             if (total_subscriptions >= sub_goal_values[index]) {
                 skip_sub_animation = true;
                 sub_validated[index] = true;
