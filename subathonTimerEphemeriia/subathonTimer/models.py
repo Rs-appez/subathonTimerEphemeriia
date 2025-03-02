@@ -72,6 +72,8 @@ class SubGoal(models.Model):
     def get_image(self):
         return self.goal_image.url[32:]
 
+    def get_image_validated(self):
+        return self.goal_image_validated.url[32:]
 
 class Timer(models.Model):
     # Timer settings

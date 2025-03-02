@@ -20,26 +20,33 @@
     <div class="tip-wrapper">
       <div class="image-column-sub" id="tips">
         {% for tip in tips %}
-                <div id='{{tip.goal_name}}' class="tip_image_to_move">
-        <video muted class='butterfly_animation'> 
+        <div id='{{tip.goal_name}}' class="tip_image_to_move">
+          <video muted class='butterfly_animation'>
             <source src="{% static 'subathonTimer/images/animation.webm' %}" type="video/webm">
             Your browser does not support the video tag.
-        </video>
-            <img class="{% if tip.validated %}validate validated{% else %}validate{% endif %}"
-              src="{% static 'subathonTimer/images/validation.png' %}" />
-                        <img src="{% static tip.get_image_validated %}" id='validated' class="image {% if not tip.validated %}hidden{% endif %}" alt='Image validated' />
-          <img src="{% static tip.get_image %}" id='default' alt="Image{% if tip.validated %}hidden{% endif %}" class="image" />
+          </video>
+          <img class="{% if tip.validated %}validate validated{% else %}validate{% endif %}"
+            src="{% static 'subathonTimer/images/validation.png' %}" />
+          <img src="{% static tip.get_image_validated %}" id='validated'
+            class="image {% if not tip.validated %}hidden{% endif %}" alt='Image validated' />
+          <img src="{% static tip.get_image %}" id='default' alt="Image{% if tip.validated %}hidden{% endif %}"
+            class="image" />
         </div>
         {% endfor %}
       </div>
       <div class="image-column" id='subs'>
         {% for sub in subs %}
-            <div id='{{sub.goal_name}}' class="sub_image_to_move">
-          <div class='square'>
-            <img class="{% if sub.validated %}validate validated{% else %}validate{% endif %}"
-              src="{% static 'subathonTimer/images/validation.png' %}" />
-          </div>
-          <img src="{% static sub.get_image %}" alt="Image" class="image" />
+        <div id='{{sub.goal_name}}' class="sub_image_to_move">
+          <video muted class='butterfly_animation'>
+            <source src="{% static 'subathonTimer/images/animation.webm' %}" type="video/webm">
+            Your browser does not support the video tag.
+          </video>
+          <img class="{% if sub.validated %}validate validated{% else %}validate{% endif %}"
+            src="{% static 'subathonTimer/images/validation.png' %}" />
+          <img src="{% static sub.get_image_validated %}" id='validated'
+            class="image {% if not sub.validated %}hidden{% endif %}" alt='Image validated' />
+          <img src="{% static sub.get_image %}" id='default' alt="Image{% if sub.validated %}hidden{% endif %}"
+            class="image" />
         </div>
         {% endfor %}
       </div>
@@ -65,6 +72,7 @@
 <link rel="stylesheet" type="text/css" href="{% static 'subathonTimer/css/index.css' %}" />
 
 <script src="{% static 'subathonTimer/js/update_timer.js' %}" defer data-time_left="{{ time }}" defer
-data-tip_goal_values="{{ tip_goals_values|safe|escapejs }}" data-tip_validated="{{ tip_validated }}" data-total_tips="{{ total_tips }}"
-  data-sub_goals_values="{{ sub_goals_values|safe|escapejs }}" data-sub_validated="{{ sub_validated }}" data-total_subs="{{ total_subs }}"
-  data-timer_paused="{{ timer_paused }}" data-paused_time="{{ paused_time }}"></script>
+  data-tip_goal_values="{{ tip_goals_values|safe|escapejs }}" data-tip_validated="{{ tip_validated }}"
+  data-total_tips="{{ total_tips }}" data-sub_goals_values="{{ sub_goals_values|safe|escapejs }}"
+  data-sub_validated="{{ sub_validated }}" data-total_subs="{{ total_subs }}" data-timer_paused="{{ timer_paused }}"
+  data-paused_time="{{ paused_time }}"></script>
