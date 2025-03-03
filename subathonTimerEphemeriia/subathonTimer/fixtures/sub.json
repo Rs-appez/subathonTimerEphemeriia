@@ -3,10 +3,10 @@
     "model": "subathonTimer.subgoal",
     "fields": {
       "timer": 2,
-      "goal_name": "Début du live",
+      "goal_name": "Debut du live",
       "goal_amount": 1.0,
       "goal_image": "subathonTimerEphemeriia/static/subathonTimer/images/subs/1_sub.png",
-      "goal_image_validated": "subathonTimerEphemeriia/static/subathonTimer/images/subs/validated/1_sub_validé.png"
+      "goal_image_validated": "subathonTimerEphemeriia/static/subathonTimer/images/subs/validated/1_sub_valide.png"
     }
   },
   {
@@ -16,17 +16,17 @@
       "goal_name": "Je remercie les subs (sauf neigara)",
       "goal_amount": 5.0,
       "goal_image": "subathonTimerEphemeriia/static/subathonTimer/images/subs/5_subs.png",
-      "goal_image_validated": "subathonTimerEphemeriia/static/subathonTimer/images/subs/validated/5_subs_validé.png"
+      "goal_image_validated": "subathonTimerEphemeriia/static/subathonTimer/images/subs/validated/5_subs_valide.png"
     }
   },
   {
     "model": "subathonTimer.subgoal",
     "fields": {
       "timer": 2,
-      "goal_name": "On fait des TierList (meta/beauté)",
+      "goal_name": "On fait des TierList (meta/beaute)",
       "goal_amount": 50.0,
       "goal_image": "subathonTimerEphemeriia/static/subathonTimer/images/subs/50_subs.png",
-      "goal_image_validated": "subathonTimerEphemeriia/static/subathonTimer/images/subs/validated/50_subs_validé.png"
+      "goal_image_validated": "subathonTimerEphemeriia/static/subathonTimer/images/subs/validated/50_subs_valide.png"
     }
   },
   {
@@ -36,7 +36,7 @@
       "goal_name": "Rajout de 10h au compteur (sub)",
       "goal_amount": 100.0,
       "goal_image": "subathonTimerEphemeriia/static/subathonTimer/images/subs/100_subs.png",
-      "goal_image_validated": "subathonTimerEphemeriia/static/subathonTimer/images/subs/validated/100_subs_validé.png"
+      "goal_image_validated": "subathonTimerEphemeriia/static/subathonTimer/images/subs/validated/100_subs_valide.png"
     }
   },
   {
@@ -46,7 +46,7 @@
       "goal_name": "Pokemon violet lets play",
       "goal_amount": 151.0,
       "goal_image": "subathonTimerEphemeriia/static/subathonTimer/images/subs/151_subs.png",
-      "goal_image_validated": "subathonTimerEphemeriia/static/subathonTimer/images/subs/validated/151_subs_validé.png"
+      "goal_image_validated": "subathonTimerEphemeriia/static/subathonTimer/images/subs/validated/151_subs_valide.png"
     }
   },
   {
@@ -56,7 +56,7 @@
       "goal_name": "Blinest + Guess my Lol/Valo/Dofus",
       "goal_amount": 200.0,
       "goal_image": "subathonTimerEphemeriia/static/subathonTimer/images/subs/200_subs.png",
-      "goal_image_validated": "subathonTimerEphemeriia/static/subathonTimer/images/subs/validated/200_subs_validé.png"
+      "goal_image_validated": "subathonTimerEphemeriia/static/subathonTimer/images/subs/validated/200_subs_valide.png"
     }
   },
   {
@@ -66,7 +66,7 @@
       "goal_name": "Game jvalo sur le tapis de marche",
       "goal_amount": 250.0,
       "goal_image": "subathonTimerEphemeriia/static/subathonTimer/images/subs/250_subs.png",
-      "goal_image_validated": "subathonTimerEphemeriia/static/subathonTimer/images/subs/validated/250_subs_validé.png"
+      "goal_image_validated": "subathonTimerEphemeriia/static/subathonTimer/images/subs/validated/250_subs_valide.png"
     }
   },
   {
@@ -76,7 +76,7 @@
       "goal_name": "Le retour sur Super Meat Boy",
       "goal_amount": 300.0,
       "goal_image": "subathonTimerEphemeriia/static/subathonTimer/images/subs/300_subs.png",
-      "goal_image_validated": "subathonTimerEphemeriia/static/subathonTimer/images/subs/validated/300_subs_validé.png"
+      "goal_image_validated": "subathonTimerEphemeriia/static/subathonTimer/images/subs/validated/300_subs_valide.png"
     }
   },
   {
@@ -86,7 +86,7 @@
       "goal_name": "Rajout de 15h au compteur (sub)",
       "goal_amount": 350.0,
       "goal_image": "subathonTimerEphemeriia/static/subathonTimer/images/subs/350_subs.png",
-      "goal_image_validated": "subathonTimerEphemeriia/static/subathonTimer/images/subs/validated/350_subs_validé.png"
+      "goal_image_validated": "subathonTimerEphemeriia/static/subathonTimer/images/subs/validated/350_subs_valide.png"
     }
   },
   {
@@ -96,7 +96,7 @@
       "goal_name": "Error Subgoal not found",
       "goal_amount": 404.0,
       "goal_image": "subathonTimerEphemeriia/static/subathonTimer/images/subs/404_subs.png",
-      "goal_image_validated": "subathonTimerEphemeriia/static/subathonTimer/images/subs/validated/404_subs_validé.png"
+      "goal_image_validated": "subathonTimerEphemeriia/static/subathonTimer/images/subs/validated/404_subs_valide.png"
     }
   },
   {
@@ -106,7 +106,7 @@
       "goal_name": "Apprenti huppermage",
       "goal_amount": 444.0,
       "goal_image": "subathonTimerEphemeriia/static/subathonTimer/images/subs/444_subs.png",
-      "goal_image_validated": "subathonTimerEphemeriia/static/subathonTimer/images/subs/validated/444_subs_validé.png"
+      "goal_image_validated": "subathonTimerEphemeriia/static/subathonTimer/images/subs/validated/444_subs_valide.png"
     }
   },
   {
@@ -116,17 +116,17 @@
       "goal_name": "Jett entry frag",
       "goal_amount": 500.0,
       "goal_image": "subathonTimerEphemeriia/static/subathonTimer/images/subs/500_subs.png",
-      "goal_image_validated": "subathonTimerEphemeriia/static/subathonTimer/images/subs/validated/500_subs_validé.png"
+      "goal_image_validated": "subathonTimerEphemeriia/static/subathonTimer/images/subs/validated/500_subs_valide.png"
     }
   },
   {
     "model": "subathonTimer.subgoal",
     "fields": {
       "timer": 2,
-      "goal_name": "Soirée CS",
+      "goal_name": "Soiree CS",
       "goal_amount": 555.0,
       "goal_image": "subathonTimerEphemeriia/static/subathonTimer/images/subs/555_subs.png",
-      "goal_image_validated": "subathonTimerEphemeriia/static/subathonTimer/images/subs/validated/555_subs_validé.png"
+      "goal_image_validated": "subathonTimerEphemeriia/static/subathonTimer/images/subs/validated/555_subs_valide.png"
     }
   },
   {
@@ -136,7 +136,7 @@
       "goal_name": "PokeMMO",
       "goal_amount": 600.0,
       "goal_image": "subathonTimerEphemeriia/static/subathonTimer/images/subs/600_subs.png",
-      "goal_image_validated": "subathonTimerEphemeriia/static/subathonTimer/images/subs/validated/600_subs_validé.png"
+      "goal_image_validated": "subathonTimerEphemeriia/static/subathonTimer/images/subs/validated/600_subs_valide.png"
     }
   },
   {
@@ -146,7 +146,7 @@
       "goal_name": "Les pirates full RP (sot)",
       "goal_amount": 666.0,
       "goal_image": "subathonTimerEphemeriia/static/subathonTimer/images/subs/666_subs.png",
-      "goal_image_validated": "subathonTimerEphemeriia/static/subathonTimer/images/subs/validated/666_subs_validé.png"
+      "goal_image_validated": "subathonTimerEphemeriia/static/subathonTimer/images/subs/validated/666_subs_valide.png"
     }
   },
   {
@@ -156,7 +156,7 @@
       "goal_name": "On fait un gâteau ensemble",
       "goal_amount": 700.0,
       "goal_image": "subathonTimerEphemeriia/static/subathonTimer/images/subs/700_subs.png",
-      "goal_image_validated": "subathonTimerEphemeriia/static/subathonTimer/images/subs/validated/700_subs_validé.png"
+      "goal_image_validated": "subathonTimerEphemeriia/static/subathonTimer/images/subs/validated/700_subs_valide.png"
     }
   }
 ]
