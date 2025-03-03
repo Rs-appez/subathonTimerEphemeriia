@@ -66,6 +66,11 @@ class SubGoal(models.Model):
     )
     validated = False
 
+    def save(self, *args, **kwargs):
+        if not self.goal_image_validated:
+            self.goal_image_validated = self.goal_image
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return self.goal_name
 
@@ -74,6 +79,7 @@ class SubGoal(models.Model):
 
     def get_image_validated(self):
         return self.goal_image_validated.url[32:]
+
 
 class Timer(models.Model):
     # Timer settings
