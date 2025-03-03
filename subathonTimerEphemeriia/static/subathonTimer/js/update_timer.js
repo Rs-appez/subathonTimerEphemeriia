@@ -179,7 +179,7 @@ function removeFirstTreeSub() {
         }
         skip_sub_animation = false;
         checkSubGoal();
-    }, 6500);
+    }, 7000);
 }
 
 function validateSubGoal() {
@@ -195,7 +195,7 @@ function validateSubGoal() {
                 setTimeout(function() {
                     skip_sub_animation = false;
                     checkSubGoal();
-                }, 2001);
+                }, 2201);
             }
         }
     });
