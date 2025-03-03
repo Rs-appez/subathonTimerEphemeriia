@@ -28,7 +28,7 @@
           </video>
           <img class="{% if tip.validated %}validate validated{% else %}validate{% endif %}"
             src="{% static 'subathonTimer/images/validation.png' %}" />
-          <img src="{% static tip.get_image_validated|safe %}" id='validated'
+          <img src="{% static tip.get_image_validated %}" id='validated'
             class="image {% if not tip.validated %}hidden{% endif %}" alt='Image validated' />
           <img src="{% static tip.get_image %}" id='default' alt="Image"
             class="image {% if tip.validated %}hidden{% endif %}" />
@@ -44,7 +44,7 @@
           </video>
           <img class="{% if sub.validated %}validate validated{% else %}validate{% endif %}"
             src="{% static 'subathonTimer/images/validation.png' %}" />
-          <img src="{% static sub.get_image_validated|safe %}" id='validated'
+          <img src="{% static sub.get_image_validated %}" id='validated'
             class="image {% if not sub.validated %}hidden{% endif %}" alt='Image validated' />
           <img src="{% static sub.get_image %}" id='default' alt="Image"
             class="image {% if sub.validated %}hidden{% endif %}" />
