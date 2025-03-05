@@ -1,0 +1,10 @@
+.inline-form {
+    display: inline-block;
+}
+
+body {
+    background-color: #121212;
+    /* Darker background */
+    color: #e0e0e0;
+    /* Lighter text color for better contrast */
+}
