@@ -1,8 +1,6 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.http import HttpRequest
 
-from django.conf import settings
-
 from .utils import get_logs
 
 from .models import Timer
