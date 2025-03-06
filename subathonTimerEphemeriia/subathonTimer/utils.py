@@ -41,3 +41,25 @@ def get_donators():
 
     donators = sorted(donators, key=lambda x: x["total"], reverse=True)
     return donators
+
+
+def get_gifters():
+    logs = get_logs()
+    gifters = []
+
+    for log in logs:
+        start_sub = re.search(r"Subathon started", log)
+        if start_sub:
+            break
+        match = re.search(r"New sub: \w+ - \d+ - offered by (\w+)", log)
+        if match:
+            for gifter in gifters:
+                if gifter["name"] == match.group(1):
+                    gifter["total"] = gifter["total"] + 1
+                    break
+
+            else:
+                gifters.append({"name": match.group(1), "total": 1})
+
+    gifters = sorted(gifters, key=lambda x: x["total"], reverse=True)
+    return gifters
