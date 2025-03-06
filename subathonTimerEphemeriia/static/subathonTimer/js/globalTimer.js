@@ -18,6 +18,7 @@ setInterval(update, 1000);
 
 function formatTime(seconds) {
     var hours = Math.floor(seconds / 3600);
+    hours = hours < 10 ? "0" + hours : hours;
     var minutes = Math.floor((seconds % 3600) / 60);
     minutes = minutes < 10 ? "0" + minutes : minutes;
     var seconds = Math.floor(seconds % 60);

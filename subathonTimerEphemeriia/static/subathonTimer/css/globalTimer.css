@@ -3,14 +3,27 @@
     src: url("/static/subathonTimer/fonts/century.ttf") format("truetype");
 }
 
+.time-container {
+    display: flex;
+    justify-content: left;
+    width: 100%;
+}
+
 .number {
     font-family: "Century";
     color: white;
     text-shadow: 3px 3px 5px #000000;
 }
 
-span.time {
-    font-size: 70px;
+.time {
+    position: absolute;
+    left: 187px;
+    top: 22px;
+
+    width: 242px;
+    height: 59px;
+
+    font-size: 45px;
     text-align: center;
     /* border: 2px solid black; */
     text-shadow: 3px 3px 5px #000000;
