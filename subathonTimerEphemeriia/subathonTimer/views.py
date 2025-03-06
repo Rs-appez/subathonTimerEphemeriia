@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.http import HttpRequest
 
-from .utils import get_logs
+from .utils import get_logs, get_donators
 
 from .models import Timer
 from .views_api import TimerViewSet
@@ -88,15 +88,13 @@ def add_time(request):
         )
 
 
-def list_tippers(request):
-    return
-    # logs = get_logs()
-    # for log in logs:
-    # return render(
-    #     request,
-    #     "subathonTimer/tippers.html",
-    #     {"tippers": tippers},
-    # )
+def list_donators(request):
+    donators = get_donators()
+    return render(
+        request,
+        "subathonTimer/donators.html",
+        {"donators": donators},
+    )
 
 
 def add_time_success(request):
@@ -149,8 +147,7 @@ def tip_progress(request):
     return render(
         request,
         "subathonTimer/tipProgress.html",
-        {"total_tips": timer.timer_total_donations,
-            "last_goal": last_goal.goal_amount},
+        {"total_tips": timer.timer_total_donations, "last_goal": last_goal.goal_amount},
     )
 
 
