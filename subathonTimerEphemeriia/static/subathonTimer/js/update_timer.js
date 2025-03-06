@@ -89,8 +89,9 @@ function removeFirstTreeTip() {
         tip_validated = [false, false, false];
         if (tip_goal_values.length >= 3) {
             tip_goal_values.splice(0, 3);
-        } else {
-            tip_goal_values.length = 0; // Clear the array if there are less than 3 elements
+            if (tip_goal_values.length === 0) {
+                document.querySelector("#tips").style.display = "none";
+            }
         }
         skip_tip_animation = false;
         checkTipGoal();
@@ -174,8 +175,6 @@ function removeFirstTreeSub() {
         sub_validated = [false, false, false];
         if (sub_goal_values.length >= 3) {
             sub_goal_values.splice(0, 3);
-        } else {
-            sub_goal_values.length = 0; // Clear the array if there are less than 3 elements
         }
         skip_sub_animation = false;
         checkSubGoal();
