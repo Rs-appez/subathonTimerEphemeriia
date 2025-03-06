@@ -8,6 +8,7 @@ from .views import (
     sub_progress,
     pause_timer,
     global_timer,
+    list_donators,
 )
 from .views_api import TimerViewSet
 
@@ -21,6 +22,7 @@ urlpatterns = [
     path("", index, name="index_timer"),
     path("start_timer", start_timer, name="start_timer"),
     path("add_time/", add_time, name="add_time"),
+    path("list_donators", list_donators, name="list_donators"),
     path("add_time_success/", add_time_success, name="add_time_success"),
     path("tip_progress", tip_progress, name="tip_progress"),
     path("sub_progress", sub_progress, name="sub_progress"),
