@@ -1,0 +1,41 @@
+{% load static %}
+<!doctype html>
+<html>
+  <head>
+    <title>Participants</title>
+    <link rel="icon" href="{% static 'bingo/images/cacatchu.png' %}" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'subathonTimer/css/admin.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'subathonTimer/css/participants.css' %}"
+    />
+  </head>
+
+  <body>
+        <div class='participants'>
+        <div class='donators'>
+    <h1>Donators</h1>
+    <div>
+      {% for donator in donators %}
+      <li>{{ donator.name }} - {{ donator.total }}</li>
+      {% endfor %}
+    </div>
+    </div>
+        <div class="gifters">
+            <h1>Gifters</h1>
+            <div>
+                {% for gifter in gifters %}
+                    <li>{{ gifter.name }} - {{ gifter.total }}</li>
+                {% endfor %}
+                    
+            </div>
+        </div>
+    </div>
+
+  </body>
+</html>

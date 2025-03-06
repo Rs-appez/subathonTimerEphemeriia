@@ -1,0 +1,7 @@
+.participants {
+    display: flex;
+}
+
+.participants div {
+    margin: 0 15px;
+}

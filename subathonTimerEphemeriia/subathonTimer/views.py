@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.http import HttpRequest
 
-from .utils import get_logs, get_donators
+from .utils import get_logs, get_donators, get_gifters
 
 from .models import Timer
 from .views_api import TimerViewSet
@@ -88,12 +88,13 @@ def add_time(request):
         )
 
 
-def list_donators(request):
+def list_participants(request):
     donators = get_donators()
+    gifters = get_gifters()
     return render(
         request,
-        "subathonTimer/donators.html",
-        {"donators": donators},
+        "subathonTimer/participants.html",
+        {"donators": donators, "gifters": gifters},
     )
 
 
