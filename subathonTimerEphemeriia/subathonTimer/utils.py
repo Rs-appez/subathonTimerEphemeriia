@@ -19,9 +19,9 @@ def get_logs():
     return lines[::-1]
 
 
-def get_tippers():
+def get_donators():
     logs = get_logs()
-    tippers = []
+    donators = []
 
     for log in logs:
         start_sub = re.search(r"Subathon started", log)
@@ -29,13 +29,13 @@ def get_tippers():
             break
         match = re.search(r"New donation: (\w+) - (\d+\.\d+)", log)
         if match:
-            for tipper in tippers:
-                if tipper["name"] == match.group(1):
-                    tipper["total"] = float(tipper["total"]) + float(match.group(2))
+            for donator in donators:
+                if donator["name"] == match.group(1):
+                    donator["total"] = float(donator["total"]) + float(match.group(2))
                     break
 
             else:
-                tippers.append({"name": match.group(1), "total": float(match.group(2))})
+                donators.append({"name": match.group(1), "total": float(match.group(2))})
 
-    tippers = sorted(tippers, key=lambda x: x["total"], reverse=True)
-    return tippers
+    donators = sorted(donators, key=lambda x: x["total"], reverse=True)
+    return donators
