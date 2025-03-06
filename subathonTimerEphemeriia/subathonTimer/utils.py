@@ -35,7 +35,9 @@ def get_donators():
                     break
 
             else:
-                donators.append({"name": match.group(1), "total": float(match.group(2))})
+                donators.append(
+                    {"name": match.group(1), "total": float(match.group(2))}
+                )
 
     donators = sorted(donators, key=lambda x: x["total"], reverse=True)
     return donators
