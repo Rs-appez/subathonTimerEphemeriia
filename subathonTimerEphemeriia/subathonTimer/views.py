@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.http import HttpRequest
 
-from django.conf import settings
+from .utils import get_logs
 
 from .models import Timer
 from .views_api import TimerViewSet
@@ -84,8 +84,19 @@ def add_time(request):
         return render(
             request,
             "subathonTimer/addTime.html",
-            {"logs": __get_logs(), "timer_paused": timer.timer_paused},
+            {"logs": get_logs(), "timer_paused": timer.timer_paused},
         )
+
+
+def list_tippers(request):
+    return
+    # logs = get_logs()
+    # for log in logs:
+    # return render(
+    #     request,
+    #     "subathonTimer/tippers.html",
+    #     {"tippers": tippers},
+    # )
 
 
 def add_time_success(request):
@@ -98,7 +109,7 @@ def add_time_success(request):
         {
             "message": request.GET.get("message", ""),
             "status": request.GET.get("status"),
-            "logs": __get_logs(),
+            "logs": get_logs(),
             "timer_paused": timer.timer_paused,
         },
     )
@@ -138,8 +149,10 @@ def tip_progress(request):
     return render(
         request,
         "subathonTimer/tipProgress.html",
-        {"total_tips": timer.timer_total_donations, "last_goal": last_goal.goal_amount},
+        {"total_tips": timer.timer_total_donations,
+            "last_goal": last_goal.goal_amount},
     )
+
 
 def sub_progress(request):
     timer = Timer.objects.last()
@@ -151,6 +164,7 @@ def sub_progress(request):
         {"total_subs": total_subs},
     )
 
+
 def global_timer(request):
     timer = Timer.objects.last()
     return render(
@@ -158,10 +172,3 @@ def global_timer(request):
         "subathonTimer/globalTimer.html",
         {"time": timer.started_time()},
     )
-
-
-def __get_logs():
-    path = "/logs/log.txt" if not settings.DEBUG else "log.txt"
-    with open(path, "r") as f:
-        lines = f.readlines()
-    return lines[::-1]

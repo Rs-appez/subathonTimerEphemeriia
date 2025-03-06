@@ -4,7 +4,8 @@
 
 <head>
   <title>Subathon Timer</title>
-  <meta charset="utf-8">
+    <link rel='icon' href="{% static 'bingo/images/cacatchu.png' %}" />
+    <meta charset="utf-8">
 </head>
 
 <body>
@@ -19,6 +20,7 @@
       </div>
     </div>
     <div class="tip-wrapper">
+    {% if tips %}
       <div class="image-column-sub" id="tips">
         {% for tip in tips %}
         <div id='{{tip.goal_name}}' class="tip_image_to_move">
@@ -35,6 +37,7 @@
         </div>
         {% endfor %}
       </div>
+        {% endif %}
       <div class="image-column" id='subs'>
         {% for sub in subs %}
         <div id='{{sub.goal_name}}' class="sub_image_to_move">
@@ -53,9 +56,6 @@
       </div>
     </div>
 
-    <div style="height: 50px;">
-    </div>
-    <div style="height: 50px;background-color: black;"></div>
     {% else %}
     <form method="POST" action="start_timer">
       {% csrf_token %}

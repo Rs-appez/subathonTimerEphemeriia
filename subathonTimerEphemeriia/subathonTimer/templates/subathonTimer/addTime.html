@@ -1,53 +1,47 @@
-<!DOCTYPE html>
+{% load static %}
+<!doctype html>
 <html>
-
-<head>
+  <head>
     <title>Manage Time</title>
-    <style>
-        .inline-form {
-            display: inline-block;
-        }
-        body {
-            background-color:rgb(20, 20, 24);
-            color:rgb(197, 186, 172);
-        }
-    </style>
-</head>
+    <link rel="icon" href="{% static 'bingo/images/cacatchu.png' %}" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'subathonTimer/css/admin.css' %}"
+    />
+  </head>
 
-<body>
+  <body>
     <h1>Manage Time</h1>
     <div>
-        <form method="POST" action="{% url 'add_time' %}" class="inline-form">
-            {% csrf_token %}
-            <label for="time">Time to add (in seconds):</label>
-            <p style="font-style: italic;">Negative number for substract time</p>
-            <input type="number" id="time" name="time" required>
-            <button type="submit">Add</button>
-        </form>
+      <form method="POST" action="{% url 'add_time' %}" class="inline-form">
+        {% csrf_token %}
+        <label for="time">Time to add (in seconds):</label>
+        <p style="font-style: italic">Negative number for substract time</p>
+        <input type="number" id="time" name="time" required />
+        <button type="submit">Add</button>
+      </form>
 
-        <form action="{% url 'pause_timer' %}" method="POST" class="inline-form">
-            {% csrf_token %}
-            {% if timer_paused %}
-            <input type="hidden" name="pause" value="false">
-            <button type="submit">Resume</button>
-            {% else %}
-            <input type="hidden" name="pause" value="true">
-            <button type="submit">Pause</button>
-            {% endif %}
-        </form>
-        
-        {% if status == "200" %}
-        <p style="color: green;">{{ message }} </p>
+      <form action="{% url 'pause_timer' %}" method="POST" class="inline-form">
+        {% csrf_token %} {% if timer_paused %}
+        <input type="hidden" name="pause" value="false" />
+        <button type="submit">Resume</button>
         {% else %}
-        <p style="color: red;">{{ message }}</p>
+        <input type="hidden" name="pause" value="true" />
+        <button type="submit">Pause</button>
         {% endif %}
+      </form>
+
+      {% if status == "200" %}
+      <p style="color: green">{{ message }}</p>
+      {% else %}
+      <p style="color: red">{{ message }}</p>
+      {% endif %}
     </div>
     <div>
-            {% for log in logs %}
-            <p>{{ log }}</p>
-            {% endfor %}
-
+      {% for log in logs %}
+      <p>{{ log }}</p>
+      {% endfor %}
     </div>
-</body>
-
+  </body>
 </html>
