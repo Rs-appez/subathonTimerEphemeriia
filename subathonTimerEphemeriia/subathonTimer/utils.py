@@ -53,9 +53,9 @@ def get_gifters():
             break
         match = re.search(r"New sub: \w+ - \d+ - offered by (\w+)", log)
         if match:
+            if match.group(1) == "Anonymous":
+                continue
             for gifter in gifters:
-                if match.group(1) == "Anonymous":
-                    break
                 if gifter["name"] == match.group(1):
                     gifter["total"] = gifter["total"] + 1
                     break
