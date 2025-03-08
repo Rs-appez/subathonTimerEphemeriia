@@ -21,7 +21,7 @@
     </div>
     <div class="tip-wrapper">
     {% if tips %}
-      <div class="image-column-sub" id="tips">
+      <div class="image-column" id="tips">
         {% for tip in tips %}
         <div id='{{tip.goal_name}}' class="tip_image_to_move">
           <video muted class='butterfly_animation'>
@@ -38,7 +38,7 @@
         {% endfor %}
       </div>
         {% endif %}
-      <div class="image-column" id='subs'>
+      <div class="image-column-sub" id='subs'>
         {% for sub in subs %}
         <div id='{{sub.goal_name}}' class="sub_image_to_move">
           <video muted class='butterfly_animation'>
