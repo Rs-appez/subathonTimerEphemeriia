@@ -24,9 +24,9 @@ console_command = '/code/manage.py shell'
   processes = ['app']
 
 [[vm]]
-  memory = '1gb'
   cpu_kind = 'shared'
   cpus = 1
+  memory_mb = 512
 
 [mounts]
 source="log_volume"
