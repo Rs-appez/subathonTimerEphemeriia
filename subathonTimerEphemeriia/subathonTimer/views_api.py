@@ -11,6 +11,7 @@ from .utils import write_log
 import time
 import threading
 
+
 class TimerViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAdminUser]
     queryset = Timer.objects.all()
@@ -184,6 +185,21 @@ class TimerViewSet(viewsets.ModelViewSet):
             timer.send_ticket()
             return Response({"message": "Timer resumed", "status": 200})
         return Response({"message": "Timer not paused", "status": 400})
+
+    @action(detail=False, methods=["post"], permission_classes=[IsAdminUser])
+    def edit_started_time(self, request, pk=None):
+        timer = Timer.objects.last()
+        time = request.data["time"]
+
+        try:
+            timer.edit_started_time(float(time))
+
+        except Exception as e:
+            return Response({"message": "Invalid time", "status": 400})
+
+        timer.send_ticket_start()
+
+        return Response({"message": "Started time edited", "status": 200})
 
 
 class TipGoalViewSet(viewsets.ModelViewSet):
