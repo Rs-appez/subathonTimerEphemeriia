@@ -17,7 +17,8 @@ class BonusType(models.TextChoices):
 
 
 class BonusTime(models.Model):
-    bonus_condition = models.CharField(choices=BonusType.choices, max_length=10)
+    bonus_condition = models.CharField(
+        choices=BonusType.choices, max_length=10)
     bonus_value = models.IntegerField()
     bonus_time = models.IntegerField()
     bonus_used = models.BooleanField(default=False)
@@ -137,6 +138,13 @@ class Timer(models.Model):
 
         return self.timer_start.timestamp()
 
+    def edit_started_time(self, time: float):
+        self.timer_start = F("timer_start") - timezone.timedelta(seconds=time)
+
+        self.save(update_fields=["timer_start"])
+        self.refresh_from_db()
+
+
     def start_timer(self):
         self.timer_start = timezone.now()
         self.timer_end = self.timer_start + timezone.timedelta(
@@ -180,11 +188,12 @@ class Timer(models.Model):
             TipGoal.objects.filter(timer=self).all().order_by("goal_amount")
         )
 
-        grouped_goals = [tip_goals[i : i + 3] for i in range(0, len(tip_goals), 3)]
+        grouped_goals = [tip_goals[i: i + 3]
+                         for i in range(0, len(tip_goals), 3)]
         goals = []
         for i, goal in enumerate(grouped_goals):
             if goal[-1].goal_amount > self.timer_total_donations:
-                goals = tip_goals[i * 3 :]
+                goals = tip_goals[i * 3:]
                 break
         for goal in goals:
             if goal.goal_amount <= self.timer_total_donations:
@@ -201,11 +210,12 @@ class Timer(models.Model):
         sub_goals = list(
             SubGoal.objects.filter(timer=self).all().order_by("goal_amount")
         )
-        grouped_goals = [sub_goals[i : i + 3] for i in range(0, len(sub_goals), 3)]
+        grouped_goals = [sub_goals[i: i + 3]
+                         for i in range(0, len(sub_goals), 3)]
         goals = []
         for i, goal in enumerate(grouped_goals):
             if goal[-1].goal_amount > self.timer_total_subscriptions:
-                goals = sub_goals[i * 3 :]
+                goals = sub_goals[i * 3:]
                 break
         for goal in goals:
             if goal.goal_amount <= self.timer_total_subscriptions:
@@ -278,7 +288,8 @@ class Timer(models.Model):
 
         bonus_time *= multiplier
 
-        self.timer_end = F("timer_end") + timezone.timedelta(seconds=bonus_time)
+        self.timer_end = F("timer_end") + \
+            timezone.timedelta(seconds=bonus_time)
 
         self.save(update_fields=["timer_end"])
         self.refresh_from_db()
