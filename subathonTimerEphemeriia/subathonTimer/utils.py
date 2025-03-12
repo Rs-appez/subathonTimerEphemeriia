@@ -1,13 +1,15 @@
 from django.conf import settings
 
 import re
+from datetime import datetime
 
 
 def write_log(msg):
     path = "/logs/log.txt" if not settings.DEBUG else "log.txt"
+    time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     with open(path, "a") as f:
         f.write("\n")
-        f.write(msg)
+        f.write(f"[{time}] {msg}")
         f.write("\n")
         f.write("-" * 100)
 
