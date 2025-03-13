@@ -116,6 +116,7 @@ class Timer(models.Model):
 
     # Bonus time
     bonus_times = models.ManyToManyField(BonusTime, blank=True)
+    multiplicator_on = models.BooleanField(default=True)
 
     def __str__(self):
         return self.timer_name
