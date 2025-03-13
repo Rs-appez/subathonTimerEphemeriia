@@ -23,12 +23,28 @@
       </form>
 
       <form action="{% url 'pause_timer' %}" method="POST" class="inline-form">
+        <label for="pause">Timer : </label>
         {% csrf_token %} {% if timer_paused %}
         <input type="hidden" name="pause" value="false" />
         <button type="submit">Resume</button>
         {% else %}
         <input type="hidden" name="pause" value="true" />
         <button type="submit">Pause</button>
+        {% endif %}
+      </form>
+
+      <form
+        action="{% url 'toggle_multiplicator' %}"
+        method="POST"
+        class="inline-form multiplicator"
+      >
+        <label for="toggle_multiplicator">Sub bonus multiplicator : </label>
+        {% csrf_token %} {% if multiplicator_on %}
+        <input type="hidden" name="toggle_multiplicator" value="false" />
+        <button type="submit">Desactivate</button>
+        {% else %}
+        <input type="hidden" name="toggle_multiplicator" value="true" />
+        <button type="submit">Activate</button>
         {% endif %}
       </form>
 
