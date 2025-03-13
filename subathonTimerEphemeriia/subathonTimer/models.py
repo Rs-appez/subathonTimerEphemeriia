@@ -184,6 +184,10 @@ class Timer(models.Model):
 
         return True
 
+    def toggle_multiplicator(self, active: bool):
+        self.multiplicator_on = active
+        self.save()
+
     def get_tip_goal(self):
         tip_goals = list(
             TipGoal.objects.filter(timer=self).all().order_by("goal_amount")
