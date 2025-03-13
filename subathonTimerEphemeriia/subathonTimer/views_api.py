@@ -51,35 +51,37 @@ class TimerViewSet(viewsets.ModelViewSet):
             if not timer.new_sub(tier):
                 raise Exception
 
-            with self.cache_lock:
-                last_gifters = cache.get("last_gifter", [])
+            if timer.multiplicator_on:
 
-                last_gifter = [x for x in last_gifters if x[0] == gifter]
-                last_gifter = last_gifter[0] if last_gifter else ("", 0, 0)
+                with self.cache_lock:
+                    last_gifters = cache.get("last_gifter", [])
 
-                if (
-                    gifter != ""
-                    and gifter == last_gifter[0]
-                    and time.time() - last_gifter[2] < 20
-                ):
-                    update_gifter = (gifter, last_gifter[1] + 1, time.time())
+                    last_gifter = [x for x in last_gifters if x[0] == gifter]
+                    last_gifter = last_gifter[0] if last_gifter else ("", 0, 0)
 
-                    if update_gifter[1] == 5:
-                        bonus_time = timer.add_bonus_sub(tier, 5)
+                    if (
+                        gifter != ""
+                        and gifter == last_gifter[0]
+                        and time.time() - last_gifter[2] < 20
+                    ):
+                        update_gifter = (gifter, last_gifter[1] + 1, time.time())
 
-                    elif update_gifter[1] == 10:
-                        bonus_time = timer.add_bonus_sub(tier, 15)
-                        update_gifter = (gifter, 0, time.time())
+                        if update_gifter[1] == 5:
+                            bonus_time = timer.add_bonus_sub(tier, 5)
 
-                else:
-                    update_gifter = (gifter, 1, time.time())
+                        elif update_gifter[1] == 10:
+                            bonus_time = timer.add_bonus_sub(tier, 15)
+                            update_gifter = (gifter, 0, time.time())
 
-                if last_gifter in last_gifters and last_gifter[0] != "":
-                    last_gifters[last_gifters.index(last_gifter)] = update_gifter
-                else:
-                    last_gifters.append(update_gifter)
+                    else:
+                        update_gifter = (gifter, 1, time.time())
 
-                cache.set("last_gifter", last_gifters)
+                    if last_gifter in last_gifters and last_gifter[0] != "":
+                        last_gifters[last_gifters.index(last_gifter)] = update_gifter
+                    else:
+                        last_gifters.append(update_gifter)
+
+                    cache.set("last_gifter", last_gifters)
 
         except Exception as e:
             return Response({"message": "Invalid tier", "status": 400})
