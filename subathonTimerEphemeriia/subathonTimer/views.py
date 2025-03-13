@@ -84,7 +84,11 @@ def add_time(request):
         return render(
             request,
             "subathonTimer/addTime.html",
-            {"logs": get_logs(), "timer_paused": timer.timer_paused},
+            {
+                "logs": get_logs(),
+                "timer_paused": timer.timer_paused,
+                "multiplicator_on": timer.multiplicator_on,
+            },
         )
 
 
@@ -110,6 +114,7 @@ def add_time_success(request):
             "status": request.GET.get("status"),
             "logs": get_logs(),
             "timer_paused": timer.timer_paused,
+            "multiplicator_on": timer.multiplicator_on,
         },
     )
 
@@ -139,6 +144,29 @@ def pause_timer(request):
         return redirect(
             f"/timer/add_time_success?message={res.data['message']}&status={res.data['status']}"
         )
+
+
+def toggle_multiplicator(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect("/admin_django/login/?next=/timer/add_time/")
+    if request.method == "POST":
+        req = HttpRequest()
+        req.method = "POST"
+        req.user = request.user
+
+        timer = Timer.objects.last()
+
+        try:
+            toggle = request.POST.get("toggle_multiplicator").lower() == "true"
+            timer.toggle_multiplicator(toggle)
+        except Exception as e:
+            return redirect(
+                "/timer/add_time_success?message=Error in request&status=400"
+            )
+
+        message = "Multiplicator actived" if toggle else "Multiplicator desactived"
+
+        return redirect(f"/timer/add_time_success?message={message}&status=200")
 
 
 def tip_progress(request):
