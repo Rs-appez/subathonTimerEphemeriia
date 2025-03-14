@@ -1,3 +1,28 @@
 from django.db import models
 
-# Create your models here.
+
+class Calendar(models.Model):
+    title = models.CharField(max_length=200)
+    size = models.IntegerField()
+
+    background_url = models.URLField()
+    cells = models.ManyToManyField("Cell", related_name="cells")
+
+    def __str__(self):
+        return str(self.title)
+
+
+class Cell(models.Model):
+    number = models.IntegerField()
+    image_url = models.URLField()
+    reward = models.ForeignKey("Reward", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.number)
+
+class Reward(models.Model):
+    name = models.CharField(max_length=200)
+    image_url = models.URLField()
+
+    def __str__(self):
+        return str(self.name)
