@@ -48,13 +48,14 @@ INSTALLED_APPS = [
     "whitenoise.runserver_nostatic",
     "rest_framework",
     "rest_framework.authtoken",
+    "channels",
+    "corsheaders",
     "administrative",
     "subathonTimer",
     "oauth",
     "bingo",
     "chatbot",
-    "channels",
-    "corsheaders",
+    "giveaway",
 ]
 
 MIDDLEWARE = [
