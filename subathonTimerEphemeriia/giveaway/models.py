@@ -5,6 +5,7 @@ class Calendar(models.Model):
     title = models.CharField(max_length=200)
     size = models.IntegerField()
 
+    mask_url = models.URLField()
     background_url = models.URLField()
     cells = models.ManyToManyField("Cell", related_name="cells")
 
@@ -19,6 +20,7 @@ class Cell(models.Model):
 
     def __str__(self):
         return str(self.number)
+
 
 class Reward(models.Model):
     name = models.CharField(max_length=200)
