@@ -1,3 +1,6 @@
 from django.contrib import admin
+from .models import Calendar, Cell, Reward
 
-# Register your models here.
+admin.site.register(Calendar)
+admin.site.register(Cell)
+admin.site.register(Reward)
