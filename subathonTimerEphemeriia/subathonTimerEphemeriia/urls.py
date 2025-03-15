@@ -8,4 +8,5 @@ urlpatterns = [
     path("timer/", include("subathonTimer.urls")),
     path("bingo/", include("bingo.urls")),
     path("info/", include("administrative.urls")),
+    path("giveaway/", include("giveaway.urls")),
 ]
