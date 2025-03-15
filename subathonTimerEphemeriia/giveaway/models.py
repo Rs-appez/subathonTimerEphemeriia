@@ -16,7 +16,7 @@ class Calendar(models.Model):
 class Cell(models.Model):
     number = models.IntegerField()
     image_url = models.URLField()
-    reward = models.ForeignKey("Reward", on_delete=models.CASCADE)
+    reward = models.ForeignKey("Reward", on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return str(self.number)
