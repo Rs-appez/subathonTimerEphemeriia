@@ -9,6 +9,8 @@ class Calendar(models.Model):
     background_url = models.URLField()
     cells = models.ManyToManyField("Cell", related_name="cells")
 
+    is_active = models.BooleanField(default=False)
+
     def __str__(self):
         return str(self.title)
 
