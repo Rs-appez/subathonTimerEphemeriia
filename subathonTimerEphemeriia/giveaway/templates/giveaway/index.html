@@ -7,7 +7,38 @@
     <meta charset="utf-8" />
   </head>
 
-  <body></body>
+  <body>
+    <div class="container">
+      <div class="cacatchu">
+        <img
+          class="cacatchu_background cacatchu_image"
+          src="{% static 'giveaway/images/cacatchu.png' %}"
+          alt="cacatchu"
+        />
+        {% for cell in calendar.cells %}
+        <img
+          class="cacatchu_image"
+          id="cell_{{ cell.number }}"
+          src="{{ cell.image_url }}"
+          alt="cell"
+        />
+        {% endfor %}
+        <img class="cacatchu_image mask" src="{{ calendar.mask_url }}" alt="" usemap="#cacatchu-map" />
+        <map name="cacatchu-map">
+        {% for cell in calendar.cells %}
+          <area
+            id="cell_{{ cell.number }}_area"
+            shape="poly"
+            coords=""
+            alt="Clickable Area"
+            onclick="handleClick(event)"
+            nohref="nohref"
+          />
+                    {% endfor %}
+        </map>
+      </div>
+    </div>
+  </body>
 </html>
 <link
   rel="stylesheet"
@@ -15,4 +46,7 @@
   href="{% static 'giveaway/css/index.css' %}"
 />
 
-<script src="{% static 'giveaway/js/index.js' %}"></script>
+{{ calendar.cells|json_script:"calendar-cells-data" }}
+<script
+  src="{% static 'giveaway/js/index.js' %}"
+></script>
