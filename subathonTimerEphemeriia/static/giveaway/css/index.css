@@ -29,7 +29,6 @@ body {
     display: flex;
     position: absolute;
 
-    pointer-events: none;
     height: 100%;
 }
 
