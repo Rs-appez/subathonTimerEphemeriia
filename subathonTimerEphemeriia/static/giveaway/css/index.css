@@ -29,11 +29,8 @@ body {
     display: flex;
     position: absolute;
 
-    height: 100%;
-}
-
-.mask {
     pointer-events: none;
+    height: 100%;
 }
 
 area {
