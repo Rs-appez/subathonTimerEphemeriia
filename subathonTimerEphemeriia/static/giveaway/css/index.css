@@ -1,0 +1,41 @@
+body {
+    padding: 0;
+    margin: 0;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.cacatchu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+
+    height: 90%;
+    width: 90%;
+}
+
+.cacatchu_background {
+    opacity: 0.5;
+}
+
+.cacatchu_image {
+    display: flex;
+    position: absolute;
+
+    height: 100%;
+}
+
+.mask {
+    pointer-events: none;
+}
+
+area {
+    cursor: pointer;
+}
