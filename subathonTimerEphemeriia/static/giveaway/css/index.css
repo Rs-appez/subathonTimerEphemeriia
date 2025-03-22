@@ -35,3 +35,31 @@ body {
 area {
     cursor: pointer;
 }
+
+.fade-out {
+    animation: fade 1s forwards;
+}
+
+.go-up {
+    animation: go-up 1.5s forwards;
+}
+
+@keyframes fade {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes go-up {
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(-200%);
+    }
+}
