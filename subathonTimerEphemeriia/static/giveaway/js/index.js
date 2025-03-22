@@ -18,12 +18,15 @@ function handleClick(event) {
 }
 
 function addRandomEffect(element) {
-    const effects = ["go-up", "fade-out"];
+    const effects = ["fade-out", "go-up", "go-down", "go-left", "go-right"];
     const randomEffect = effects[Math.floor(Math.random() * effects.length)];
 
     // add specific effect
     switch (randomEffect) {
         case "go-up":
+        case "go-down":
+        case "go-left":
+        case "go-right":
             element.style.setProperty("z-index", "1");
             break;
         default:
