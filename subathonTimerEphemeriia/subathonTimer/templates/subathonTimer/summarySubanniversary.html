@@ -14,19 +14,52 @@
   <body>
     <img class='background' src="{% static 'general/images/background.jpg' %}" alt="Image" />
         <div class='container'>
-            <img class="emote" style="top:32%;left:66%;" src="{% static 'general/images/emotes/gg.png' %}" alt="Image" />
+            <div class="emote-column" style="left: 71%;">
+                <img class="emote_float" style="--i:0;" src="{% static 'general/images/emotes/gg.png' %}" alt="Image" />
+                <img class="emote_float" style="--i:1;" src="{% static 'general/images/emotes/gg.png' %}" alt="Image" />
+                <img class="emote_float" style="--i:2;" src="{% static 'general/images/emotes/gg.png' %}" alt="Image" />
+            </div>
+            <div class="emote-column" style="left: 28%;">
+                <img class="emote_float" style="--i:1.5;" src="{% static 'general/images/emotes/cacatchu_GG.png' %}" alt="Image" />
+                <img class="emote_float" style="--i:2.5;" src="{% static 'general/images/emotes/cacatchu_GG.png' %}" alt="Image" />
+                <img class="emote_float" style="--i:3.5;" src="{% static 'general/images/emotes/cacatchu_GG.png' %}" alt="Image" />
+            </div>
+            <img class="emote_bounce" style='top: 22%;left: 11%;' src="{% static 'general/images/emotes/dab.png' %}" alt="Image" />
+            <img class="emote_flip" style='top: 44%;right: 35%;' src="{% static 'general/images/emotes/wow.png' %}" alt="Image" />
+            <img class="emote_flip" style='top: 44%;left: 35%;animation-delay:-1.5s;' src="{% static 'general/images/emotes/wow.png' %}" alt="Image" />
             <div class="time-container">
-<svg >
-    <defs>
-        <path id="curve" d="M 30,100 A 100,50 0 1,1 250,100" />
-    </defs>
-    <text class="curved-text">
-        <textPath href="#curve" startOffset="50%" text-anchor="middle">
-            Subanniversary
-        </textPath>
-    </text>
-</svg>
-                    <p class="time number" id="time"></p>
+                <svg >
+                    <defs>
+                        <path id="curve" d="M 30,100 A 100,50 0 1,1 250,100" />
+                    </defs>
+                    <text class="curved-text">
+                        <textPath href="#curve" startOffset="50%" text-anchor="middle">
+                            Subanniversary
+                        </textPath>
+                    </text>
+                </svg>
+                <p class="time number" id="time"></p>
+            </div>
+            <div class="subathon-stats">
+                <div class="title">
+                <p class="text" style="text-decoration: underline;">Quelques stats</p>
+                    <img class="emote"  src="{% static 'general/images/emotes/note.png' %}" alt="Image" />
+                </div>
+                <div class="stats"> 
+                        <p class="text"> Nombre de subs</p>
+                        <p class="text"> : </p>
+                        <p class="text"> {{ subs }}</p>
+                        <img class="emote"  src="{% static 'general/images/emotes/stonk.png' %}" alt="Image" />
+                        <p class="text"> Nombre de dons</p>
+                        <p class="text"> : </p>
+                        <p class="text"> {{ dons }}</p>
+                        <img class="emote"  src="{% static 'general/images/emotes/fric.png' %}" alt="Image" />
+                        <p class="text"> Nombre de bits</p>
+                        <p class="text"> : </p>
+                        <p class="text"> {{ bits }}</p>
+                        <img class="emote"  src="{% static 'general/images/emotes/cheers.gif' %}" alt="Image" />
+                    </div>
+                </div>
             </div>
         </div>
   </body>
