@@ -106,11 +106,14 @@ def list_participants(request):
 def subannivesary_summary(request):
     timer = Timer.objects.get(timer_name="subaniversery")
     time = timer.get_total_time()
+    dons = timer.timer_total_donations
+    subs = timer.timer_total_subscriptions
+    bits = timer.timer_total_bits
 
     return render(
         request,
         "subathonTimer/summarySubanniversary.html",
-        {"time": time},
+        {"time": time, "dons": dons, "subs": subs, "bits": bits},
     )
 
 
