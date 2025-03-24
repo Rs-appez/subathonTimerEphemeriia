@@ -42,7 +42,7 @@ body {
     flex-direction: column;
     width: 100%;
     overflow: hidden;
-    height: 450px;
+    height: 150px;
 }
 
 .image-column-sub {

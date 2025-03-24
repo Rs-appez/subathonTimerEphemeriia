@@ -189,6 +189,14 @@ class Timer(models.Model):
         self.save()
 
     def get_tip_goal(self):
+
+        return (TipGoal.objects.filter(
+                goal_amount__gt=self.timer_total_donations, timer=self
+                )
+                .all()
+                .order_by("goal_amount")
+                )
+
         tip_goals = list(
             TipGoal.objects.filter(timer=self).all().order_by("goal_amount")
         )
@@ -212,6 +220,15 @@ class Timer(models.Model):
         return TipGoal.objects.filter(timer=self).all().order_by("goal_amount").last()
 
     def get_sub_goal(self):
+
+        return (
+            SubGoal.objects.filter(
+                goal_amount__gt=self.timer_total_subscriptions, timer=self
+            )
+            .all()
+            .order_by("goal_amount")
+        )
+
         sub_goals = list(
             SubGoal.objects.filter(timer=self).all().order_by("goal_amount")
         )
