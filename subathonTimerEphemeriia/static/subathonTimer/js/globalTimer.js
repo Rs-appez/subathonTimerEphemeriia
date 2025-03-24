@@ -1,14 +1,14 @@
 const data = document.currentScript.dataset;
-var startedTime = data.time;
+var time = data.time;
 
 function update() {
-    console.log(startedTime);
+    console.log(time);
     const timeElement = document.getElementById("time");
     if (!timeElement) {
         return;
     }
-    if (startedTime !== "0") {
-        remainingTime = new Date().getTime() / 1000 - startedTime;
+    if (time !== "0") {
+        remainingTime = new Date().getTime() / 1000 - time;
         timeElement.innerHTML = formatTime(remainingTime);
     } else {
         timeElement.innerHTML = "SOON !!!!!";
@@ -35,7 +35,7 @@ function connect() {
 
     ws.onmessage = function(event) {
         var data_ws = JSON.parse(event.data);
-        startedTime = data_ws.time;
+        time = data_ws.time;
 
         update();
     };

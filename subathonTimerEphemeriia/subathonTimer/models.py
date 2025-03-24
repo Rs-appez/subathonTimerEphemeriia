@@ -139,6 +139,12 @@ class Timer(models.Model):
 
         return self.timer_start.timestamp()
 
+    def get_total_time(self):
+        if self.timer_start is None:
+            return 0
+
+        return (self.timer_end - self.timer_start).total_seconds()
+
     def edit_started_time(self, time: float):
         self.timer_start = F("timer_start") - timezone.timedelta(seconds=time)
 

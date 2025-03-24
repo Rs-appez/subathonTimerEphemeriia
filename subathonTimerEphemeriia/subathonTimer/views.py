@@ -6,6 +6,7 @@ from .utils import get_logs, get_donators, get_gifters
 from .models import Timer
 from .views_api import TimerViewSet
 
+from datetime import timedelta, datetime
 
 def index(request):
     timer = Timer.objects.last()
@@ -99,6 +100,17 @@ def list_participants(request):
         request,
         "subathonTimer/participants.html",
         {"donators": donators, "gifters": gifters},
+    )
+
+
+def subannivesary_summary(request):
+    timer = Timer.objects.get(timer_name="subaniversery")
+    time = timer.get_total_time()
+
+    return render(
+        request,
+        "subathonTimer/summarySubanniversary.html",
+        {"time": time},
     )
 
 

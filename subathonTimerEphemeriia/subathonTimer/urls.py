@@ -10,6 +10,7 @@ from .views import (
     pause_timer,
     global_timer,
     list_participants,
+    subannivesary_summary,
 )
 from .views_api import TimerViewSet
 
@@ -30,4 +31,5 @@ urlpatterns = [
     path("pause_timer", pause_timer, name="pause_timer"),
     path("global_timer", global_timer, name="global_timer"),
     path("list_participants/", list_participants, name="list_participants"),
+    path("subanniversary_summary/", subannivesary_summary, name="subanniversary_summary"),
 ]

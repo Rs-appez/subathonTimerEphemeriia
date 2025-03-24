@@ -1,0 +1,37 @@
+{% load static %}
+<!doctype html>
+<html>
+  <head>
+    <title>Subanniversay summary</title>
+    <link rel="icon" href="{% static 'bingo/images/cacatchu.png' %}" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'subathonTimer/css/summary.css' %}"
+    />
+  </head>
+
+  <body>
+    <img class='background' src="{% static 'general/images/background.jpg' %}" alt="Image" />
+        <div class='container'>
+            <img class="emote" style="top:32%;left:66%;" src="{% static 'general/images/emotes/gg.png' %}" alt="Image" />
+            <div class="time-container">
+<svg >
+    <defs>
+        <path id="curve" d="M 30,100 A 100,50 0 1,1 250,100" />
+    </defs>
+    <text class="curved-text">
+        <textPath href="#curve" startOffset="50%" text-anchor="middle">
+            Subanniversary
+        </textPath>
+    </text>
+</svg>
+                    <p class="time number" id="time"></p>
+            </div>
+        </div>
+  </body>
+</html>
+
+<script
+  src="{% static 'subathonTimer/js/summary.js' %}"
+data-time="{{ time }}"></script>
