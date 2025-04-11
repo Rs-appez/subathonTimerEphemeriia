@@ -18,6 +18,12 @@ class CellViewSet(viewsets.ModelViewSet):
     queryset = Cell.objects.all()
     serializer_class = CellSerializer
 
+    @action(detail=True, methods=["POST"], permission_classes=[IsAdminUser])
+    def open_cell(self, request, pk=None):
+        cell = self.get_object()
+        cell.open()
+        return Response({"status": "cell opened", "cell": CellSerializer(cell).data})
+
 
 class RewardViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAdminUser]
