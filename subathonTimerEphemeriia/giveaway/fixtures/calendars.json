@@ -1,0 +1,1 @@
+[{"model": "giveaway.calendar", "pk": 1, "fields": {"title": "24", "size": 24, "mask_url": "http://127.0.0.1:8000/static/giveaway/images/calendar_contours_uniquement.png", "background_url": "http://127.0.0.1:8000/static/giveaway/images/FONDSCENEVIERGE.jpg", "is_active": true, "cells": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]}}]
