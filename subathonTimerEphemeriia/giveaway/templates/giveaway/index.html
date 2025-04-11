@@ -16,16 +16,19 @@
           alt="cacatchu"
         />
         {% for cell in calendar.cells %}
+        {% if not cell.is_opened %}
         <img
           class="cacatchu_image"
           id="cell_{{ cell.number }}"
           src="{{ cell.image_url }}"
           alt="cell"
         />
+        {% endif %}
         {% endfor %}
         <img class="cacatchu_image mask" src="{{ calendar.mask_url }}" alt="" usemap="#cacatchu-map" />
         <map name="cacatchu-map">
         {% for cell in calendar.cells %}
+        {% if not cell.is_opened %}
           <area
             id="cell_{{ cell.number }}_area"
             shape="poly"
@@ -34,6 +37,7 @@
             onclick="handleClick(event)"
             nohref="nohref"
           />
+        {% endif %}
         {% endfor %}
         </map>
       </div>
