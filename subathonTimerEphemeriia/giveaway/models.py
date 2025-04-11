@@ -20,6 +20,8 @@ class Cell(models.Model):
     image_url = models.URLField()
     reward = models.ForeignKey("Reward", on_delete=models.CASCADE, null=True, blank=True)
 
+    is_opened = models.BooleanField(default=False)
+
     coordonates = models.CharField(max_length=500)
 
     def __str__(self):
