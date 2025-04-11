@@ -18,7 +18,9 @@ class Calendar(models.Model):
 class Cell(models.Model):
     number = models.IntegerField()
     image_url = models.URLField()
-    reward = models.ForeignKey("Reward", on_delete=models.CASCADE, null=True, blank=True)
+    reward = models.ForeignKey(
+        "Reward", on_delete=models.CASCADE, null=True, blank=True
+    )
 
     is_opened = models.BooleanField(default=False)
 
@@ -26,6 +28,10 @@ class Cell(models.Model):
 
     def __str__(self):
         return str(self.number)
+
+    def open(self):
+        self.is_opened = True
+        self.save()
 
 
 class Reward(models.Model):
