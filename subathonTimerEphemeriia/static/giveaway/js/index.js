@@ -15,6 +15,23 @@ function handleClick(event) {
     addRandomEffect(cell_img);
 
     console.log(cellNumber);
+
+    var csrftoken = getCookie("csrftoken");
+    fetch(`/giveaway/api/cell/${cellNumber}/open_cell/`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": csrftoken,
+        },
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log("Success:", data);
+            // Handle the response data here
+        })
+        .catch((error) => {
+            console.error("Error:", error);
+        });
 }
 
 function addRandomEffect(element) {
@@ -39,6 +56,9 @@ function addRandomEffect(element) {
 function scaleImage() {
     cellsData.forEach(function(cell) {
         var img = document.getElementById(`cell_${cell.number}`);
+        if (!img) {
+            return;
+        }
         var imgWidth = img.width;
         var imgHeight = img.height;
 
@@ -50,6 +70,21 @@ function scaleImage() {
         var area = document.getElementById(`cell_${cell.number}_area`);
         area.setAttribute("coords", coords.join(","));
     });
+}
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+        const cookies = document.cookie.split(";");
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === name + "=") {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
 }
 
 window.addEventListener("load", scaleImage);
