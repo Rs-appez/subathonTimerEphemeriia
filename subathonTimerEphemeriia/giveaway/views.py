@@ -12,3 +12,13 @@ def index(request):
     calendar_json = CalendarSerializer(calendar).data
 
     return render(request, "giveaway/index.html", {"calendar": calendar_json})
+
+
+def admin(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect("/admin_django/login/?next=/giveaway/admin/")
+
+    calendars = Calendar.objects.all()
+    calendars_json = CalendarSerializer(calendars, many=True).data
+
+    return render(request, "giveaway/admin.html", {"calendars": calendars_json})
