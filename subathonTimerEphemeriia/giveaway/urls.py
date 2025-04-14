@@ -1,7 +1,7 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
-from .views import index
+from .views import index, admin
 from .views_api import CalendarViewSet, RewardViewSet, CellViewSet
 
 router = DefaultRouter()
@@ -13,4 +13,5 @@ router.register(r"cell", CellViewSet, basename="cell")
 urlpatterns = [
     path("api/", include(router.urls)),
     path("", index, name="index"),
+    path("admin/", admin, name="admin"),
 ]
