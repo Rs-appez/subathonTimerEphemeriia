@@ -18,7 +18,14 @@ def admin(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect("/admin_django/login/?next=/giveaway/admin/")
 
+    active_calendar = Calendar.objects.filter(is_active=True).last()
     calendars = Calendar.objects.all()
+
+    active_calendar_json = CalendarSerializer(active_calendar).data if active_calendar else None
     calendars_json = CalendarSerializer(calendars, many=True).data
 
-    return render(request, "giveaway/admin.html", {"calendars": calendars_json})
+    return render(
+        request,
+        "giveaway/admin.html",
+        {"calendars": calendars_json, "active_calendar": active_calendar_json},
+    )
