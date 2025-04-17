@@ -14,4 +14,5 @@ urlpatterns = [
     path("api/", include(router.urls)),
     path("", index, name="index"),
     path("admin/", admin, name="admin"),
+    path("admin/<int:calendar_id>/", admin, name="admin_arg"),
 ]
