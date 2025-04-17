@@ -14,8 +14,12 @@
     <div>
         <h1>Active Calendar</h1>
         <div class="active-calendar">
-            <h2>{{ active_bingo.name }}</h2>
-            <p>{{ active_bingo.description }}</p>
+            {% if active_calendar %}
+                <h2>{{ active_calendar.name }}</h2>
+                <p>{{ active_calendar.description }}</p>
+            {% else %}
+                <p>No active calendar</p>
+            {% endif %}
 
         </div>
         <div>
