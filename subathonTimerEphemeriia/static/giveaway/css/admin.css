@@ -1,10 +1,3 @@
-body {
-    background-color: #121212;
-    /* Darker background */
-    color: #e0e0e0;
-    /* Lighter text color for better contrast */
-}
-
 .active-calendar {
     border: 2px solid #e0e0e0;
     border-radius: 10px;
@@ -31,40 +24,6 @@ body {
     margin: 0;
     text-align: left;
     align-self: center;
-}
-
-.div-clickable {
-    cursor: pointer;
-    text-decoration: none;
-    /* Remove underline from links */
-    color: inherit;
-    /* Inherit text color */
-}
-
-a.btn,
-button {
-    background-color: #5a4bc4;
-    /* Green background */
-    border: none;
-    /* Remove borders */
-    color: #e0e0e0;
-    /* White text */
-    padding: 5px 20px;
-    /* Some padding */
-    text-decoration: none;
-    /* Remove underline */
-    margin: 4px 2px;
-    /* Add some margin */
-    cursor: pointer;
-    /* Add a pointer cursor on hover */
-    border-radius: 8px;
-    /* Rounded corners */
-}
-
-a.btn:hover,
-button:hover {
-    background-color: #4938bf;
-    /* Darker green on hover */
 }
 
 .item.alternate {
