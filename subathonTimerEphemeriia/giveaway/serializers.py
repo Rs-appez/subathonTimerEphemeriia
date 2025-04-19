@@ -25,7 +25,6 @@ class CalendarCellSerializer(serializers.ModelSerializer):
 
 
 class BaseCalendarSerializer(serializers.ModelSerializer):
-    cells = CalendarCellSerializer(many=True)
 
     class Meta:
         model = BaseCalendar
@@ -34,6 +33,7 @@ class BaseCalendarSerializer(serializers.ModelSerializer):
 
 class CalendarSerializer(serializers.ModelSerializer):
     base_calendar = BaseCalendarSerializer()
+    cells = CalendarCellSerializer(many=True)
 
     class Meta:
         model = Calendar
