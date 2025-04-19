@@ -5,7 +5,6 @@ class BaseCalendar(models.Model):
     size = models.IntegerField()
 
     mask_url = models.URLField()
-    background_url = models.URLField()
 
     def __str__(self):
         return str(self.size)
@@ -13,6 +12,8 @@ class BaseCalendar(models.Model):
 
 class Calendar(models.Model):
     title = models.CharField(max_length=200)
+    background_url = models.URLField()
+
     base_calendar = models.ForeignKey('BaseCalendar', on_delete=models.CASCADE)
 
     cells = models.ManyToManyField("CalendarCell", related_name="cells")
