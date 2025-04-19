@@ -1,12 +1,20 @@
 from django.db import models
 
 
-class Calendar(models.Model):
-    title = models.CharField(max_length=200)
+class BaseCalendar(models.Model):
     size = models.IntegerField()
 
     mask_url = models.URLField()
     background_url = models.URLField()
+
+    def __str__(self):
+        return str(self.size)
+
+
+class Calendar(models.Model):
+    title = models.CharField(max_length=200)
+    base_calendar = models.ForeignKey('BaseCalendar', on_delete=models.CASCADE)
+
     cells = models.ManyToManyField("CalendarCell", related_name="cells")
 
     is_active = models.BooleanField(default=False)
