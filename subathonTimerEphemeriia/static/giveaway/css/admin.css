@@ -41,6 +41,7 @@ body {
     /* Inherit text color */
 }
 
+a.btn,
 button {
     background-color: #5a4bc4;
     /* Green background */
@@ -60,6 +61,7 @@ button {
     /* Rounded corners */
 }
 
+a.btn:hover,
 button:hover {
     background-color: #4938bf;
     /* Darker green on hover */
@@ -94,5 +96,5 @@ button:hover {
     display: flex;
     justify-content: center;
     gap: 10px;
-    margin-top: 10px;
+    margin-top: 20px;
 }
