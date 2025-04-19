@@ -14,7 +14,7 @@ class Calendar(models.Model):
     title = models.CharField(max_length=200)
     background_url = models.URLField()
 
-    base_calendar = models.ForeignKey('BaseCalendar', on_delete=models.CASCADE)
+    base_calendar = models.ForeignKey("BaseCalendar", on_delete=models.CASCADE)
 
     cells = models.ManyToManyField("CalendarCell", related_name="cells")
 
@@ -22,6 +22,16 @@ class Calendar(models.Model):
 
     def __str__(self):
         return str(self.title)
+
+    def generate_cells(self):
+        """
+        Generate cells for the calendar based on the base calendar size.
+        """
+        cells = Cell.objects.filter(size=self.base_calendar.size)
+        for cell in cells:
+            calendar_cell = CalendarCell.objects.create(cell=cell)
+            self.cells.add(calendar_cell)
+        self.save()
 
 
 class CalendarCell(models.Model):
