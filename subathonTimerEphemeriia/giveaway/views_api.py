@@ -8,7 +8,6 @@ from .serializers import (
     CalendarSerializer,
     CellSerializer,
     RewardSerializer,
-    BaseCalendarSerializer,
 )
 
 import bleach
@@ -39,7 +38,9 @@ class CalendarViewSet(viewsets.ModelViewSet):
         )
         calendar.generate_cells()
 
-        return Response({"status": "calendar created", "calendar_id": calendar.id})
+        serializer = CalendarSerializer(calendar)
+
+        return Response({"status": "calendar created", "calendar": serializer.data})
 
 
 class CellViewSet(viewsets.ModelViewSet):
