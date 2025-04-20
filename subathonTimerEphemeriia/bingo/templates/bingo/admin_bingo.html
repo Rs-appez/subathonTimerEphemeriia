@@ -30,4 +30,5 @@
 
 </html>
 
-<script src="{% static 'bingo/js/admin_bingo.js' %}" data-bingo_items="{{ bingo_items_data }}"></script>
+{{ bingo_items_data|json_script:"bingo-items-data" }}
+<script type="module" src="{% static 'bingo/js/admin_bingo.js' %}" ></script>
