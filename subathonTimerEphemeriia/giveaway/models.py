@@ -16,8 +16,6 @@ class Calendar(models.Model):
 
     base_calendar = models.ForeignKey("BaseCalendar", on_delete=models.CASCADE)
 
-    cells = models.ManyToManyField("CalendarCell", related_name="cells")
-
     is_active = models.BooleanField(default=False)
 
     def __str__(self):
@@ -29,12 +27,11 @@ class Calendar(models.Model):
         """
         cells = Cell.objects.filter(size=self.base_calendar.size)
         for cell in cells:
-            calendar_cell = CalendarCell.objects.create(cell=cell)
-            self.cells.add(calendar_cell)
-        self.save()
+            CalendarCell.objects.create(cell=cell, calendar=self)
 
 
 class CalendarCell(models.Model):
+    calendar = models.ForeignKey("Calendar", on_delete=models.CASCADE)
     cell = models.ForeignKey(
         "Cell", on_delete=models.CASCADE, related_name="calendar_cells"
     )
