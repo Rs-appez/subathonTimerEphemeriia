@@ -1,17 +1,10 @@
-const data_admin = document.currentScript.dataset;
+import { getCookie } from "/static/general/js/utils.js";
+
+const data_admin = document.getElementById("bingo-items-data").textContent;
 
 const backend = window.location.host;
 
-const formattedData = data_admin.bingo_items
-    .replace(/{'/g, '{"')
-    .replace(/': '/g, '": "')
-    .replace(/, '/g, ', "')
-    .replace(/'}/g, '"}')
-    .replace(/':/g, '":')
-    .replace(/False/g, "false")
-    .replace(/True/g, "true");
-
-var bingo_items = JSON.parse(formattedData);
+var bingo_items = JSON.parse(data_admin);
 
 var bingoBoard = document.querySelectorAll(".bingo-cell");
 let showButton = document.getElementById("showBingo");
@@ -20,21 +13,6 @@ let hideButton = document.getElementById("hideBingo");
 bingoBoard.forEach((item) => {
     item.addEventListener("click", clickCell);
 });
-
-function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== "") {
-        const cookies = document.cookie.split(";");
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === name + "=") {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
 
 function makeBingoBoard() {
     var board = document.getElementById("bingoCard");
@@ -65,7 +43,7 @@ function clickCell() {
 
     var csrftoken = getCookie("csrftoken");
 
-    fetch("https://" + backend + "/bingo/api/bingo_item_user/check_item_admin/", {
+    fetch("/bingo/api/bingo_item_user/check_item_admin/", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
