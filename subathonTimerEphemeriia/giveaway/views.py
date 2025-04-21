@@ -45,3 +45,17 @@ def create_calendar(request):
         "giveaway/create_calendar.html",
         {"base_calendars": base_calendars_json},
     )
+
+
+def edit_calendar(request, calendar_id):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect("/admin_django/login/?next=/giveaway/admin/edit/")
+
+    calendar = Calendar.objects.get(id=calendar_id)
+    calendar_json = CalendarSerializer(calendar).data
+
+    return render(
+        request,
+        "giveaway/update_calendar.html",
+        {"calendar": calendar_json},
+    )
