@@ -29,24 +29,24 @@
             <div class="item">
                 <p class="bold">Name</p>
                 <p class="bold">Size</p>
-                <p class="bold">Cells</p>
+                <p class="bold">Edit</p>
                 <p class="bold">Activate</p>
                 <p class="bold">Delete</p>
             </div>
 
             {% for calendar in calendars %}
-            <a href="{% url 'admin_arg' bingo.id %}" class="div-clickable">
+            <a href="{% url 'admin_arg' calendar.id %}" class="div-clickable">
                 <div class="item {% if forloop.counter|divisibleby:2 %}alternate{% endif %}">
-                    <p class="bold">{{ bingo.name }}</p>
-                    <p>{{ bingo.description }}</p>
-                    <button type="button">Items</button>
-                    <form action="{% url 'activate_bingo' bingo.id %}" method="post" style="display:inline;">
+                    <p class="bold">{{ calendar.title }}</p>
+                    <p>{{ calendar.base_calendar.size }}</p>
+                    <button type="button">Edit</button>
+                    <form action="{% url 'activate_bingo' calendar.id %}" method="post" style="display:inline;">
                         {% csrf_token %}
                         <button type="submit">Activate</button>
                     </form>
-                    <form action="{% url 'reset_bingo' bingo.id %}" method="post" style="display:inline;">
+                    <form action="{% url 'reset_bingo' calendar.id %}" method="post" style="display:inline;">
                         {% csrf_token %}
-                        <button type="submit">Reset</button>
+                        <button type="submit">Delete</button>
                     </form>
                 </div>
             </a>
