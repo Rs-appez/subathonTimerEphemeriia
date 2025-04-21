@@ -1,0 +1,33 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+}
+
+.item {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    justify-items: start;
+}
+
+.cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.cell:nth-child(12n + 1),
+.cell:nth-child(12n + 3),
+.cell:nth-child(12n + 5),
+.cell:nth-child(12n + 8),
+.cell:nth-child(12n + 10),
+.cell:nth-child(12n) {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.cells-container {
+    width: 80vw;
+}

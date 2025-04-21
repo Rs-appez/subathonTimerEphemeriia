@@ -1,0 +1,31 @@
+{% load static %}
+<!doctype html>
+<html>
+
+<head>
+    <title>Calendar Edit</title>
+    <link rel="icon" href="{% static 'bingo/images/cacatchu.png' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'giveaway/css/base_admin.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'giveaway/css/update.css' %}" />
+    <meta charset="utf-8" />
+</head>
+
+<body>
+    <a class="btn float_element" href="{% url 'admin' %}">Back</a>
+    <div class="container">
+        <h1>{{ calendar.title }}</h1>
+        <h1>List Calendars</h1>
+        <div class="item cells-container">
+            {% for cell in calendar.cells %}
+            <div class="cell">
+                <p>{{ cell.cell.number }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="btn-group">
+        <!--<a href="{% url 'create_calendar' %}" class="btn">Create Calendar</a>-->
+    </div>
+</body>
+
+</html>
