@@ -70,3 +70,14 @@ def activate_calendar(request, calendar_id):
         calendar.activate()
 
     return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
+
+
+def delete_calendar(request, calendar_id):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect("/admin_django/login/?next=/giveaway/admin/")
+
+    calendar = Calendar.objects.get(id=calendar_id)
+    if calendar:
+        calendar.delete()
+
+    return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
