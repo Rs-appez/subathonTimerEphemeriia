@@ -1,16 +1,23 @@
+import bleach
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 
-from .models import Calendar, Cell, Reward, BaseCalendar
+from .models import Calendar, Cell, Reward, BaseCalendar, CalendarCell
 from .serializers import (
+    BaseCalendarSerializer,
     CalendarSerializer,
     CellSerializer,
+    CalendarCellSerializer,
     RewardSerializer,
 )
 
-import bleach
+
+class BaseCalendarViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAdminUser]
+    queryset = BaseCalendar.objects.all()
+    serializer_class = BaseCalendarSerializer
 
 
 class CalendarViewSet(viewsets.ModelViewSet):
@@ -48,11 +55,20 @@ class CellViewSet(viewsets.ModelViewSet):
     queryset = Cell.objects.all()
     serializer_class = CellSerializer
 
+
+class CalendarCellViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAdminUser]
+    queryset = CalendarCell.objects.all()
+    serializer_class = CalendarCellSerializer
+
     @action(detail=True, methods=["POST"], permission_classes=[IsAdminUser])
     def open_cell(self, request, pk=None):
-        cell = self.get_object()
-        cell.open()
-        return Response({"status": "cell opened", "cell": CellSerializer(cell).data})
+        calendar_cell = self.get_object()
+        calendar_cell.open()
+        return Response(
+            {"status": "cell opened",
+                "cell": CalendarCellSerializer(calendar_cell).data}
+        )
 
 
 class RewardViewSet(viewsets.ModelViewSet):
