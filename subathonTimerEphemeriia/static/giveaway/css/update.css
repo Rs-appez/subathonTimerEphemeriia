@@ -34,6 +34,10 @@
 }
 
 .reward {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     height: 100px;
     width: 100px;
     border: 2px solid #5a4bc4;
