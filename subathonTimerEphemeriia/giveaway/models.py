@@ -60,7 +60,7 @@ class Cell(models.Model):
 
 class Reward(models.Model):
     name = models.CharField(max_length=200)
-    image_url = models.URLField()
+    image_url = models.URLField(blank=True, null=True)
 
     def __str__(self):
         return str(self.name)
