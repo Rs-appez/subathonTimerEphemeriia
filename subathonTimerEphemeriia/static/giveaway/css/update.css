@@ -7,15 +7,16 @@
 .item {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
-    justify-items: start;
+    justify-items: stretch;
 }
 
 .cell {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 100%;
     height: 100%;
+    aspect-ratio: 1;
 }
 
 .cell:nth-child(12n + 1),
@@ -28,5 +29,13 @@
 }
 
 .cells-container {
-    width: 80vw;
+    width: 70%;
+    border: 3px solid #5a4bc4;
+}
+
+.reward {
+    height: 100px;
+    width: 100px;
+    border: 1px solid #5a4bc4;
+    margin-bottom: 30px;
 }
