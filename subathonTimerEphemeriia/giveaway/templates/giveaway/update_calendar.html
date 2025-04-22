@@ -20,7 +20,11 @@
                 <p>{{ cell.cell.number }}</p>
                 <div class="reward">
                     {% if cell.reward %}
-                    <p>{{ cell.reward.name }}</p>
+                        {% if cell.reward.image_url %}  
+                            <img class="reward-image" src="{{ cell.reward.image_url }}" alt="Reward Image" />
+                        {% else %}
+                            <p>{{ cell.reward.name }}</p>
+                        {% endif %}
                     {% else %}
                     <p class="bold">No Reward</p>
                     {% endif %}
