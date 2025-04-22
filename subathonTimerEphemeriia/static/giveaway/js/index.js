@@ -74,6 +74,13 @@ function scaleImage() {
         area.setAttribute("coords", coords.join(","));
     });
 }
+function removeCurtains() {
+    const curtains = document.getElementById("curtains");
+    curtains.classList.add("fade-out");
+    curtains.addEventListener("animationend", function() {
+        curtains.remove();
+    });
+}
 window.addEventListener("load", () => {
     scaleImage();
 
@@ -82,4 +89,5 @@ window.addEventListener("load", () => {
     cells.forEach((cell) => {
         cell.addEventListener("click", handleClick);
     });
+    removeCurtains();
 });
