@@ -24,6 +24,10 @@ body {
     z-index: 1;
 }
 
+.hidden {
+    display: none;
+}
+
 .cacatchu {
     display: flex;
     justify-content: center;
