@@ -7,6 +7,7 @@ from .views import (
     create_calendar,
     edit_calendar,
     activate_calendar,
+    deactivate_calendar,
     delete_calendar,
 )
 from .views_api import (
@@ -34,6 +35,11 @@ urlpatterns = [
         "admin/<int:calendar_id>/activate/",
         activate_calendar,
         name="activate_calendar",
+    ),
+    path(
+        "admin/<int:calendar_id>/deactivate/",
+        deactivate_calendar,
+        name="deactivate_calendar",
     ),
     path(
         "admin/<int:calendar_id>/delete/",
