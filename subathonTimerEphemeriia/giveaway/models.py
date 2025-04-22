@@ -29,6 +29,14 @@ class Calendar(models.Model):
         for cell in cells:
             CalendarCell.objects.create(cell=cell, calendar=self)
 
+    def activate(self):
+        """
+        Activate the calendar and deactivate all other calendars.
+        """
+        Calendar.objects.filter(is_active=True).update(is_active=False)
+        self.is_active = True
+        self.save()
+
 
 class CalendarCell(models.Model):
     calendar = models.ForeignKey("Calendar", on_delete=models.CASCADE)
