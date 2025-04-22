@@ -74,15 +74,17 @@ function scaleImage() {
         area.setAttribute("coords", coords.join(","));
     });
 }
+
 function removeCurtains() {
     const curtains = document.getElementById("curtains");
-    const cacatchu = document.getElementById("cacatchu");
-    cacatchu.classList.remove("hidden");
+    const container = document.getElementById("container");
+    container.classList.remove("hidden");
     curtains.classList.add("fade-out");
     curtains.addEventListener("animationend", function() {
         curtains.remove();
     });
 }
+
 window.addEventListener("load", () => {
     scaleImage();
 
