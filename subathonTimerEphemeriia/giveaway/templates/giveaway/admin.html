@@ -43,9 +43,9 @@
                         {% csrf_token %}
                         <button type="submit" >Activate</button>
                     </form>
-                    <form action="{% url 'reset_bingo' calendar.id %}" method="post" style="display:inline;">
+                    <form action="{% url 'delete_calendar' calendar.id %}" method="post" style="display:inline;">
                         {% csrf_token %}
-                        <button type="submit" disabled >Delete</button>
+                        <button type="submit" >Delete</button>
                     </form>
                 </div>
             </a>
