@@ -19,22 +19,21 @@
         {% if not cell.is_opened %}
         <img
           class="cacatchu_image"
-          id="cell_{{ cell.number }}"
-          src="{{ cell.image_url }}"
+          id="cell_{{ cell.id }}"
+          src="{{ cell.cell.image_url }}"
           alt="cell"
         />
         {% endif %}
         {% endfor %}
-        <img class="cacatchu_image mask" src="{{ calendar.mask_url }}" alt="" usemap="#cacatchu-map" />
+        <img class="cacatchu_image mask" src="{{ calendar.base_calendar.mask_url }}" alt="" usemap="#cacatchu-map" />
         <map name="cacatchu-map">
         {% for cell in calendar.cells %}
         {% if not cell.is_opened %}
           <area
-            id="cell_{{ cell.number }}_area"
+            id="cell_{{ cell.id }}_area"
             shape="poly"
             coords="0, 0"
             alt="Clickable Area"
-            onclick="handleClick(event)"
             nohref="nohref"
           />
         {% endif %}
@@ -52,5 +51,6 @@
 
 {{ calendar.cells|json_script:"calendar-cells-data" }}
 <script
+  type="module"
   src="{% static 'giveaway/js/index.js' %}"
 ></script>
