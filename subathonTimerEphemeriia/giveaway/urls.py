@@ -1,8 +1,21 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
-from .views import index, admin, create_calendar, edit_calendar, activate_calendar
-from .views_api import CalendarViewSet, RewardViewSet, CellViewSet, BaseCalendarViewSet, CalendarCellViewSet
+from .views import (
+    index,
+    admin,
+    create_calendar,
+    edit_calendar,
+    activate_calendar,
+    delete_calendar,
+)
+from .views_api import (
+    CalendarViewSet,
+    RewardViewSet,
+    CellViewSet,
+    BaseCalendarViewSet,
+    CalendarCellViewSet,
+)
 
 router = DefaultRouter()
 
@@ -21,6 +34,11 @@ urlpatterns = [
         "admin/<int:calendar_id>/activate/",
         activate_calendar,
         name="activate_calendar",
+    ),
+    path(
+        "admin/<int:calendar_id>/delete/",
+        delete_calendar,
+        name="delete_calendar",
     ),
     path("admin/create/", create_calendar, name="create_calendar"),
 ]
