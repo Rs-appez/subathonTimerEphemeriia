@@ -16,8 +16,7 @@
         <h1>Active Calendar</h1>
         <div class="active-calendar">
             {% if active_calendar %}
-                <h2>{{ active_calendar.name }}</h2>
-                <p>{{ active_calendar.description }}</p>
+                <h2>{{ active_calendar.title }}</h2>
             {% else %}
                 <p>No active calendar</p>
             {% endif %}
@@ -40,13 +39,13 @@
                     <p class="bold">{{ calendar.title }}</p>
                     <p>{{ calendar.base_calendar.size }}</p>
                     <button type="button">Edit</button>
-                    <form action="{% url 'activate_bingo' calendar.id %}" method="post" style="display:inline;">
+                    <form action="{% url 'activate_calendar' calendar.id %}" method="post" style="display:inline;">
                         {% csrf_token %}
-                        <button type="submit">Activate</button>
+                        <button type="submit" >Activate</button>
                     </form>
                     <form action="{% url 'reset_bingo' calendar.id %}" method="post" style="display:inline;">
                         {% csrf_token %}
-                        <button type="submit">Delete</button>
+                        <button type="submit" disabled >Delete</button>
                     </form>
                 </div>
             </a>
