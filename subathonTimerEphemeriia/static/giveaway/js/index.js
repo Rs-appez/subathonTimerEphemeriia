@@ -1,3 +1,5 @@
+import { getCookie } from "/static/general/js/utils.js";
+
 const rawCellData = document.getElementById("calendar-cells-data").textContent;
 const cellsData = JSON.parse(rawCellData);
 
@@ -55,36 +57,29 @@ function addRandomEffect(element) {
 
 function scaleImage() {
     cellsData.forEach(function(cell) {
-        var img = document.getElementById(`cell_${cell.number}`);
+        console.log(cell);
+        var img = document.getElementById(`cell_${cell.id}`);
         if (!img) {
             return;
         }
         var imgWidth = img.width;
         var imgHeight = img.height;
 
-        var originalCoords = cell.coordonates.split(",").map(Number);
+        var originalCoords = cell.cell.coordonates.split(",").map(Number);
         var coords = originalCoords.map(function(coord, index) {
             return index % 2 === 0 ? coord * imgWidth : coord * imgHeight;
         });
 
-        var area = document.getElementById(`cell_${cell.number}_area`);
+        var area = document.getElementById(`cell_${cell.id}_area`);
         area.setAttribute("coords", coords.join(","));
     });
 }
+window.addEventListener("load", () => {
+    scaleImage();
 
-function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== "") {
-        const cookies = document.cookie.split(";");
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === name + "=") {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
-
-window.addEventListener("load", scaleImage);
+    // Attach handleClick to all areas
+    const cells = document.querySelectorAll("area");
+    cells.forEach((cell) => {
+        cell.addEventListener("click", handleClick);
+    });
+});
