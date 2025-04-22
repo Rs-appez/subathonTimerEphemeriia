@@ -37,6 +37,13 @@ class Calendar(models.Model):
         self.is_active = True
         self.save()
 
+    def desactivate(self):
+        """
+        Deactivate the calendar.
+        """
+        self.is_active = False
+        self.save()
+
 
 class CalendarCell(models.Model):
     calendar = models.ForeignKey("Calendar", on_delete=models.CASCADE)
