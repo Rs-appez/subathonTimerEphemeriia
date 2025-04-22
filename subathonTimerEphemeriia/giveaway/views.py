@@ -59,3 +59,14 @@ def edit_calendar(request, calendar_id):
         "giveaway/update_calendar.html",
         {"calendar": calendar_json},
     )
+
+
+def activate_calendar(request, calendar_id):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect("/admin_django/login/?next=/giveaway/admin/")
+
+    calendar = Calendar.objects.get(id=calendar_id)
+    if calendar:
+        calendar.activate()
+
+    return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
