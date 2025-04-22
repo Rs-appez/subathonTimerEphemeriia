@@ -39,10 +39,17 @@
                     <p class="bold">{{ calendar.title }}</p>
                     <p>{{ calendar.base_calendar.size }}</p>
                     <button type="button">Edit</button>
-                    <form action="{% url 'activate_calendar' calendar.id %}" method="post" style="display:inline;">
-                        {% csrf_token %}
-                        <button type="submit" >Activate</button>
-                    </form>
+                    {% if calendar.is_active %}
+                        <form action="{% url 'deactivate_calendar' calendar.id %}" method="post" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" >Deactivate</button>
+                        </form>
+                    {% else %}
+                        <form action="{% url 'activate_calendar' calendar.id %}" method="post" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" >Activate</button>
+                        </form>
+                    {% endif %}
                     <form action="{% url 'delete_calendar' calendar.id %}" method="post" style="display:inline;">
                         {% csrf_token %}
                         <button type="submit" >Delete</button>
