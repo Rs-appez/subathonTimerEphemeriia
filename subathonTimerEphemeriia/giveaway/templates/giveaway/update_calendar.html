@@ -14,17 +14,14 @@
     <a class="btn float_element" href="{% url 'admin' %}">Back</a>
     <div class="container">
         <h1>{{ calendar.title }}</h1>
-        <h1>List Calendars</h1>
         <div class="item cells-container">
             {% for cell in calendar.cells %}
             <div class="cell">
                 <p>{{ cell.cell.number }}</p>
+                <div class="reward"></div>
             </div>
             {% endfor %}
         </div>
-    </div>
-    <div class="btn-group">
-        <!--<a href="{% url 'create_calendar' %}" class="btn">Create Calendar</a>-->
     </div>
 </body>
 
