@@ -1,6 +1,7 @@
 import { getCookie } from "/static/general/js/utils.js";
 
-function createCalendar() {
+function createCalendar(btn) {
+    btn.disabled = true;
     let title = document.getElementById("calendar-name").value;
     let base_calendar =
         document.querySelector('input[name="calendar-size"]:checked')?.value || "";
@@ -9,6 +10,7 @@ function createCalendar() {
 
     if (title === "" || base_calendar === "" || img === "") {
         alert("Please fill all fields");
+        btn.disabled = false;
         return;
     }
 
@@ -29,12 +31,13 @@ function createCalendar() {
         .then((response) => response.json())
         .then((data) => {
             console.log("Success:", data);
-            //window.location.reload();
+            window.location.href = `/giveaway/admin/${data.calendar.id}/`;
         })
         .catch((error) => {
             console.error("Error:", error);
+            btn.disabled = false;
         });
 }
 
 const createButton = document.getElementById("create-calendar");
-createButton.addEventListener("click", createCalendar);
+createButton.addEventListener("click", () => createCalendar(createButton));
