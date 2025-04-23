@@ -12,6 +12,7 @@
 
 <body>
     <a class="btn back-button" href="{% url 'admin' %}">Back</a>
+    <a class="btn shuffle-button" id="shuffle-button">Shuffle</a>
     <div class="container">
         <h1>{{ calendar.title }}</h1>
         <div class="item cells-container">
@@ -36,3 +37,6 @@
 </body>
 
 </html>
+
+{{ calendar.id|json_script:"calendar-id-data" }}
+<script type="module" src="{% static 'giveaway/js/update_calendar.js' %}"></script>
