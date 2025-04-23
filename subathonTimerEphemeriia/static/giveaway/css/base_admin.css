@@ -37,7 +37,7 @@ button:hover {
     /* Darker green on hover */
 }
 
-.float_element {
+.back-button {
     position: fixed;
     top: 20px;
     left: 20px;
