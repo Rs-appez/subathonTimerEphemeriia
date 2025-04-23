@@ -61,6 +61,15 @@ class Calendar(models.Model):
             cell.reward = rewards[i]
             cell.save()
 
+    def close_all_cells(self):
+        """
+        Close all cells in the calendar.
+        """
+        cells = CalendarCell.objects.filter(calendar=self)
+        for cell in cells:
+            cell.is_opened = False
+            cell.save()
+
 
 class CalendarCell(models.Model):
     calendar = models.ForeignKey("Calendar", on_delete=models.CASCADE)
