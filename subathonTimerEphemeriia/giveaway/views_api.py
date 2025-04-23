@@ -49,6 +49,17 @@ class CalendarViewSet(viewsets.ModelViewSet):
 
         return Response({"status": "calendar created", "calendar": serializer.data})
 
+    @action(detail=True, methods=["post"], permission_classes=[IsAdminUser])
+    def shuffle_reward(self, request, pk=None):
+        calendar = self.get_object()
+        calendar.shuffle_reward()
+        return Response(
+            {
+                "status": "rewards shuffled",
+                "calendar": CalendarSerializer(calendar).data,
+            }
+        )
+
 
 class CellViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAdminUser]
@@ -66,8 +77,10 @@ class CalendarCellViewSet(viewsets.ModelViewSet):
         calendar_cell = self.get_object()
         calendar_cell.open()
         return Response(
-            {"status": "cell opened",
-                "cell": CalendarCellSerializer(calendar_cell).data}
+            {
+                "status": "cell opened",
+                "cell": CalendarCellSerializer(calendar_cell).data,
+            }
         )
 
 
