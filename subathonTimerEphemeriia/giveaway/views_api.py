@@ -60,6 +60,17 @@ class CalendarViewSet(viewsets.ModelViewSet):
             }
         )
 
+    @action(detail=True, methods=["post"], permission_classes=[IsAdminUser])
+    def close_all(self, request, pk=None):
+        calendar = self.get_object()
+        calendar.close_all_cells()
+        return Response(
+            {
+                "status": "all cells closed",
+                "calendar": CalendarSerializer(calendar).data,
+            }
+        )
+
 
 class CellViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAdminUser]
