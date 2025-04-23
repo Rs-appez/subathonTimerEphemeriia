@@ -12,7 +12,10 @@
 
 <body>
     <a class="btn back-button" href="{% url 'admin' %}">Back</a>
-    <a class="btn shuffle-button" id="shuffle-button">Shuffle</a>
+    <div class="btn-row">
+        <a class="btn " id="close-button">Close all</a>
+        <a class="btn " id="shuffle-button">Shuffle</a>
+    </div>
     <div class="container">
         <h1>{{ calendar.title }}</h1>
         <div class="item cells-container">
