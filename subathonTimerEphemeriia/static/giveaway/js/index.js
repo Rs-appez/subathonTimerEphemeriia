@@ -86,12 +86,11 @@ function removeCurtains() {
 }
 
 window.addEventListener("load", () => {
-    scaleImage();
-
     // Attach handleClick to all areas
     const cells = document.querySelectorAll("area");
     cells.forEach((cell) => {
         cell.addEventListener("click", handleClick);
     });
     removeCurtains();
+    scaleImage();
 });
