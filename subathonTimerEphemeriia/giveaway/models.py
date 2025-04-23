@@ -1,6 +1,9 @@
 from django.db import models
 
 
+from random import shuffle
+
+
 class BaseCalendar(models.Model):
     size = models.IntegerField()
 
@@ -43,6 +46,20 @@ class Calendar(models.Model):
         """
         self.is_active = False
         self.save()
+
+    def shuffle_reward(self):
+        """
+        Shuffle the rewards and assign them to the calendar cells.
+        """
+        rewards = []
+        cells = CalendarCell.objects.filter(calendar=self)
+        for cell in cells:
+            rewards.append(cell.reward)
+
+        shuffle(rewards)
+        for i, cell in enumerate(cells):
+            cell.reward = rewards[i]
+            cell.save()
 
 
 class CalendarCell(models.Model):
