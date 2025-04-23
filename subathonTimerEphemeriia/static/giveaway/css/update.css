@@ -48,3 +48,9 @@
     width: 100%;
     height: 100%;
 }
+
+.shuffle-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+}
