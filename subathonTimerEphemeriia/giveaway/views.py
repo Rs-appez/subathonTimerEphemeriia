@@ -78,7 +78,7 @@ def deactivate_calendar(request, calendar_id):
 
     calendar = Calendar.objects.get(id=calendar_id)
     if calendar:
-        calendar.desactivate()
+        calendar.deactivate()
 
     return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
 
