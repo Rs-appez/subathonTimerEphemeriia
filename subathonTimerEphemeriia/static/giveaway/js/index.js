@@ -9,6 +9,11 @@ function handleClick(event) {
     const cellNumber = event.target.id.split("_")[1];
 
     let cell_img = document.getElementById(`cell_${cellNumber}`);
+    let cell_reward = document.getElementById(`reward_${cellNumber}`);
+
+    if (cell_reward) {
+        cell_reward.classList.remove("hidden");
+    }
 
     cell_img.addEventListener("animationend", function() {
         event.target.remove();
