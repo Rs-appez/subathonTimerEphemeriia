@@ -95,6 +95,11 @@ class Cell(models.Model):
 
     coordonates = models.CharField(max_length=500)
 
+    reward_x = models.IntegerField()
+    reward_y = models.IntegerField()
+    reward_width = models.IntegerField()
+    reward_height = models.IntegerField()
+
     def __str__(self):
         return str(self.number)
 
