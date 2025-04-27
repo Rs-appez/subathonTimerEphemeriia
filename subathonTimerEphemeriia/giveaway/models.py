@@ -82,6 +82,9 @@ class CalendarCell(models.Model):
 
     is_opened = models.BooleanField(default=False)
 
+    def __str__(self):
+        return f"{self.calendar} - {self.cell}"
+
     def open(self):
         self.is_opened = True
         self.save()
