@@ -40,7 +40,7 @@ class Calendar(models.Model):
         self.is_active = True
         self.save()
 
-    def desactivate(self):
+    def deactivate(self):
         """
         Deactivate the calendar.
         """
