@@ -1,4 +1,7 @@
+from operator import attrgetter
+
 from django.shortcuts import render, HttpResponseRedirect
+from django.shortcuts import get_object_or_404
 
 from .models import Calendar, BaseCalendar
 from .serializers import CalendarSerializer, BaseCalendarSerializer
@@ -38,7 +41,8 @@ def create_calendar(request):
         return HttpResponseRedirect("/admin_django/login/?next=/giveaway/admin/create/")
 
     base_calendars = BaseCalendar.objects.all().order_by("size")
-    base_calendars_json = BaseCalendarSerializer(base_calendars, many=True).data
+    base_calendars_json = BaseCalendarSerializer(
+        base_calendars, many=True).data
 
     return render(
         request,
@@ -51,13 +55,13 @@ def edit_calendar(request, calendar_id):
     if not request.user.is_authenticated:
         return HttpResponseRedirect("/admin_django/login/?next=/giveaway/admin/edit/")
 
-    calendar = Calendar.objects.get(id=calendar_id)
-    calendar_json = CalendarSerializer(calendar).data
+    calendar = get_object_or_404(Calendar, id=calendar_id)
+    sorted_cells = calendar.get_sorted_cells()
 
     return render(
         request,
         "giveaway/update_calendar.html",
-        {"calendar": calendar_json},
+        {"calendar": calendar, "sorted_cells": sorted_cells},
     )
 
 

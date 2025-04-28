@@ -19,7 +19,7 @@
     <div class="container">
         <h1>{{ calendar.title }}</h1>
         <div class="item cells-container">
-            {% for cell in calendar.cells %}
+            {% for cell in sorted_cells %}
             <div class="cell">
                 <p>{{ cell.cell.number }}</p>
                 <div class="reward">
