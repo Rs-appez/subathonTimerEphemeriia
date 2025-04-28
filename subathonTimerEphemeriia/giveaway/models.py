@@ -32,6 +32,12 @@ class Calendar(models.Model):
         for cell in cells:
             CalendarCell.objects.create(cell=cell, calendar=self)
 
+    def get_sorted_cells(self):
+        """
+        Retrieve calendar cells sorted by the associated cell's number.
+        """
+        return self.calendarcell_set.order_by("cell__number")
+
     def activate(self):
         """
         Activate the calendar and deactivate all other calendars.
