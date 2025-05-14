@@ -1,26 +1,23 @@
-from operator import attrgetter
-
 from django.shortcuts import render, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import permission_required, user_passes_test
 
 from .models import Calendar, BaseCalendar
 from .serializers import CalendarSerializer, BaseCalendarSerializer
 
+from utils.permissions import is_streamer
 
+
+@user_passes_test(is_streamer)
 def index(request):
-    if not request.user.is_authenticated:
-        return HttpResponseRedirect("/admin_django/login/?next=/giveaway/")
-
     calendar = Calendar.objects.filter(is_active=True).last()
     calendar_json = CalendarSerializer(calendar).data
 
     return render(request, "giveaway/index.html", {"calendar": calendar_json})
 
 
+@permission_required("giveaway.view_calendar")
 def admin(request):
-    if not request.user.is_authenticated:
-        return HttpResponseRedirect("/admin_django/login/?next=/giveaway/admin/")
-
     active_calendar = Calendar.objects.filter(is_active=True).last()
     calendars = Calendar.objects.all()
 
@@ -36,10 +33,8 @@ def admin(request):
     )
 
 
+@permission_required("giveaway.add_calendar")
 def create_calendar(request):
-    if not request.user.is_authenticated:
-        return HttpResponseRedirect("/admin_django/login/?next=/giveaway/admin/create/")
-
     base_calendars = BaseCalendar.objects.all().order_by("size")
     base_calendars_json = BaseCalendarSerializer(
         base_calendars, many=True).data
@@ -51,10 +46,8 @@ def create_calendar(request):
     )
 
 
+@permission_required("giveaway.change_calendar")
 def edit_calendar(request, calendar_id):
-    if not request.user.is_authenticated:
-        return HttpResponseRedirect("/admin_django/login/?next=/giveaway/admin/edit/")
-
     calendar = get_object_or_404(Calendar, id=calendar_id)
     sorted_cells = calendar.get_sorted_cells()
 
@@ -65,10 +58,8 @@ def edit_calendar(request, calendar_id):
     )
 
 
+@permission_required("giveaway.change_calendar")
 def activate_calendar(request, calendar_id):
-    if not request.user.is_authenticated:
-        return HttpResponseRedirect("/admin_django/login/?next=/giveaway/admin/")
-
     calendar = Calendar.objects.get(id=calendar_id)
     if calendar:
         calendar.activate()
@@ -76,10 +67,8 @@ def activate_calendar(request, calendar_id):
     return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
 
 
+@permission_required("giveaway.change_calendar")
 def deactivate_calendar(request, calendar_id):
-    if not request.user.is_authenticated:
-        return HttpResponseRedirect("/admin_django/login/?next=/giveaway/admin/")
-
     calendar = Calendar.objects.get(id=calendar_id)
     if calendar:
         calendar.deactivate()
@@ -87,10 +76,8 @@ def deactivate_calendar(request, calendar_id):
     return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
 
 
+@permission_required("giveaway.delete_calendar")
 def delete_calendar(request, calendar_id):
-    if not request.user.is_authenticated:
-        return HttpResponseRedirect("/admin_django/login/?next=/giveaway/admin/")
-
     calendar = Calendar.objects.get(id=calendar_id)
     if calendar:
         calendar.delete()
