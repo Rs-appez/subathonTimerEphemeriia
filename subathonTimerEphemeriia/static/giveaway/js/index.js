@@ -62,7 +62,6 @@ function addRandomEffect(element) {
 
 function scaleImage() {
     cellsData.forEach(function(cell) {
-        console.log(cell);
         var img = document.getElementById(`cell_${cell.id}`);
         if (!img) {
             return;
@@ -98,4 +97,9 @@ window.addEventListener("load", () => {
     });
     removeCurtains();
     scaleImage();
+
+    // Detect viewport changes
+    window.addEventListener("resize", () => {
+        scaleImage();
+    });
 });
