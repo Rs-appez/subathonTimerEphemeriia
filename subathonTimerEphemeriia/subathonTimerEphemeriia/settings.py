@@ -46,11 +46,15 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "whitenoise.runserver_nostatic",
+    # rest_framework
     "rest_framework",
     "rest_framework.authtoken",
+    # others
+    "whitenoise.runserver_nostatic",
     "channels",
     "corsheaders",
+    "storages",
+    # my apps
     "administrative",
     "subathonTimer",
     "oauth",
