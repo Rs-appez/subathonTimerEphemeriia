@@ -1,5 +1,5 @@
 from django.db import models
-from subathonTimerEphemeriia.storage_backends import RewardStorage
+from subathonTimerEphemeriia.storage_backends import RewardStorage, BackgroundStorage
 
 
 from random import shuffle
@@ -16,7 +16,7 @@ class BaseCalendar(models.Model):
 
 class Calendar(models.Model):
     title = models.CharField(max_length=200)
-    background_url = models.URLField()
+    background = models.ImageField(storage=BackgroundStorage(), blank=True, null=True)
 
     base_calendar = models.ForeignKey("BaseCalendar", on_delete=models.CASCADE)
 
