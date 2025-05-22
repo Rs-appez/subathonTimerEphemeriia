@@ -84,7 +84,7 @@ class CalendarCell(models.Model):
         "Cell", on_delete=models.CASCADE, related_name="calendar_cells"
     )
     reward = models.ForeignKey(
-        "Reward", on_delete=models.CASCADE, null=True, blank=True
+        "Reward", on_delete=models.SET_NULL, null=True, blank=True
     )
 
     is_opened = models.BooleanField(default=False)
