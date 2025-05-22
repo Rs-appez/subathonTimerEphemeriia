@@ -18,8 +18,8 @@ def index(request):
 
 @permission_required("giveaway.view_calendar")
 def admin(request):
-    active_calendar = Calendar.objects.filter(is_active=True).last()
     calendars = Calendar.objects.all()
+    active_calendar = calendars.filter(is_active=True).last()
 
     active_calendar_json = (
         CalendarSerializer(active_calendar).data if active_calendar else None
@@ -36,8 +36,7 @@ def admin(request):
 @permission_required("giveaway.add_calendar")
 def create_calendar(request):
     base_calendars = BaseCalendar.objects.all().order_by("size")
-    base_calendars_json = BaseCalendarSerializer(
-        base_calendars, many=True).data
+    base_calendars_json = BaseCalendarSerializer(base_calendars, many=True).data
 
     return render(
         request,
