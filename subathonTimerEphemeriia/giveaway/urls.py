@@ -29,8 +29,8 @@ router.register(r"cell", CalendarCellViewSet, basename="cell")
 urlpatterns = [
     path("api/", include(router.urls)),
     path("", index, name="index"),
-    path("admin/", admin, name="admin"),
-    path("admin/<int:calendar_id>/", edit_calendar, name="admin_arg"),
+    path("admin/", admin, name="calendar_admin"),
+    path("admin/<int:calendar_id>/", edit_calendar, name="calendar_admin_arg"),
     path(
         "admin/<int:calendar_id>/activate/",
         activate_calendar,

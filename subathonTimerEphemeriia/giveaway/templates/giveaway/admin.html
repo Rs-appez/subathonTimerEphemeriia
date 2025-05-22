@@ -34,7 +34,7 @@
             </div>
 
             {% for calendar in calendars %}
-            <a href="{% url 'admin_arg' calendar.id %}" class="div-clickable">
+            <a href="{% url 'calendar_admin_arg' calendar.id %}" class="div-clickable">
                 <div class="item {% if forloop.counter|divisibleby:2 %}alternate{% endif %}">
                     <p class="bold">{{ calendar.title }}</p>
                     <p>{{ calendar.base_calendar.size }}</p>
