@@ -1,4 +1,5 @@
 from django.db import models
+from subathonTimerEphemeriia.storage_backends import RewardStorage
 
 
 from random import shuffle
@@ -115,7 +116,7 @@ class Cell(models.Model):
 
 class Reward(models.Model):
     name = models.CharField(max_length=200)
-    image_url = models.URLField(blank=True, null=True)
+    image = models.FileField(storage=RewardStorage(), blank=True, null=True)
 
     def __str__(self):
         return str(self.name)
