@@ -6,8 +6,6 @@ from utils.utils import rename_file_to_upload
 from random import shuffle
 
 
-
-
 class BaseCalendar(models.Model):
     size = models.IntegerField()
 
