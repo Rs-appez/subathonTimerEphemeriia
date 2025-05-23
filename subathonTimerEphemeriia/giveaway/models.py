@@ -3,6 +3,16 @@ from subathonTimerEphemeriia.storage_backends import RewardStorage, BackgroundSt
 
 
 from random import shuffle
+from uuid import uuid4
+
+
+def rename_file_to_upload(instance, filename):
+    """
+    Rename file name with UUID
+    """
+    ext = filename.split(".")[-1]
+    new_filename = f"{uuid4()}.{ext}"
+    return new_filename
 
 
 class BaseCalendar(models.Model):
@@ -16,7 +26,9 @@ class BaseCalendar(models.Model):
 
 class Calendar(models.Model):
     title = models.CharField(max_length=200)
-    background = models.ImageField(storage=BackgroundStorage(), default="FONDSCENEVIERGE.jpg")
+    background = models.ImageField(
+        storage=BackgroundStorage(), default="FONDSCENEVIERGE.jpg"
+    )
 
     base_calendar = models.ForeignKey("BaseCalendar", on_delete=models.CASCADE)
 
@@ -116,7 +128,9 @@ class Cell(models.Model):
 
 class Reward(models.Model):
     name = models.CharField(max_length=200)
-    image = models.ImageField(storage=RewardStorage(), blank=True, null=True)
+    image = models.ImageField(
+        storage=RewardStorage(), upload_to=rename_file_to_upload, blank=True, null=True
+    )
 
     def __str__(self):
         return str(self.name)
