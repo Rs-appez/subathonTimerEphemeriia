@@ -34,14 +34,14 @@ class CalendarViewSet(viewsets.ModelViewSet):
     def create_calendar(self, request):
         title = bleach.clean(request.data.get("title"))
         base_calendar_id = request.data.get("base_calendar_id")
-        background_url = bleach.clean(request.data.get("background_url"))
+        # background_url = bleach.clean(request.data.get("background_url"))
 
         baseCalendar = BaseCalendar.objects.get(id=base_calendar_id)
         if not baseCalendar:
             return Response({"status": "BaseCalendar not found"}, status=404)
 
         calendar = Calendar.objects.create(
-            title=title, background_url=background_url, base_calendar=baseCalendar
+            title=title,  base_calendar=baseCalendar
         )
         calendar.generate_cells()
 
