@@ -16,7 +16,7 @@ class BaseCalendar(models.Model):
 
 class Calendar(models.Model):
     title = models.CharField(max_length=200)
-    background = models.ImageField(storage=BackgroundStorage(), blank=True, null=True)
+    background = models.ImageField(storage=BackgroundStorage(), default="FONDSCENEVIERGE.jpg")
 
     base_calendar = models.ForeignKey("BaseCalendar", on_delete=models.CASCADE)
 
