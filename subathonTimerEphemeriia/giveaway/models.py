@@ -127,3 +127,8 @@ class Reward(models.Model):
 
     def __str__(self):
         return str(self.name)
+
+    def delete(self, *args, **kwargs):
+        if self.image:
+            self.image.delete(save=False)
+        super().delete(*args, **kwargs)
