@@ -1,7 +1,7 @@
 import bleach
 from rest_framework import viewsets
 from rest_framework.decorators import action
-from rest_framework.permissions import IsAdminUser
+from rest_framework.permissions import IsAdminUser, DjangoModelPermissions
 from rest_framework.response import Response
 
 from .models import Calendar, Cell, Reward, BaseCalendar, CalendarCell
@@ -96,6 +96,6 @@ class CalendarCellViewSet(viewsets.ModelViewSet):
 
 
 class RewardViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAdminUser]
+    permission_classes = [DjangoModelPermissions]
     queryset = Reward.objects.all()
     serializer_class = RewardSerializer
