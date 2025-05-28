@@ -82,3 +82,8 @@ def delete_calendar(request, calendar_id):
         calendar.delete()
 
     return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
+
+
+@permission_required("reward.add_reward")
+def create_reward(request):
+    return render(request, "giveaway/create_reward.html")
