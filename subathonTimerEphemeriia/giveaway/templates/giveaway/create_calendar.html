@@ -1,40 +1,43 @@
 {% load static %}
-<!doctype html>
+<!DOCTYPE html>
 <html>
-
-<head>
-    <title>Create Calendar</title>
-    <link rel="icon" href="{% static 'bingo/images/cacatchu.png' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'giveaway/css/base_admin.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'giveaway/css/create.css' %}" />
-    <meta charset="utf-8" />
-</head>
-
-<body>
-    <a class='btn back-button' href="{% url 'calendar_admin' %}">Back</a>
-    <div class="container">
-        <h1>Create Calendar</h1>
-        <div class="input-container">
-            <div class="input-group">
-                <label for="calendar-name">Calendar Name :</label>
-                <input type="text" id="calendar-name" name="calendar-name" required />
+    <head>
+        <title>Create Calendar</title>
+        <link rel="icon" href="{% static 'bingo/images/cacatchu.png' %}" />
+        <link rel="stylesheet"
+              type="text/css"
+              href="{% static 'giveaway/css/base_admin.css' %}" />
+        <link rel="stylesheet"
+              type="text/css"
+              href="{% static 'giveaway/css/create.css' %}" />
+        <meta charset="utf-8" />
+    </head>
+    <body>
+        <a class='btn back-button' href="{% url 'calendar_admin' %}">Back</a>
+        <div class="container">
+            <h1>Create Calendar</h1>
+            <div class="input-container">
+                <div class="input-group">
+                    <label for="calendar-name">Calendar Name :</label>
+                    <input type="text" id="calendar-name" name="calendar-name" required />
+                </div>
+                <div class="input-group">
+                    <label>Calendar Size :</label>
+                    {% for calendar in base_calendars %}
+                        <input type="radio"
+                               id="calendar-size-{{ calendar.id }}"
+                               name="calendar-size"
+                               value="{{ calendar.id }}"
+                               required />
+                        <label for="calendar-size-{{ calendar.id }}">{{ calendar.size }}</label>
+                    {% endfor %}
+                </div>
+                <!--<div class="input-group">-->
+                <!--    <label for="calendar-image">Calendar Background :</label>-->
+                <!--    <input type='text' id="calendar-image" name="calendar-image" required />-->
+                <!--</div>-->
+                <button id="create-calendar" class="button">Create Calendar</button>
             </div>
-            <div class="input-group">
-                <label>Calendar Size :</label>
-                {% for calendar in base_calendars %}
-                <input type="radio" id="calendar-size-{{ calendar.id }}" name="calendar-size" value="{{ calendar.id }}"
-                    required />
-                <label for="calendar-size-{{ calendar.id }}">{{ calendar.size }}</label>
-                {% endfor %}
-            </div>
-            <!--<div class="input-group">-->
-            <!--    <label for="calendar-image">Calendar Background :</label>-->
-            <!--    <input type='text' id="calendar-image" name="calendar-image" required />-->
-            <!--</div>-->
-            <button id="create-calendar" class="button">Create Calendar</button>
-        </div>
-</body>
-
-</html>
-
-<script type="module" src="{% static 'giveaway/js/create_calendar.js' %}"></script>
+        </body>
+    </html>
+    <script type="module" src="{% static 'giveaway/js/create_calendar.js' %}"></script>
