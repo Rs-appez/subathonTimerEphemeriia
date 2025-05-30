@@ -26,7 +26,6 @@ function activePedro() {
 pedro.addEventListener("load", () => {
   pedroWidth = pedro.naturalWidth;
   pedroHeight = pedro.naturalHeight;
-  activePedro();
 });
 
 // Websocket
