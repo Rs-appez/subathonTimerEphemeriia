@@ -22,13 +22,18 @@ class TimerViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=["get"], permission_classes=[AllowAny])
     def get_timer_info(self, request, pk=None):
-        timer = Timer.objects.last()
+        timer = Timer.objects.filter(timer_active=True).last()
+        if not timer:
+            return Response({"message": "No active timer"})
+
         time = timer.display_time()
         return Response({"time": time})
 
     @action(detail=False, methods=["post"], permission_classes=[IsAuthenticated])
     def sub(self, request, pk=None):
-        timer = Timer.objects.last()
+        timer = Timer.objects.filter(timer_active=True).last()
+        if not timer:
+            return Response({"message": "No active timer"})
 
         tier = request.data["tier"]
         username = request.data["username"]
@@ -52,7 +57,6 @@ class TimerViewSet(viewsets.ModelViewSet):
                 raise Exception
 
             if timer.multiplicator_on:
-
                 with self.cache_lock:
                     last_gifters = cache.get("last_gifter", [])
 
@@ -64,7 +68,8 @@ class TimerViewSet(viewsets.ModelViewSet):
                         and gifter == last_gifter[0]
                         and time.time() - last_gifter[2] < 20
                     ):
-                        update_gifter = (gifter, last_gifter[1] + 1, time.time())
+                        update_gifter = (
+                            gifter, last_gifter[1] + 1, time.time())
 
                         if update_gifter[1] == 5:
                             bonus_time = timer.add_bonus_sub(tier, 5)
@@ -77,7 +82,8 @@ class TimerViewSet(viewsets.ModelViewSet):
                         update_gifter = (gifter, 1, time.time())
 
                     if last_gifter in last_gifters and last_gifter[0] != "":
-                        last_gifters[last_gifters.index(last_gifter)] = update_gifter
+                        last_gifters[last_gifters.index(
+                            last_gifter)] = update_gifter
                     else:
                         last_gifters.append(update_gifter)
 
@@ -101,7 +107,9 @@ class TimerViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=["post"], permission_classes=[IsAuthenticated])
     def bits(self, request, pk=None):
-        timer = Timer.objects.last()
+        timer = Timer.objects.filter(timer_active=True).last()
+        if not timer:
+            return Response({"message": "No active timer"})
 
         bits = request.data["bits"]
         username = request.data["username"]
@@ -127,7 +135,10 @@ class TimerViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=["post"], permission_classes=[IsAuthenticated])
     def donation(self, request, pk=None):
-        timer = Timer.objects.last()
+        timer = Timer.objects.filter(timer_active=True).last()
+        if not timer:
+            return Response({"message": "No active timer"})
+
         donation = request.data["amount"]
         name = request.data["name"]
         id = request.data["id"]
@@ -152,7 +163,10 @@ class TimerViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=["post"], permission_classes=[IsAuthenticated])
     def add_time(self, request, pk=None):
-        timer = Timer.objects.last()
+        timer = Timer.objects.filter(timer_active=True).last()
+        if not timer:
+            return Response({"message": "No active timer"})
+
         time = request.data["time"]
         username = (
             request.data["username"] if "username" in request.data else "anonymous"
@@ -172,7 +186,10 @@ class TimerViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=["post"], permission_classes=[IsAdminUser])
     def pause(self, request, pk=None):
-        timer = Timer.objects.last()
+        timer = Timer.objects.filter(timer_active=True).last()
+        if not timer:
+            return Response({"message": "No active timer"})
+
         user = request.user
         if timer.pause_timer(user.username):
             timer.send_ticket()
@@ -181,7 +198,10 @@ class TimerViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=["post"], permission_classes=[IsAdminUser])
     def resume(self, request, pk=None):
-        timer = Timer.objects.last()
+        timer = Timer.objects.filter(timer_active=True).last()
+        if not timer:
+            return Response({"message": "No active timer"})
+
         user = request.user
         if timer.resume_timer(user.username):
             timer.send_ticket()
@@ -190,7 +210,10 @@ class TimerViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=["post"], permission_classes=[IsAdminUser])
     def edit_started_time(self, request, pk=None):
-        timer = Timer.objects.last()
+        timer = Timer.objects.filter(timer_active=True).last()
+        if not timer:
+            return Response({"message": "No active timer"})
+
         time = request.data["time"]
 
         try:
