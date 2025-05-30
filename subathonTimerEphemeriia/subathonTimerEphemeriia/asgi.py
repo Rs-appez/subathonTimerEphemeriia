@@ -15,8 +15,10 @@ from channels.auth import AuthMiddlewareStack
 
 import subathonTimer.routing as timer_routing
 import bingo.routing as bingo_routing
+import reward.routing as reward_routing
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "subathonTimerEphemeriia.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE",
+                      "subathonTimerEphemeriia.settings")
 
 django_asgi_app = get_asgi_application()
 
@@ -27,6 +29,7 @@ application = ProtocolTypeRouter(
             URLRouter(
                 timer_routing.websocket_urlpatterns
                 + bingo_routing.websocket_urlpatterns
+                + reward_routing.websocket_urlpatterns
             )
         ),
     }
