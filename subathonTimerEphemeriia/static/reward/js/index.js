@@ -1,4 +1,5 @@
 const pedro = document.getElementById("pedro");
+const pedroAudio = new Audio(window.PEDRO_AUDIO_URL);
 let pedroWidth, pedroHeight;
 
 let width = window.innerWidth;
@@ -10,7 +11,6 @@ function refreshWidth() {
 }
 
 function activePedro() {
-  console.log(pedroWidth, pedroHeight, width, height);
   refreshWidth();
   const x = Math.floor(Math.random() * (width - pedroWidth));
   const y = Math.floor(Math.random() * (height - pedroHeight));
@@ -18,15 +18,19 @@ function activePedro() {
   pedro.style.top = `${y}px`;
 
   pedro.classList.add("active");
-  setTimeout(() => {
+  pedroAudio.play().catch((error) => {
+    console.error("Error playing audio:", error);
     pedro.classList.remove("active");
-  }, 1000);
+  });
 }
 
 pedro.addEventListener("load", () => {
   pedroWidth = pedro.naturalWidth;
   pedroHeight = pedro.naturalHeight;
 });
+pedroAudio.onended = () => {
+  pedro.classList.remove("active");
+};
 
 // Websocket
 var ws_url = "ws://" + window.location.host + "/ws/reward/";
