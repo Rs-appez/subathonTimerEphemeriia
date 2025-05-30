@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     "bingo",
     "chatbot",
     "giveaway",
+    "reward",
 ]
 
 MIDDLEWARE = [
