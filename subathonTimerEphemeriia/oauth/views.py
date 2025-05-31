@@ -106,7 +106,8 @@ def authorizeTwich(request):
     else:
         state = request.session["oauth_state"]
 
-    redirect_uri = "https://" + config("BACKEND_HOST") + "/oauth/twitch/authorize"
+    redirect_uri = "https://" + \
+        config("BACKEND_HOST") + "/oauth/twitch/authorize"
 
     if not request.GET.get("state") == str(state):
         res = requests.get(
@@ -115,7 +116,7 @@ def authorizeTwich(request):
                 "client_id": config("TWITCH_APP_ID"),
                 "redirect_uri": redirect_uri,
                 "response_type": "code",
-                "scope": "bits:read channel:read:subscriptions moderator:read:followers channel:read:predictions channel:manage:predictions channel:read:redemptions channel:manage:redemptions",
+                "scope": "bits:read channel:read:subscriptions moderator:read:followers channel:read:predictions channel:manage:predictions channel:read:redemptions channel:manage:redemptions channel:read:hype_train",
                 "state": state,
             },
         )
@@ -151,7 +152,8 @@ def authorizeTwich(request):
 
 
 def authorizeStreamlabs(request):
-    redirect_uri = "https://" + config("BACKEND_HOST") + "/oauth/streamlabs/authorize"
+    redirect_uri = "https://" + \
+        config("BACKEND_HOST") + "/oauth/streamlabs/authorize"
 
     if not request.user.is_authenticated:
         return HttpResponseRedirect("/admin_django/login/?next=/oauth/")
@@ -209,7 +211,8 @@ def authorizeChatbot(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect("/admin_django/login/?next=/oauth/")
 
-    redirect_uri = "https://" + config("BACKEND_HOST") + "/oauth/chatbot/authorize"
+    redirect_uri = "https://" + \
+        config("BACKEND_HOST") + "/oauth/chatbot/authorize"
 
     if not request.session.get("oauth_state"):
         state = uuid.uuid4()
