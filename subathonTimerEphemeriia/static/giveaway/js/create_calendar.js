@@ -5,10 +5,9 @@ function createCalendar(btn) {
     let title = document.getElementById("calendar-name").value;
     let base_calendar =
         document.querySelector('input[name="calendar-size"]:checked')?.value || "";
-    let img = document.getElementById("calendar-image").value;
-    console.log(title, base_calendar, img);
+    //let img = document.getElementById("calendar-image").value;
 
-    if (title === "" || base_calendar === "" || img === "") {
+    if (title === "" || base_calendar === "") {
         alert("Please fill all fields");
         btn.disabled = false;
         return;
@@ -25,7 +24,6 @@ function createCalendar(btn) {
         body: JSON.stringify({
             title: title,
             base_calendar_id: base_calendar,
-            background_url: img,
         }),
     })
         .then((response) => response.json())

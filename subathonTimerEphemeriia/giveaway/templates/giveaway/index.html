@@ -8,8 +8,8 @@
   </head>
 
   <body>
-        <img class="background" src="{{ calendar.background_url }}"  alt=""/>
-        <img class="background curtains" id="curtains" src="{{ calendar.background_url }}"  alt=""/>
+        <img class="background" src="{{ calendar.background }}"  alt=""/>
+        <img class="background curtains" id="curtains" src="{{ calendar.background }}"  alt=""/>
     <div class="container hidden" id="container">
       <div class="cacatchu " id="cacatchu">
         <img
@@ -20,8 +20,8 @@
         {% for cell in calendar.cells %}
             {% if cell.reward %}
                 <div id="reward_{{ cell.id }}" class="reward {% if not cell.is_opened %} hidden {% endif %}" style="left: {{ cell.cell.reward_x }}%; top: {{ cell.cell.reward_y }}%; width: {{ cell.cell.reward_width }}%; height: {{ cell.cell.reward_height }}%;"> 
-                        {% if cell.reward.image_url %}
-                            <img class="reward_image" src="{{ cell.reward.image_url }}" alt="Reward Image" />
+                        {% if cell.reward.image %}
+                            <img class="reward_image" src="{{ cell.reward.image }}" alt="Reward Image" />
                         {% else %}
                     <p> {{ cell.reward.name }} </p>
                         {% endif %}

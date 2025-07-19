@@ -1,4 +1,6 @@
 from django.db import models
+from subathonTimerEphemeriia.storage_backends import RewardStorage, BackgroundStorage
+from utils.utils import rename_file_to_upload
 
 
 from random import shuffle
@@ -15,7 +17,11 @@ class BaseCalendar(models.Model):
 
 class Calendar(models.Model):
     title = models.CharField(max_length=200)
-    background_url = models.URLField()
+    background = models.ImageField(
+        storage=BackgroundStorage(),
+        default="FONDSCENEVIERGE.jpg",
+        upload_to=rename_file_to_upload,
+    )
 
     base_calendar = models.ForeignKey("BaseCalendar", on_delete=models.CASCADE)
 
@@ -83,7 +89,7 @@ class CalendarCell(models.Model):
         "Cell", on_delete=models.CASCADE, related_name="calendar_cells"
     )
     reward = models.ForeignKey(
-        "Reward", on_delete=models.CASCADE, null=True, blank=True
+        "Reward", on_delete=models.SET_NULL, null=True, blank=True
     )
 
     is_opened = models.BooleanField(default=False)
@@ -115,7 +121,14 @@ class Cell(models.Model):
 
 class Reward(models.Model):
     name = models.CharField(max_length=200)
-    image_url = models.URLField(blank=True, null=True)
+    image = models.ImageField(
+        storage=RewardStorage(), upload_to=rename_file_to_upload, blank=True, null=True
+    )
 
     def __str__(self):
         return str(self.name)
+
+    def delete(self, *args, **kwargs):
+        if self.image:
+            self.image.delete(save=False)
+        super().delete(*args, **kwargs)

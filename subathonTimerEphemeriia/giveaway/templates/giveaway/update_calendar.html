@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <a class="btn back-button" href="{% url 'admin' %}">Back</a>
+    <a class="btn back-button" href="{% url 'calendar_admin' %}">Back</a>
     <div class="btn-row">
         <a class="btn " id="close-button">Close all</a>
         <a class="btn " id="shuffle-button">Shuffle</a>
@@ -20,12 +20,12 @@
         <h1>{{ calendar.title }}</h1>
         <div class="item cells-container">
             {% for cell in sorted_cells %}
-            <div class="cell">
+            <div class="cell ">
                 <p>{{ cell.cell.number }}</p>
-                <div class="reward">
+                <div class="reward {% if cell.is_opened %}opened{% else %}closed{% endif %}">
                     {% if cell.reward %}
-                        {% if cell.reward.image_url %}  
-                            <img class="reward-image" src="{{ cell.reward.image_url }}" alt="Reward Image" />
+                        {% if cell.reward.image %}  
+                            <img class="reward-image" src="{{ cell.reward.image.url }}" alt="Reward Image" />
                         {% else %}
                             <p>{{ cell.reward.name }}</p>
                         {% endif %}

@@ -18,6 +18,7 @@ import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+LOGIN_URL = "/admin_django/login/"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -45,11 +46,15 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "whitenoise.runserver_nostatic",
+    # rest_framework
     "rest_framework",
     "rest_framework.authtoken",
+    # others
+    "whitenoise.runserver_nostatic",
     "channels",
     "corsheaders",
+    "storages",
+    # my apps
     "administrative",
     "subathonTimer",
     "oauth",
@@ -194,4 +199,15 @@ CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
     }
+}
+
+# AWS S3 settings
+AWS_S3_SIGNATURE_VERSION = "s3v4"
+AWS_S3_REGION_NAME = "eu-west-3"
+AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY")
+AWS_STORAGE_BUCKET_NAME = config("AWS_STORAGE_BUCKET_NAME")
+AWS_S3_ENDPOINT_URL = config("AWS_S3_ENDPOINT_URL")
+AWS_S3_OBJECT_PARAMETERS = {
+    "CacheControl": "max-age=86400",
 }
