@@ -97,4 +97,9 @@ window.addEventListener("load", () => {
     });
     removeCurtains();
     scaleImage();
+
+    // Detect viewport changes
+    window.addEventListener("resize", () => {
+        scaleImage();
+    });
 });
