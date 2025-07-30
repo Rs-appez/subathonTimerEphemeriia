@@ -28,7 +28,7 @@ function formatTime(seconds) {
 }
 
 // Websocket
-var ws_url = "wss://" + window.location.host + "/ws/global/";
+var ws_url = "wss://" + window.location.host + "/ws/global_timer/";
 
 function connect() {
     var ws = new WebSocket(ws_url);

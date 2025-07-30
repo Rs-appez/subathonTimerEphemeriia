@@ -349,7 +349,7 @@ class Timer(models.Model):
         time = self.started_time()
         channel_layer = channels.layers.get_channel_layer()
         async_to_sync(channel_layer.group_send)(
-            "global",
+            settings.GLOBAL_TIMER_GROUP_NAME,
             {
                 "type": "new_ticks",
                 "content": json.dumps(
