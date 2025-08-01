@@ -118,6 +118,10 @@ class Timer(models.Model):
         max_length=100, default="Timer goal has not been reached"
     )
 
+    # Goals display
+    timer_nb_tips = models.IntegerField(default=3)
+    timer_nb_subs = models.IntegerField(default=3)
+
     # Bonus time
     bonus_times = models.ManyToManyField(BonusTime, blank=True)
     multiplicator_on = models.BooleanField(default=True)
@@ -198,20 +202,14 @@ class Timer(models.Model):
         self.save()
 
     def get_tip_goal(self):
-        return (
-            TipGoal.objects.filter(
-                goal_amount__gt=self.timer_total_donations, timer=self
-            )
-            .all()
-            .order_by("goal_amount")
-        )
-
         tip_goals = list(
             TipGoal.objects.filter(timer=self).all().order_by("goal_amount")
         )
 
-        grouped_goals = [tip_goals[i: i + 3]
-                         for i in range(0, len(tip_goals), 3)]
+        grouped_goals = [
+            tip_goals[i: i + self.timer_nb_tips]
+            for i in range(0, len(tip_goals), self.timer_nb_tips)
+        ]
         goals = []
         for i, goal in enumerate(grouped_goals):
             if goal[-1].goal_amount > self.timer_total_donations:
@@ -229,19 +227,13 @@ class Timer(models.Model):
         return TipGoal.objects.filter(timer=self).all().order_by("goal_amount").last()
 
     def get_sub_goal(self):
-        return (
-            SubGoal.objects.filter(
-                goal_amount__gt=self.timer_total_subscriptions, timer=self
-            )
-            .all()
-            .order_by("goal_amount")
-        )
-
         sub_goals = list(
             SubGoal.objects.filter(timer=self).all().order_by("goal_amount")
         )
-        grouped_goals = [sub_goals[i: i + 3]
-                         for i in range(0, len(sub_goals), 3)]
+        grouped_goals = [
+            sub_goals[i: i + self.timer_nb_subs]
+            for i in range(0, len(sub_goals), self.timer_nb_subs)
+        ]
         goals = []
         for i, goal in enumerate(grouped_goals):
             if goal[-1].goal_amount > self.timer_total_subscriptions:
