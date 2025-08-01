@@ -2,6 +2,9 @@ from django.db.models import F
 from django.db import models
 from django.utils import timezone
 
+from subathonTimerEphemeriia.storage_backends import GoalStorage
+from utils.utils import rename_file_to_upload
+
 import json
 from asgiref.sync import async_to_sync
 import channels.layers
@@ -29,10 +32,10 @@ class TipGoal(models.Model):
     goal_name = models.CharField(max_length=100)
     goal_amount = models.FloatField()
     goal_image = models.ImageField(
-        upload_to="subathonTimerEphemeriia/static/subathonTimer/images/tips/"
+        storage=GoalStorage(),
     )
     goal_image_validated = models.ImageField(
-        upload_to="subathonTimerEphemeriia/static/subathonTimer/images/tips/validated/",
+        storage=GoalStorage(),
         null=True,
         blank=True,
     )
@@ -58,10 +61,11 @@ class SubGoal(models.Model):
     goal_name = models.CharField(max_length=100)
     goal_amount = models.FloatField()
     goal_image = models.ImageField(
-        upload_to="subathonTimerEphemeriia/static/subathonTimer/images/subs/"
+        storage=GoalStorage(),
+        upload_to=rename_file_to_upload,
     )
     goal_image_validated = models.ImageField(
-        upload_to="subathonTimerEphemeriia/static/subathonTimer/images/subs/validated/",
+        storage=GoalStorage(),
         null=True,
         blank=True,
     )
@@ -151,7 +155,6 @@ class Timer(models.Model):
         self.save(update_fields=["timer_start"])
         self.refresh_from_db()
 
-
     def start_timer(self):
         self.timer_start = timezone.now()
         self.timer_end = self.timer_start + timezone.timedelta(
@@ -195,13 +198,13 @@ class Timer(models.Model):
         self.save()
 
     def get_tip_goal(self):
-
-        return (TipGoal.objects.filter(
+        return (
+            TipGoal.objects.filter(
                 goal_amount__gt=self.timer_total_donations, timer=self
-                )
-                .all()
-                .order_by("goal_amount")
-                )
+            )
+            .all()
+            .order_by("goal_amount")
+        )
 
         tip_goals = list(
             TipGoal.objects.filter(timer=self).all().order_by("goal_amount")
@@ -226,7 +229,6 @@ class Timer(models.Model):
         return TipGoal.objects.filter(timer=self).all().order_by("goal_amount").last()
 
     def get_sub_goal(self):
-
         return (
             SubGoal.objects.filter(
                 goal_amount__gt=self.timer_total_subscriptions, timer=self
