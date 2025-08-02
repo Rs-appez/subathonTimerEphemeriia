@@ -6,7 +6,6 @@ from .utils import get_logs, get_donators, get_gifters
 from .models import Timer
 from .views_api import TimerViewSet
 
-from datetime import timedelta, datetime
 
 def index(request):
     timer = Timer.objects.last()
@@ -44,12 +43,12 @@ def index(request):
             "tips": tips,
             "tip_nb_goals": timer.timer_nb_tips,
             "tip_goals_values": tip_goals_values,
-            "tip_validated": tip_validated[:timer.timer_nb_tips],
+            "tip_validated": tip_validated[: timer.timer_nb_tips],
             "total_tips": timer.timer_total_donations,
             "subs": subs,
             "sub_nb_goals": timer.timer_nb_subs,
             "sub_goals_values": sub_goals_values,
-            "sub_validated": sub_validated[:timer.timer_nb_subs],
+            "sub_validated": sub_validated[: timer.timer_nb_subs],
             "total_subs": timer.timer_total_subscriptions,
             "timer_paused": timer.timer_paused,
             "paused_time": timer.display_paused_time(),
@@ -77,7 +76,8 @@ def add_time(request):
         res = tvs.add_time(req)
 
         return redirect(
-            f"/timer/add_time_success?message={res.data['message']}&status={res.data['status']}"
+            f"/timer/add_time_success?message={
+                res.data['message']}&status={res.data['status']}"
         )
 
     elif request.method == "GET":
@@ -159,7 +159,8 @@ def pause_timer(request):
             res = tvs.resume(req)
 
         return redirect(
-            f"/timer/add_time_success?message={res.data['message']}&status={res.data['status']}"
+            f"/timer/add_time_success?message={
+                res.data['message']}&status={res.data['status']}"
         )
 
 
@@ -193,7 +194,8 @@ def tip_progress(request):
     return render(
         request,
         "subathonTimer/tipProgress.html",
-        {"total_tips": timer.timer_total_donations, "last_goal": last_goal.goal_amount},
+        {"total_tips": timer.timer_total_donations,
+            "last_goal": last_goal.goal_amount},
     )
 
 
