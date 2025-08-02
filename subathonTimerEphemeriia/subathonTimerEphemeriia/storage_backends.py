@@ -19,3 +19,8 @@ class BackgroundStorage(S3Boto3Storage):
 class GoalStorage(S3Boto3Storage):
     location = "goals"
     file_overwrite = False
+
+
+class AnnouncementStorage(S3Boto3Storage):
+    location = "announcements"
+    file_overwrite = False
