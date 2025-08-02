@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Carousel Anoucement</title>
+        <link href="{% static 'subathonTimer/css/carouselAnnouncement.css' %}"
+              rel="stylesheet" />
+    </head>
+    <body>
+        <div class="carousel">
+            {% for announcement in announcements %}
+                <div class="carousel-item">
+                    <div id="ann_{{ announcement.id }}" class="carousel-content">
+                        <img src="{{ announcement.image.url }}" alt="Announcement Image" />
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </body>
+</html>
+{{ announcements_json|json_script:"announcements" }}
+<script src="{% static 'subathonTimer/js/carouselAnnouncement.js' %}"
+        type="module"></script>
