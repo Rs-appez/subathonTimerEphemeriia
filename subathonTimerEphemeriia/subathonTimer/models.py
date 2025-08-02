@@ -2,7 +2,7 @@ from django.db.models import F
 from django.db import models
 from django.utils import timezone
 
-from subathonTimerEphemeriia.storage_backends import GoalStorage
+from subathonTimerEphemeriia.storage_backends import GoalStorage, AnnouncementStorage
 from utils.utils import rename_file_to_upload
 
 import json
@@ -357,3 +357,20 @@ class Timer(models.Model):
                 ),
             },
         )
+
+
+class CarouselAnnouncement(models.Model):
+    title = models.CharField(max_length=200)
+    image = models.ImageField(
+        storage=AnnouncementStorage(),
+        upload_to=rename_file_to_upload,
+    )
+    timer = models.ForeignKey(
+        Timer, on_delete=models.CASCADE, related_name="announcements"
+    )
+    duration = models.IntegerField(
+        default=10, help_text="Duration in seconds for the announcement to be displayed"
+    )
+
+    def __str__(self):
+        return self.title
