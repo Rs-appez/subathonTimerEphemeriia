@@ -213,7 +213,7 @@ class Timer(models.Model):
         goals = []
         for i, goal in enumerate(grouped_goals):
             if goal[-1].goal_amount > self.timer_total_donations:
-                goals = tip_goals[i * 3:]
+                goals = tip_goals[i * self.timer_nb_tips:]
                 break
         for goal in goals:
             if goal.goal_amount <= self.timer_total_donations:
@@ -237,7 +237,7 @@ class Timer(models.Model):
         goals = []
         for i, goal in enumerate(grouped_goals):
             if goal[-1].goal_amount > self.timer_total_subscriptions:
-                goals = sub_goals[i * 3:]
+                goals = sub_goals[i * self.timer_nb_subs:]
                 break
         for goal in goals:
             if goal.goal_amount <= self.timer_total_subscriptions:
