@@ -202,6 +202,8 @@ class Timer(models.Model):
         self.save()
 
     def get_tip_goal(self):
+        if self.timer_nb_tips <= 0:
+            return []
         tip_goals = list(
             TipGoal.objects.filter(timer=self).all().order_by("goal_amount")
         )
@@ -227,6 +229,8 @@ class Timer(models.Model):
         return TipGoal.objects.filter(timer=self).all().order_by("goal_amount").last()
 
     def get_sub_goal(self):
+        if self.timer_nb_subs <= 0:
+            return []
         sub_goals = list(
             SubGoal.objects.filter(timer=self).all().order_by("goal_amount")
         )
