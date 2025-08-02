@@ -3,7 +3,8 @@ from django.http import HttpRequest
 
 from .utils import get_logs, get_donators, get_gifters
 
-from .models import Timer
+from .models import Timer, CarouselAnnouncement
+from .serializers import CarouselAnnouncementSerializer
 from .views_api import TimerViewSet
 
 
@@ -76,8 +77,9 @@ def add_time(request):
         res = tvs.add_time(req)
 
         return redirect(
-            f"/timer/add_time_success?message={
-                res.data['message']}&status={res.data['status']}"
+            f"/timer/add_time_success?message={res.data['message']}&status={
+                res.data['status']
+            }"
         )
 
     elif request.method == "GET":
@@ -159,8 +161,9 @@ def pause_timer(request):
             res = tvs.resume(req)
 
         return redirect(
-            f"/timer/add_time_success?message={
-                res.data['message']}&status={res.data['status']}"
+            f"/timer/add_time_success?message={res.data['message']}&status={
+                res.data['status']
+            }"
         )
 
 
@@ -216,4 +219,20 @@ def global_timer(request):
         request,
         "subathonTimer/globalTimer.html",
         {"time": timer.started_time()},
+    )
+
+
+def carousel_announcement(request):
+    timer = Timer.objects.last()
+    announcements = CarouselAnnouncement.objects.filter(timer=timer).all()
+    announcements_json = CarouselAnnouncementSerializer(
+        announcements, many=True).data
+
+    return render(
+        request,
+        "subathonTimer/carouselAnnouncement.html",
+        {
+            "announcements": announcements,
+            "announcements_json": announcements_json,
+        },
     )
