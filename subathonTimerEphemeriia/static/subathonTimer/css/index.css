@@ -1,115 +1,115 @@
 :root {
-    --primary-color: #5b00d3;
+  --primary-color: #5b00d3;
 }
 
 @font-face {
-    font-family: "Century";
-    src: url("/static/subathonTimer/fonts/century.ttf") format("truetype");
+  font-family: "Century";
+  src: url("/static/subathonTimer/fonts/century.ttf") format("truetype");
 }
 
 .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .time-container {
-    display: flex;
-    justify-content: left;
-    width: 100%;
+  display: flex;
+  justify-content: left;
+  width: 100%;
 }
 
 span.time {
-    font-size: 70px;
-    text-align: center;
-    /* border: 2px solid black; */
-    text-shadow: 3px 3px 5px #000000;
+  font-size: 70px;
+  text-align: center;
+  /* border: 2px solid black; */
+  text-shadow: 3px 3px 5px #000000;
 }
 
 body {
-    /* background-color: #5b00d3; */
+  /* background-color: #5b00d3; */
 }
 
 .tip-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 42%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 42%;
 }
 
 .image-column {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    overflow: hidden;
-    height: 150px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow: hidden;
+  height: var(--display-nb-tip-goals);
 }
 
 .image-column-sub {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    overflow: hidden;
-    height: 450px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow: hidden;
+  height: var(--display-nb-sub-goals);
 }
 
 .image {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: top;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
 }
 
 .validate {
-    display: none;
-    position: absolute;
-    left: -2.1% !important;
-    bottom: -21% !important;
+  display: none;
+  position: absolute;
+  left: -2.1% !important;
+  bottom: -21% !important;
 }
 
 .validated {
-    display: block;
+  display: block;
 }
 
 .hidden {
-    display: none;
+  display: none;
 }
 
 .butterfly_animation {
-    display: none;
-    position: absolute;
-    top: -4.66667% !important;
-    left: -1.00418% !important;
+  display: none;
+  position: absolute;
+  top: -4.66667% !important;
+  left: -1.00418% !important;
 
-    object-fit: cover;
-    object-position: top;
-    width: 100%;
+  object-fit: cover;
+  object-position: top;
+  width: 100%;
 }
 
 .moving-image {
-    animation: moveVertical 2s ease-in;
+  animation: moveVertical 2s ease-in;
 }
 
 .number {
-    font-family: "Century";
-    color: white;
-    text-shadow: 3px 3px 5px #000000;
+  font-family: "Century";
+  color: white;
+  text-shadow: 3px 3px 5px #000000;
 }
 
 @keyframes moveVertical {
-    0% {
-        transform: translateY(0);
-    }
+  0% {
+    transform: translateY(0);
+  }
 
-    100% {
-        transform: translateY(-100%);
-    }
+  100% {
+    transform: translateY(-100%);
+  }
 }
 
 .tip_image_to_move,
 .sub_image_to_move {
-    position: relative;
-    display: inline-block;
-    height: 150px;
+  position: relative;
+  display: inline-block;
+  height: 150px;
 }
