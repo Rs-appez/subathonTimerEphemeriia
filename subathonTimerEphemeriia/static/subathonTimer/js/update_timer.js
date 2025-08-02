@@ -34,6 +34,9 @@ var total_subscriptions = data.total_subscriptions;
 var tip_goal_values = JSON.parse(data.tip_goal_values);
 var sub_goal_values = JSON.parse(data.sub_goals_values);
 
+var tip_nb_goals = parseInt(data.tip_nb_goals) || 3;
+var sub_nb_goals = parseInt(data.sub_nb_goals) || 3;
+
 var sub_validated = JSON.parse(
     data.sub_validated.replace(/True/g, "true").replace(/False/g, "false"),
 );
@@ -78,30 +81,30 @@ function updateTipGoal() {
 function removeFirstTreeTip() {
     skip_tip_animation = true;
     updateTipGoal();
-    setTimeout(() => {
-        updateTipGoal();
-        setTimeout(() => {
-            updateTipGoal();
-        }, 2201);
-    }, 2201);
+    for (let i = 1; i < tip_nb_goals; i++) {
+        setTimeout(updateTipGoal, i * 2201);
+    }
 
-    setTimeout(function() {
-        tip_validated = [false, false, false];
-        if (tip_goal_values.length >= 3) {
-            tip_goal_values.splice(0, 3);
-            if (tip_goal_values.length === 0) {
-                document.querySelector("#tips").style.display = "none";
+    setTimeout(
+        function() {
+            tip_validated = new Array(tip_nb_goals).fill(false);
+            if (tip_goal_values.length >= tip_nb_goals) {
+                tip_goal_values.splice(0, tip_nb_goals);
+                if (tip_goal_values.length === 0) {
+                    document.querySelector("#tips").style.display = "none";
+                }
             }
-        }
-        skip_tip_animation = false;
-        checkTipGoal();
-    }, 7000);
+            skip_tip_animation = false;
+            checkTipGoal();
+        },
+        500 + tip_nb_goals * 2201,
+    );
 }
 
 function validateTipGoal() {
     let tips = document.querySelector("#tips").children;
-    let firstThreeElements = Array.prototype.slice.call(tips, 0, 3);
-    firstThreeElements.forEach((element, index) => {
+    let firstElements = Array.prototype.slice.call(tips, 0, tip_nb_goals);
+    firstElements.forEach((element, index) => {
         console.log("Checking tip goal " + element.id);
         if (tip_validated[index] == false && skip_tip_animation == false) {
             if (total_tips >= tip_goal_values[index]) {
@@ -172,9 +175,9 @@ function removeFirstTreeSub() {
     }, 2201);
 
     setTimeout(function() {
-        sub_validated = [false, false, false];
-        if (sub_goal_values.length >= 3) {
-            sub_goal_values.splice(0, 3);
+        sub_validated = new Array(sub_nb_goals).fill(false);
+        if (sub_goal_values.length >= sub_nb_goals) {
+            sub_goal_values.splice(0, sub_nb_goals);
         }
         skip_sub_animation = false;
         checkSubGoal();
@@ -183,8 +186,8 @@ function removeFirstTreeSub() {
 
 function validateSubGoal() {
     let subs = document.querySelector("#subs").children;
-    let firstThreeElements = Array.prototype.slice.call(subs, 0, 3);
-    firstThreeElements.forEach((element, index) => {
+    let firstElements = Array.prototype.slice.call(subs, 0, sub_nb_goals);
+    firstElements.forEach((element, index) => {
         if (sub_validated[index] == false && skip_sub_animation == false) {
             if (total_subscriptions >= sub_goal_values[index]) {
                 skip_sub_animation = true;
@@ -211,7 +214,7 @@ function checkSubGoal() {
     }
 }
 
-// Goal validation
+// Generals functions
 function validateGoal(goalId) {
     const goalSquare = document.querySelector(`[id="${goalId}"] .validate`);
     const animation = document.querySelector(
@@ -235,8 +238,19 @@ function validateGoal(goalId) {
     }
 }
 
+function resizeDisplayGoals() {
+    document.documentElement.style.setProperty(
+        "--display-nb-tip-goals",
+        tip_nb_goals * 150 + "px",
+    );
+    document.documentElement.style.setProperty(
+        "--display-nb-sub-goals",
+        sub_nb_goals * 150 + "px",
+    );
+}
+
 // Websocket
-var ws_url = 'wss://' + window.location.host + '/ws/ticks/';
+var ws_url = "ws://" + window.location.host + "/ws/ticks/";
 
 function connect() {
     var ws = new WebSocket(ws_url);
@@ -261,8 +275,10 @@ function connect() {
 
     ws.onerror = function(event) {
         console.log("Error");
-        ws.close();
+        setTimeout(connect, 1000);
     };
 }
 
 connect();
+
+resizeDisplayGoals();
