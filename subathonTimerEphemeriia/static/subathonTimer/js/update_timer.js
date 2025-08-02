@@ -167,21 +167,21 @@ function updateSubGoal() {
 function removeFirstTreeSub() {
     skip_sub_animation = true;
     updateSubGoal();
-    setTimeout(() => {
-        updateSubGoal();
-        setTimeout(() => {
-            updateSubGoal();
-        }, 2201);
-    }, 2201);
+    for (let i = 1; i < sub_nb_goals; i++) {
+        setTimeout(updateSubGoal, i * 2201);
+    }
 
-    setTimeout(function() {
-        sub_validated = new Array(sub_nb_goals).fill(false);
-        if (sub_goal_values.length >= sub_nb_goals) {
-            sub_goal_values.splice(0, sub_nb_goals);
-        }
-        skip_sub_animation = false;
-        checkSubGoal();
-    }, 7000);
+    setTimeout(
+        function() {
+            sub_validated = new Array(sub_nb_goals).fill(false);
+            if (sub_goal_values.length >= sub_nb_goals) {
+                sub_goal_values.splice(0, sub_nb_goals);
+            }
+            skip_sub_animation = false;
+            checkSubGoal();
+        },
+        500 + sub_nb_goals * 2201,
+    );
 }
 
 function validateSubGoal() {
