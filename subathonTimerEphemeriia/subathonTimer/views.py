@@ -77,7 +77,9 @@ def add_time(request):
         res = tvs.add_time(req)
 
         return redirect(
-            f"/timer/add_time_success?message={res.data['message']}&status={res.data['status']}"
+            f"/timer/add_time_success?message={res.data['message']}&status={
+                res.data['status']
+            }"
         )
 
     elif request.method == "GET":
