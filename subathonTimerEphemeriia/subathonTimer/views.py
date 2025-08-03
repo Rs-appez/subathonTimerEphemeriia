@@ -60,7 +60,7 @@ def index(request):
     )
 
 
-@permission_required("subathonTimer.change_timer")
+@permission_required("subathonTimer.view_timer")
 def add_time(request):
     if request.method == "POST":
         user = request.user
@@ -120,7 +120,7 @@ def subannivesary_summary(request):
     )
 
 
-@permission_required("subathonTimer.change_timer")
+@permission_required("subathonTimer.view_timer")
 def add_time_success(request):
     timer = Timer.objects.last()
     return render(
@@ -144,7 +144,7 @@ def start_timer(request):
         return redirect("index_timer")
 
 
-@permission_required("subathonTimer.change_timer")
+@permission_required("subathonTimer.view_timer")
 def pause_timer(request):
     if request.method == "POST":
         req = HttpRequest()
@@ -165,7 +165,7 @@ def pause_timer(request):
         )
 
 
-@permission_required("subathonTimer.change_timer")
+@permission_required("subathonTimer.view_timer")
 def toggle_sub_multiplicator(request):
     if request.method == "POST":
         req = HttpRequest()
