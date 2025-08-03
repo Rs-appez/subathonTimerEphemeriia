@@ -42,6 +42,11 @@
                     <button type="submit">Activate</button>
                 {% endif %}
             </form>
+            <form class="inline-form" method="POST" action="{% url 'refresh_timer' %}">
+                {% csrf_token %}
+                <label for="refresh">Refresh timer :</label>
+                <button type="submit">Refresh</button>
+            </form>
             {% if status == "200" %}
                 <p style="color: green">{{ message }}</p>
             {% else %}

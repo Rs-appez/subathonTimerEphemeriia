@@ -166,6 +166,23 @@ def pause_timer(request):
 
 
 @permission_required("subathonTimer.view_timer")
+def refresh_timer(request):
+    if request.method == "POST":
+        req = HttpRequest()
+        req.method = "POST"
+        req.user = request.user
+
+        tvs = TimerViewSet()
+        res = tvs.refresh(req)
+
+        return redirect(
+            f"/timer/add_time_success?message={res.data['message']}&status={
+                res.data['status']
+            }"
+        )
+
+
+@permission_required("subathonTimer.view_timer")
 def toggle_sub_multiplicator(request):
     if request.method == "POST":
         req = HttpRequest()

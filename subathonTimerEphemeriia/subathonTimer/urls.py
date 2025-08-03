@@ -8,6 +8,7 @@ from .views import (
     tip_progress,
     sub_progress,
     pause_timer,
+    refresh_timer,
     global_timer,
     list_participants,
     subannivesary_summary,
@@ -31,6 +32,7 @@ urlpatterns = [
     path("tip_progress", tip_progress, name="tip_progress"),
     path("sub_progress", sub_progress, name="sub_progress"),
     path("pause_timer", pause_timer, name="pause_timer"),
+    path("refresh_timer", refresh_timer, name="refresh_timer"),
     path("global_timer", global_timer, name="global_timer"),
     path("list_participants/", list_participants, name="list_participants"),
     path(

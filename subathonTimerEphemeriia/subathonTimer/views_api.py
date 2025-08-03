@@ -196,6 +196,12 @@ class TimerViewSet(viewsets.ModelViewSet):
         return Response({"message": "Timer not paused", "status": 400})
 
     @action(detail=False, methods=["post"], permission_classes=[IsAdminUser])
+    def refresh(self, request, pk=None):
+        timer = Timer.objects.last()
+        timer.send_ticket()
+        return Response({"message": "Timer refreshed", "status": 200})
+
+    @action(detail=False, methods=["post"], permission_classes=[IsAdminUser])
     def edit_started_time(self, request, pk=None):
         timer = Timer.objects.last()
         time = request.data["time"]
