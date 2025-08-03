@@ -142,7 +142,7 @@ class TimerViewSet(viewsets.ModelViewSet):
             donation = float(donation)
             timer.new_donation(donation)
 
-            if donation >= 100.0:
+            if timer.multiplicator_tip_on and donation >= 100.0:
                 bonus_time = timer.add_bonus_tip(donation)
 
         except Exception as e:
