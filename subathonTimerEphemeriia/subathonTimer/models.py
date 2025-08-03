@@ -20,8 +20,7 @@ class BonusType(models.TextChoices):
 
 
 class BonusTime(models.Model):
-    bonus_condition = models.CharField(
-        choices=BonusType.choices, max_length=10)
+    bonus_condition = models.CharField(choices=BonusType.choices, max_length=10)
     bonus_value = models.IntegerField()
     bonus_time = models.IntegerField()
     bonus_used = models.BooleanField(default=False)
@@ -126,6 +125,12 @@ class Timer(models.Model):
     bonus_times = models.ManyToManyField(BonusTime, blank=True)
     multiplicator_on = models.BooleanField(default=True)
 
+    # Announcement carousel
+    nb_seconds_announcement = models.IntegerField(
+        default=300,
+        help_text="Number of seconds between each announcement will be displayed",
+    )
+
     def __str__(self):
         return self.timer_name
 
@@ -209,13 +214,13 @@ class Timer(models.Model):
         )
 
         grouped_goals = [
-            tip_goals[i: i + self.timer_nb_tips]
+            tip_goals[i : i + self.timer_nb_tips]
             for i in range(0, len(tip_goals), self.timer_nb_tips)
         ]
         goals = []
         for i, goal in enumerate(grouped_goals):
             if goal[-1].goal_amount > self.timer_total_donations:
-                goals = tip_goals[i * self.timer_nb_tips:]
+                goals = tip_goals[i * self.timer_nb_tips :]
                 break
         for goal in goals:
             if goal.goal_amount <= self.timer_total_donations:
@@ -235,13 +240,13 @@ class Timer(models.Model):
             SubGoal.objects.filter(timer=self).all().order_by("goal_amount")
         )
         grouped_goals = [
-            sub_goals[i: i + self.timer_nb_subs]
+            sub_goals[i : i + self.timer_nb_subs]
             for i in range(0, len(sub_goals), self.timer_nb_subs)
         ]
         goals = []
         for i, goal in enumerate(grouped_goals):
             if goal[-1].goal_amount > self.timer_total_subscriptions:
-                goals = sub_goals[i * self.timer_nb_subs:]
+                goals = sub_goals[i * self.timer_nb_subs :]
                 break
         for goal in goals:
             if goal.goal_amount <= self.timer_total_subscriptions:
@@ -314,8 +319,7 @@ class Timer(models.Model):
 
         bonus_time *= multiplier
 
-        self.timer_end = F("timer_end") + \
-            timezone.timedelta(seconds=bonus_time)
+        self.timer_end = F("timer_end") + timezone.timedelta(seconds=bonus_time)
 
         self.save(update_fields=["timer_end"])
         self.refresh_from_db()
