@@ -77,9 +77,7 @@ def add_time(request):
         res = tvs.add_time(req)
 
         return redirect(
-            f"/timer/add_time_success?message={res.data['message']}&status={
-                res.data['status']
-            }"
+            f"/timer/add_time_success?message={res.data['message']}&status={res.data['status']}"
         )
 
     elif request.method == "GET":
@@ -197,8 +195,7 @@ def tip_progress(request):
     return render(
         request,
         "subathonTimer/tipProgress.html",
-        {"total_tips": timer.timer_total_donations,
-            "last_goal": last_goal.goal_amount},
+        {"total_tips": timer.timer_total_donations, "last_goal": last_goal.goal_amount},
     )
 
 
@@ -225,8 +222,7 @@ def global_timer(request):
 def carousel_announcement(request):
     timer = Timer.objects.last()
     announcements = CarouselAnnouncement.objects.filter(timer=timer).all()
-    announcements_json = CarouselAnnouncementSerializer(
-        announcements, many=True).data
+    announcements_json = CarouselAnnouncementSerializer(announcements, many=True).data
 
     return render(
         request,
