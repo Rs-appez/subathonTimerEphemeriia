@@ -21,5 +21,7 @@
     </body>
 </html>
 {{ announcements_json|json_script:"announcements" }}
+{{ switch_time|json_script:"switchTime" }}
 <script src="{% static 'subathonTimer/js/carouselAnnouncement.js' %}"
-        type="module"></script>
+        type="module"
+        data-switch_time="{{switch_time}}"></script>

@@ -225,6 +225,7 @@ def carousel_announcement(request):
     timer = Timer.objects.last()
     announcements = CarouselAnnouncement.objects.filter(timer=timer).all()
     announcements_json = CarouselAnnouncementSerializer(announcements, many=True).data
+    switch_time = timer.nb_seconds_announcement
 
     return render(
         request,
@@ -232,5 +233,6 @@ def carousel_announcement(request):
         {
             "announcements": announcements,
             "announcements_json": announcements_json,
+            "switch_time": switch_time,
         },
     )

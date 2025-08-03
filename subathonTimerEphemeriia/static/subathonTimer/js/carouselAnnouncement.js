@@ -1,6 +1,9 @@
 const announcements = document.getElementById("announcements");
 const announcementData = JSON.parse(announcements.innerHTML);
 
+const switchTime =
+    parseInt(document.getElementById("switchTime").innerHTML) || 300;
+
 let i = 0;
 
 function rotateAnnouncements() {
@@ -13,9 +16,10 @@ function rotateAnnouncements() {
         showAnnouncement(announcement);
         setTimeout(() => {
             hideAnnouncement(announcement);
+            console.log(switchTime);
             setTimeout(() => {
                 rotateAnnouncements();
-            }, 90000);
+            }, switchTime * 1000);
         }, element.duration * 1000);
     }
     i++;
