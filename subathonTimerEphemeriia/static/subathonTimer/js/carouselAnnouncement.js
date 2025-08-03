@@ -15,7 +15,7 @@ function rotateAnnouncements() {
             hideAnnouncement(announcement);
             setTimeout(() => {
                 rotateAnnouncements();
-            }, 3000);
+            }, 90000);
         }, element.duration * 1000);
     }
     i++;
