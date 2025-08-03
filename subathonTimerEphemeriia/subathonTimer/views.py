@@ -92,7 +92,7 @@ def add_time(request):
             {
                 "logs": get_logs(),
                 "timer_paused": timer.timer_paused,
-                "multiplicator_on": timer.multiplicator_on,
+                "multiplicator_sub_on": timer.multiplicator_sub_on,
             },
         )
 
@@ -133,7 +133,7 @@ def add_time_success(request):
             "status": request.GET.get("status"),
             "logs": get_logs(),
             "timer_paused": timer.timer_paused,
-            "multiplicator_on": timer.multiplicator_on,
+            "multiplicator_sub_on": timer.multiplicator_sub_on,
         },
     )
 
@@ -167,7 +167,7 @@ def pause_timer(request):
         )
 
 
-def toggle_multiplicator(request):
+def toggle_sub_multiplicator(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect("/admin_django/login/?next=/timer/add_time/")
     if request.method == "POST":
@@ -179,7 +179,7 @@ def toggle_multiplicator(request):
 
         try:
             toggle = request.POST.get("toggle_multiplicator").lower() == "true"
-            timer.toggle_multiplicator(toggle)
+            timer.toggle_sub_multiplicator(toggle)
         except Exception as e:
             return redirect(
                 "/timer/add_time_success?message=Error in request&status=400"

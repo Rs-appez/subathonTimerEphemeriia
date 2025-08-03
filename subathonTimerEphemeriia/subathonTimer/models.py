@@ -123,7 +123,7 @@ class Timer(models.Model):
 
     # Bonus time
     bonus_times = models.ManyToManyField(BonusTime, blank=True)
-    multiplicator_on = models.BooleanField(default=True)
+    multiplicator_sub_on = models.BooleanField(default=True)
 
     # Announcement carousel
     nb_seconds_announcement = models.IntegerField(
@@ -202,8 +202,8 @@ class Timer(models.Model):
 
         return True
 
-    def toggle_multiplicator(self, active: bool):
-        self.multiplicator_on = active
+    def toggle_sub_multiplicator(self, active: bool):
+        self.multiplicator_sub_on = active
         self.save()
 
     def get_tip_goal(self):
