@@ -63,8 +63,7 @@ class TimerViewSet(viewsets.ModelViewSet):
                         and gifter == last_gifter[0]
                         and time.time() - last_gifter[2] < 20
                     ):
-                        update_gifter = (
-                            gifter, last_gifter[1] + 1, time.time())
+                        update_gifter = (gifter, last_gifter[1] + 1, time.time())
 
                         if update_gifter[1] == 5:
                             bonus_time = timer.add_bonus_sub(tier, 5)
@@ -77,8 +76,7 @@ class TimerViewSet(viewsets.ModelViewSet):
                         update_gifter = (gifter, 1, time.time())
 
                     if last_gifter in last_gifters and last_gifter[0] != "":
-                        last_gifters[last_gifters.index(
-                            last_gifter)] = update_gifter
+                        last_gifters[last_gifters.index(last_gifter)] = update_gifter
                     else:
                         last_gifters.append(update_gifter)
 
@@ -138,9 +136,14 @@ class TimerViewSet(viewsets.ModelViewSet):
 
         self.seen_ids.add(id)
 
+        bonus_time = 0
+
         try:
             donation = float(donation)
             timer.new_donation(donation)
+
+            if donation >= 100.0:
+                bonus_time = timer.add_bonus_tip(donation)
 
         except Exception as e:
             return Response({"message": "Invalid donation", "status": 400})
@@ -148,6 +151,9 @@ class TimerViewSet(viewsets.ModelViewSet):
         timer.send_ticket()
 
         write_log(f"New donation: {name} - {donation}")
+
+        if bonus_time > 0:
+            write_log(f"Bonus time added for {name} - {bonus_time} seconds")
 
         return Response({"message": "Donation added", "status": 200})
 
