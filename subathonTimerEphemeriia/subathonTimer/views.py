@@ -1,13 +1,16 @@
-from django.shortcuts import render, redirect, HttpResponseRedirect
+from django.shortcuts import render, redirect
 from django.http import HttpRequest
+from django.contrib.auth.decorators import permission_required, user_passes_test
 
 from .utils import get_logs, get_donators, get_gifters
+from utils.permissions import is_streamer
 
 from .models import Timer, CarouselAnnouncement
 from .serializers import CarouselAnnouncementSerializer
 from .views_api import TimerViewSet
 
 
+@permission_required("subathonTimer.view_timer")
 def index(request):
     timer = Timer.objects.last()
     tip_goals_values = []
@@ -57,11 +60,9 @@ def index(request):
     )
 
 
+@permission_required("subathonTimer.change_timer")
 def add_time(request):
     if request.method == "POST":
-        if not request.user.is_authenticated:
-            return HttpResponseRedirect("/admin_django/login/?next=/timer/add_time")
-
         user = request.user
 
         req = HttpRequest()
@@ -83,8 +84,6 @@ def add_time(request):
         )
 
     elif request.method == "GET":
-        if not request.user.is_authenticated:
-            return HttpResponseRedirect("/admin_django/login/?next=/timer/add_time/")
         timer = Timer.objects.last()
         return render(
             request,
@@ -121,9 +120,8 @@ def subannivesary_summary(request):
     )
 
 
+@permission_required("subathonTimer.change_timer")
 def add_time_success(request):
-    if not request.user.is_authenticated:
-        return HttpResponseRedirect("/admin_django/login/?next=/timer/add_time/")
     timer = Timer.objects.last()
     return render(
         request,
@@ -138,6 +136,7 @@ def add_time_success(request):
     )
 
 
+@user_passes_test(is_streamer)
 def start_timer(request):
     if request.method == "POST":
         timer = Timer.objects.last()
@@ -145,9 +144,8 @@ def start_timer(request):
         return redirect("index_timer")
 
 
+@permission_required("subathonTimer.change_timer")
 def pause_timer(request):
-    if not request.user.is_authenticated:
-        return HttpResponseRedirect("/admin_django/login/?next=/timer/add_time/")
     if request.method == "POST":
         req = HttpRequest()
         req.method = "POST"
@@ -167,9 +165,8 @@ def pause_timer(request):
         )
 
 
+@permission_required("subathonTimer.change_timer")
 def toggle_sub_multiplicator(request):
-    if not request.user.is_authenticated:
-        return HttpResponseRedirect("/admin_django/login/?next=/timer/add_time/")
     if request.method == "POST":
         req = HttpRequest()
         req.method = "POST"
@@ -190,6 +187,7 @@ def toggle_sub_multiplicator(request):
         return redirect(f"/timer/add_time_success?message={message}&status=200")
 
 
+@permission_required("subathonTimer.view_timer")
 def tip_progress(request):
     timer = Timer.objects.last()
     last_goal = timer.get_last_tip_goal()
@@ -201,6 +199,7 @@ def tip_progress(request):
     )
 
 
+@permission_required("subathonTimer.view_timer")
 def sub_progress(request):
     timer = Timer.objects.last()
     total_subs = timer.timer_total_subscriptions
@@ -212,6 +211,7 @@ def sub_progress(request):
     )
 
 
+@permission_required("subathonTimer.view_timer")
 def global_timer(request):
     timer = Timer.objects.last()
     return render(
@@ -221,6 +221,7 @@ def global_timer(request):
     )
 
 
+@permission_required("subathonTimer.view_timer")
 def carousel_announcement(request):
     timer = Timer.objects.last()
     announcements = CarouselAnnouncement.objects.filter(timer=timer).all()
