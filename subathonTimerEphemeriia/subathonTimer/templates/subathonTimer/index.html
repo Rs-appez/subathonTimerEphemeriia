@@ -34,10 +34,10 @@
                                     <img src="{{ tip.goal_image_validated.url }}"
                                          id='validated'
                                          class="image {% if not tip.validated %}hidden{% endif %}"
-                                         alt='Image validated' />
+                                         alt='' />
                                     <img src="{{ tip.goal_image.url }}"
                                          id='default'
-                                         alt="Image"
+                                         alt=""
                                          class="image {% if tip.validated %}hidden{% endif %}" />
                                 </div>
                             {% endfor %}
@@ -56,10 +56,10 @@
                                 <img src="{{ sub.goal_image_validated.url }}"
                                      id='validated'
                                      class="image {% if not sub.validated %}hidden{% endif %}"
-                                     alt='Image validated' />
+                                     alt='' />
                                 <img src="{{ sub.goal_image.url }}"
                                      id='default'
-                                     alt="Image"
+                                     alt=""
                                      class="image {% if sub.validated %}hidden{% endif %}" />
                             </div>
                         {% endfor %}
