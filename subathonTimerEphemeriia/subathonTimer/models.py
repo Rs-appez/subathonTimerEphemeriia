@@ -124,6 +124,7 @@ class Timer(models.Model):
     # Bonus time
     bonus_times = models.ManyToManyField(BonusTime, blank=True)
     multiplicator_sub_on = models.BooleanField(default=True)
+    multiplicator_tip_on = models.BooleanField(default=True)
 
     # Announcement carousel
     nb_seconds_announcement = models.IntegerField(
@@ -321,6 +322,16 @@ class Timer(models.Model):
 
         self.timer_end = F("timer_end") + timezone.timedelta(seconds=bonus_time)
 
+        self.save(update_fields=["timer_end"])
+        self.refresh_from_db()
+
+        return bonus_time
+
+    def add_bonus_tip(self, tip_amount: float):
+        """Double the time added for a tip"""
+        bonus_time = self.timer_add_time_donation * tip_amount
+
+        self.timer_end = F("timer_end") + timezone.timedelta(seconds=bonus_time)
         self.save(update_fields=["timer_end"])
         self.refresh_from_db()
 
