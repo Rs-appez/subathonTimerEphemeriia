@@ -52,7 +52,6 @@ class TimerViewSet(viewsets.ModelViewSet):
                 raise Exception
 
             if timer.multiplicator_on:
-
                 with self.cache_lock:
                     last_gifters = cache.get("last_gifter", [])
 
@@ -64,7 +63,8 @@ class TimerViewSet(viewsets.ModelViewSet):
                         and gifter == last_gifter[0]
                         and time.time() - last_gifter[2] < 20
                     ):
-                        update_gifter = (gifter, last_gifter[1] + 1, time.time())
+                        update_gifter = (
+                            gifter, last_gifter[1] + 1, time.time())
 
                         if update_gifter[1] == 5:
                             bonus_time = timer.add_bonus_sub(tier, 5)
@@ -77,7 +77,8 @@ class TimerViewSet(viewsets.ModelViewSet):
                         update_gifter = (gifter, 1, time.time())
 
                     if last_gifter in last_gifters and last_gifter[0] != "":
-                        last_gifters[last_gifters.index(last_gifter)] = update_gifter
+                        last_gifters[last_gifters.index(
+                            last_gifter)] = update_gifter
                     else:
                         last_gifters.append(update_gifter)
 
