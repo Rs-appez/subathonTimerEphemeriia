@@ -51,7 +51,7 @@ class TimerViewSet(viewsets.ModelViewSet):
             if not timer.new_sub(tier):
                 raise Exception
 
-            if timer.multiplicator_on:
+            if timer.multiplicator_sub_on:
                 with self.cache_lock:
                     last_gifters = cache.get("last_gifter", [])
 
