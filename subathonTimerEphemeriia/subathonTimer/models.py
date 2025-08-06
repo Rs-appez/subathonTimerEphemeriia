@@ -3,7 +3,7 @@ from django.db import models
 from django.utils import timezone
 
 from subathonTimerEphemeriia.storage_backends import GoalStorage, AnnouncementStorage
-from utils.misc import rename_file_to_upload
+from utils.utils import rename_file_to_upload
 
 import json
 from asgiref.sync import async_to_sync
