@@ -1,6 +1,6 @@
 from django.db import models
 from subathonTimerEphemeriia.storage_backends import RewardStorage, BackgroundStorage
-from utils.utils import rename_file_to_upload
+from utils.misc import rename_file_to_upload
 
 
 from random import shuffle
