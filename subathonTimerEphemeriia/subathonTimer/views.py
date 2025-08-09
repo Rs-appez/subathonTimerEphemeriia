@@ -182,7 +182,33 @@ def toggle_sub_multiplicator(request):
                 "/timer/add_time_success?message=Error in request&status=400"
             )
 
-        message = "Multiplicator actived" if toggle else "Multiplicator desactived"
+        message = (
+            "Sub multiplicator actived" if toggle else "Sub multiplicator desactived"
+        )
+
+        return redirect(f"/timer/add_time_success?message={message}&status=200")
+
+
+@permission_required("subathonTimer.view_timer")
+def toggle_tip_multiplicator(request):
+    if request.method == "POST":
+        req = HttpRequest()
+        req.method = "POST"
+        req.user = request.user
+
+        timer = Timer.objects.last()
+
+        try:
+            toggle = request.POST.get("toggle_multiplicator").lower() == "true"
+            timer.toggle_tip_multiplicator(toggle)
+        except Exception as e:
+            return redirect(
+                "/timer/add_time_success?message=Error in request&status=400"
+            )
+
+        message = (
+            "Tip multiplicator actived" if toggle else "Tip multiplicator desactived"
+        )
 
         return redirect(f"/timer/add_time_success?message={message}&status=200")
 
@@ -195,7 +221,8 @@ def tip_progress(request):
     return render(
         request,
         "subathonTimer/tipProgress.html",
-        {"total_tips": timer.timer_total_donations, "last_goal": last_goal.goal_amount},
+        {"total_tips": timer.timer_total_donations,
+            "last_goal": last_goal.goal_amount},
     )
 
 
@@ -225,7 +252,8 @@ def global_timer(request):
 def carousel_announcement(request):
     timer = Timer.objects.last()
     announcements = CarouselAnnouncement.objects.filter(timer=timer).all()
-    announcements_json = CarouselAnnouncementSerializer(announcements, many=True).data
+    announcements_json = CarouselAnnouncementSerializer(
+        announcements, many=True).data
     switch_time = timer.nb_seconds_announcement
 
     return render(
