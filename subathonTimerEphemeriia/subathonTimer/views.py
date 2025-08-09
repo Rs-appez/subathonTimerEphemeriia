@@ -92,6 +92,7 @@ def add_time(request):
                 "logs": get_logs(),
                 "timer_paused": timer.timer_paused,
                 "multiplicator_sub_on": timer.multiplicator_sub_on,
+                "multiplicator_tip_on": timer.multiplicator_tip_on,
             },
         )
 
@@ -132,6 +133,7 @@ def add_time_success(request):
             "logs": get_logs(),
             "timer_paused": timer.timer_paused,
             "multiplicator_sub_on": timer.multiplicator_sub_on,
+            "multiplicator_tip_on": timer.multiplicator_tip_on,
         },
     )
 
@@ -175,7 +177,7 @@ def toggle_sub_multiplicator(request):
         timer = Timer.objects.last()
 
         try:
-            toggle = request.POST.get("toggle_multiplicator").lower() == "true"
+            toggle = request.POST.get("toggle_sub_multiplicator").lower() == "true"
             timer.toggle_sub_multiplicator(toggle)
         except Exception as e:
             return redirect(
@@ -199,7 +201,7 @@ def toggle_tip_multiplicator(request):
         timer = Timer.objects.last()
 
         try:
-            toggle = request.POST.get("toggle_multiplicator").lower() == "true"
+            toggle = request.POST.get("toggle_tip_multiplicator").lower() == "true"
             timer.toggle_tip_multiplicator(toggle)
         except Exception as e:
             return redirect(

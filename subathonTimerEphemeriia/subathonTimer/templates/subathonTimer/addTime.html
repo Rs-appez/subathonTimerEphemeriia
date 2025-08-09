@@ -29,16 +29,29 @@
                     <button type="submit">Pause</button>
                 {% endif %}
             </form>
-            <form action="{% url 'toggle_multiplicator' %}"
+            <form action="{% url 'toggle_sub_multiplicator' %}"
                   method="POST"
                   class="inline-form multiplicator">
-                <label for="toggle_multiplicator">Sub bonus multiplicator :</label>
+                <label for="toggle_sub_multiplicator">Sub bonus multiplicator :</label>
                 {% csrf_token %}
                 {% if multiplicator_sub_on %}
-                    <input type="hidden" name="toggle_multiplicator" value="false" />
+                    <input type="hidden" name="toggle_sub_multiplicator" value="false" />
                     <button type="submit">Desactivate</button>
                 {% else %}
-                    <input type="hidden" name="toggle_multiplicator" value="true" />
+                    <input type="hidden" name="toggle_sub_multiplicator" value="true" />
+                    <button type="submit">Activate</button>
+                {% endif %}
+            </form>
+            <form action="{% url 'toggle_tip_multiplicator' %}"
+                  method="POST"
+                  class="inline-form multiplicator">
+                <label for="toggle_tip_multiplicator">Tip bonus multiplicator :</label>
+                {% csrf_token %}
+                {% if multiplicator_tip_on %}
+                    <input type="hidden" name="toggle_tip_multiplicator" value="false" />
+                    <button type="submit">Desactivate</button>
+                {% else %}
+                    <input type="hidden" name="toggle_tip_multiplicator" value="true" />
                     <button type="submit">Activate</button>
                 {% endif %}
             </form>
