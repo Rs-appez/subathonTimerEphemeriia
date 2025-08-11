@@ -1,5 +1,7 @@
 #wheelContainer {
   position: relative;
+  height: fit-content;
+  width: fit-content;
 }
 #spinButton {
   position: absolute;

@@ -109,8 +109,8 @@ function resizeCanvas() {
     canvas.height = window.innerHeight;
     canvas.width = window.innerHeight;
 
-    container.style.width = `${canvas.width}px`;
-    container.style.height = `${canvas.height}px`;
+    // container.style.width = `${canvas.width}px`;
+    // container.style.height = `${canvas.height}px`;
 }
 
 document.getElementById("spinButton").addEventListener("click", spinWheel);
