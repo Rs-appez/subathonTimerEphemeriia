@@ -1,6 +1,5 @@
+const container = document.getElementById("wheelContainer");
 const canvas = document.getElementById("wheel");
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
 const ctx = canvas.getContext("2d");
 const data = [
     "test1",
@@ -106,11 +105,19 @@ function getWinningPartition() {
     return data[winningIndex];
 }
 
+function resizeCanvas() {
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerHeight;
+
+    container.style.width = `${canvas.width}px`;
+    container.style.height = `${canvas.height}px`;
+}
+
 document.getElementById("spinButton").addEventListener("click", spinWheel);
 window.addEventListener("resize", () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    resizeCanvas();
     drawWheel();
 });
 
+resizeCanvas();
 drawWheel();

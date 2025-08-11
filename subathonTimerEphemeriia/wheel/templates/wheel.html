@@ -9,8 +9,13 @@
         <title>Spin the wheel !!!</title>
     </head>
     <body>
-        <canvas id="wheel"></canvas>
-        <button id="spinButton">Spin!</button>
+        <div id="wheelContainer">
+            <canvas id="wheel"></canvas>
+            <button id="spinButton">Spin!</button>
+            <img id="wheelImage"
+                 src="{% static 'bingo/images/cacatchu.png' %}"
+                 alt="Wheel Image" />
+        </div>
     </body>
 </html>
 <script src="{% static 'wheel/js/wheel.js' %}"></script>
