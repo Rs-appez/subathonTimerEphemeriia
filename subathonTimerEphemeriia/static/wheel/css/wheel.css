@@ -1,6 +1,11 @@
 #wheelContainer {
   position: relative;
 }
+#spinButton {
+  position: absolute;
+  top: 5%;
+  left: 85%;
+}
 #wheelImage {
   position: absolute;
   top: 50%;
