@@ -5,7 +5,7 @@ from .models import Whell, Entry
 class EntrySerializer(serializers.ModelSerializer):
     class Meta:
         model = Entry
-        fields = ["id", "text", "image"]
+        fields = ["id", "text", "number", "image"]
 
 
 class WhellSerializer(serializers.ModelSerializer):
