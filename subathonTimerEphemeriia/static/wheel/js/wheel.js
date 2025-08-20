@@ -1,5 +1,5 @@
 const wheel_data = JSON.parse(document.getElementById("wheel_data").innerHTML);
-const entries_data = wheel_data.entries;
+const entries_data = initEntriesData();
 const container = document.getElementById("wheelContainer");
 const canvas = document.getElementById("wheel");
 const ctx = canvas.getContext("2d");
@@ -99,6 +99,27 @@ function getWinningPartition() {
 function resizeCanvas() {
     canvas.height = window.innerHeight;
     canvas.width = window.innerHeight;
+}
+
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+function initEntriesData() {
+    let entries = [];
+    wheel_data.entries.forEach((entry) => {
+        for (let i = 0; i < entry.number; i++) {
+            entries.push({
+                text: entry.text,
+                image: entry.image,
+            });
+        }
+    });
+    shuffle(entries);
+    return entries;
 }
 
 document.getElementById("spinButton").addEventListener("click", spinWheel);
