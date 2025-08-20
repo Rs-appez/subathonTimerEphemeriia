@@ -18,5 +18,5 @@
         </div>
     </body>
 </html>
-<script src="{% static 'wheel/js/wheel.js' %}"></script>
-</script>
+{{ wheel|json_script:"wheel" }}
+<script type="module" <script  src="{% static 'wheel/js/wheel.js' %}"></script>

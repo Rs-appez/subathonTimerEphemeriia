@@ -1,6 +1,7 @@
 from django.shortcuts import render
 
 from .models import Whell, Entry
+from .serializers import WhellSerializer, EntrySerializer
 
 
 def index(request):
@@ -8,9 +9,12 @@ def index(request):
     if not wheel:
         return render(request, "wheel_error.html")
 
-    entries = Entry.objects.filter(whell=wheel).order_by("?")
+    wheel_serializer = WhellSerializer(wheel)
 
-    return render(request, "wheel.html", {
-        "wheel": wheel,
-        "entries": entries,
-    })
+    return render(
+        request,
+        "wheel.html",
+        {
+            "wheel": wheel_serializer.data
+        },
+    )
