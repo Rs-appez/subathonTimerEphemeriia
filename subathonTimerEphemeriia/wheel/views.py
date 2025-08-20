@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
-from .models import Whell, Entry
-from .serializers import WhellSerializer, EntrySerializer
+from .models import Whell
+from .serializers import WhellSerializer
 
 
 def index(request):
@@ -14,7 +14,5 @@ def index(request):
     return render(
         request,
         "wheel.html",
-        {
-            "wheel": wheel_serializer.data
-        },
+        {"wheel": wheel_serializer.data},
     )
