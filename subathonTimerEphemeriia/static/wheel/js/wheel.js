@@ -1,18 +1,9 @@
+const wheel_data = JSON.parse(document.getElementById("wheel_data").innerHTML);
+const entries_data = wheel_data.entries;
 const container = document.getElementById("wheelContainer");
 const canvas = document.getElementById("wheel");
 const ctx = canvas.getContext("2d");
-const data = [
-    "test1",
-    "test2",
-    "test3",
-    "test4",
-    "test5",
-    "test6",
-    "test7",
-    "test8",
-    "test9",
-];
-const segments = data.length;
+const segments = entries_data.length;
 const colors = [
     "#ccbadb",
     "#a88fc2",
@@ -56,7 +47,7 @@ function drawWheel() {
         ctx.textBaseline = "middle";
         ctx.fillStyle = "black";
         ctx.font = `${Math.floor(radius / 10)}px Arial`;
-        ctx.fillText(data[i], radius * 0.65, 0);
+        ctx.fillText(entries_data[i].text, radius * 0.65, 0);
         ctx.restore();
     }
     drawPointer();
@@ -101,8 +92,8 @@ function getWinningPartition() {
     const winningIndex = Math.floor(
         (segments - (normalizedAngle * segments) / (2 * Math.PI)) % segments,
     );
-    console.log("Winning partition : ", data[winningIndex]);
-    return data[winningIndex];
+    console.log("Winning partition : ", entries_data[winningIndex].text);
+    return entries_data[winningIndex];
 }
 
 function resizeCanvas() {
