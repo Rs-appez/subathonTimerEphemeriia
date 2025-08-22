@@ -60,7 +60,7 @@ function drawPointer() {
     ctx.lineTo(-15, -radius - 10);
     ctx.lineTo(15, -radius - 10);
     ctx.closePath();
-    ctx.fillStyle = "#e74c3c";
+    ctx.fillStyle = "#670cb2";
     ctx.fill();
     ctx.restore();
 }
