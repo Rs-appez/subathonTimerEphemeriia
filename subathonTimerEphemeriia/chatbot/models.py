@@ -35,7 +35,7 @@ class Bot(models.Model):
         token = self.get_token()
 
         res = requests.post(
-            "https://api.twitch.tv/helix/chat/messages",
+            f"https://api.twitch.tv/helix/chat/messages",
             headers={
                 "Content-Type": "application/json",
                 "Client-ID": config("TWITCH_APP_ID"),
@@ -47,7 +47,6 @@ class Bot(models.Model):
                 "broadcaster_id": broadcaster_id,
             },
         )
-        print(res.content)
 
         if res.status_code == 204:
             return True
