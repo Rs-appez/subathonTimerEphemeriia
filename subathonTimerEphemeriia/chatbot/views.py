@@ -18,7 +18,7 @@ class BotViewSet(viewsets.ModelViewSet):
         message = request.data.get("message", "")
         broadcaster_id = request.data.get("broadcaster_id", "")
         if message and broadcaster_id:
-            bot.send_message(message)
+            bot.send_message(message, broadcaster_id)
             return Response({"status": "Message sent"})
         else:
             return Response({"error": "No message provided"}, status=400)
