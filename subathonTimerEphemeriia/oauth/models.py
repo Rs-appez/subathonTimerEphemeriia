@@ -80,7 +80,6 @@ class ChatbotAuth(models.Model):
             },
         )
 
-        print(res.content)
         if res.status_code == 200:
             data = res.json()
             self.access_token = data["access_token"]
