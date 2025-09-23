@@ -18,7 +18,7 @@ constantly==23.10.4
 cryptography==46.0.1
 daphne==4.2.1
 dj-database-url==3.0.1
-Django==5.1.10
+Django==5.1.12
 django-cors-headers==4.9.0
 django-storages==1.14.6
 djangorestframework==3.16.1
