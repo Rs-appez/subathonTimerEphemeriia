@@ -12,4 +12,4 @@ class Goal(models.Model):
     goal = models.FloatField()
 
     def __str__(self):
-        return f"{self.title} - {self.goal}"
+        return f"{self.title} - {self.goal}€"
