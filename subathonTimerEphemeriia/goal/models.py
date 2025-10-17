@@ -11,5 +11,8 @@ class Goal(models.Model):
     title = models.CharField(max_length=200)
     goal = models.FloatField()
 
+    class Meta:
+        ordering = ['goal']
+
     def __str__(self):
         return f"{self.title} - {self.goal}€"
