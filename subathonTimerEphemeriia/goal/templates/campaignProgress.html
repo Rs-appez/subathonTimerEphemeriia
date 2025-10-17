@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Subathon Timer</title>
+        <link rel="stylesheet"
+              type="text/css"
+              href="{% static 'subathonTimer/css/tipProgress.css' %}" />
+        <link rel="stylesheet"
+              type="text/css"
+              href="{% static 'goal/css/campaignProgress.css' %}" />
+    </head>
+    <body>
+        <div class="progress-container" id="progress-container">
+            <div class="progress-wrapper" id="progress-wrapper">
+                <div>
+                    <p class="progress-left number" id="goal-left">0</p>
+                    <progress id="progress-campaign" class="progress" value="0" max="100"></progress>
+                    <p class="progress-right number" id="goal-right">{{ campaign.target_amount }}</p>
+                </div>
+            </div>
+        </body>
+    </html>
+    {{ campaign|json_script:"campaign-data" }}
+    <script src="{% static 'goal/js/campaignProgress.js' %}" type="module"></script>
