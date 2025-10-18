@@ -1,6 +1,6 @@
 from django.urls import re_path
-from .consumers import GoalSyncConsumer
+from .consumers import CampaignSyncConsumer
 
 websocket_urlpatterns = [
-    re_path(r"ws/goal/$", GoalSyncConsumer.as_asgi()),
+    re_path(r"ws/campaigns/(?P<campaign_id>\w+)/?$", CampaignSyncConsumer.as_asgi()),
 ]
