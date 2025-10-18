@@ -1,9 +1,9 @@
 const data = document.getElementById("campaign-data").textContent;
 let campaign = JSON.parse(data);
 
+const progressBar = document.getElementById("progress-campaign");
+const rightAmount = document.getElementById("goal-right");
 function updateCampaignProgress() {
-    const progressBar = document.getElementById("progress-campaign");
-
     if (progressBar) {
         progressBar.value =
             (campaign.current_amount / campaign.target_amount) * 100;
@@ -12,25 +12,34 @@ function updateCampaignProgress() {
 
 function initCampaign() {
     updateCampaignProgress();
-    var progressWrapper = document.getElementById("progress-wrapper");
+    var markerContainer = document.getElementById("markers-container");
+    markerContainer.innerHTML = "";
+    rightAmount.innerHTML = campaign.target_amount;
     for (var goal of campaign.goals) {
         var goalMarker = document.createElement("div");
         goalMarker.className = "goal-marker";
         var position = (goal.goal / campaign.target_amount) * 100;
         goalMarker.style.left = position + "%";
-        progressWrapper.appendChild(goalMarker);
+        markerContainer.appendChild(goalMarker);
     }
 }
 
 // Websocket
 var ws_scheme = window.location.protocol === "https:" ? "wss" : "ws";
-var ws_url = ws_scheme + "://" + window.location.host + "/ws/goals/";
+var ws_url =
+    ws_scheme +
+    "://" +
+    window.location.host +
+    "/ws/campaigns/" +
+    campaign.id +
+    "/";
 
 function connect() {
     var ws = new WebSocket(ws_url);
 
     ws.onmessage = function(event) {
         var data_ws = JSON.parse(event.data);
+        console.log("data_ws : ", data_ws);
 
         if (data_ws.type == "progress_update") {
             campaign.current_amount = data_ws.current_amount;
@@ -52,5 +61,5 @@ function connect() {
     };
 }
 
-// connect();
+connect();
 initCampaign();
