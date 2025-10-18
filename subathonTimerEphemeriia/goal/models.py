@@ -1,3 +1,4 @@
+from django.db.models.expressions import F
 from django.db import models
 
 
@@ -14,6 +15,12 @@ class Campaign(models.Model):
         if not self.goals.exists():
             return self.target_amount
         return max(self.goals.last().goal, self.target_amount)
+
+    def add_donation(self, donation: float):
+        self.current_amount = F("current_amount") + donation
+
+        self.save(update_fields=["current_amount"])
+        self.refresh_from_db()
 
 
 class Goal(models.Model):
