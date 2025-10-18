@@ -1,12 +1,14 @@
 const data = document.getElementById("campaign-data").textContent;
 let campaign = JSON.parse(data);
 
-const progressBar = document.getElementById("progress-campaign");
+const progressBar = document.getElementById("progress-bar-fill");
 const rightAmount = document.getElementById("goal-right");
 function updateCampaignProgress() {
     if (progressBar) {
-        progressBar.value =
-            (campaign.current_amount / campaign.target_amount) * 100;
+        progressBar.style.width =
+            (campaign.current_amount / campaign.target_amount) * 100 + "%";
+    } else {
+        console.error("Progress bar element not found");
     }
 }
 
