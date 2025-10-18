@@ -39,7 +39,6 @@ function connect() {
 
     ws.onmessage = function(event) {
         var data_ws = JSON.parse(event.data);
-        console.log("data_ws : ", data_ws);
 
         if (data_ws.type == "progress_update") {
             campaign.current_amount = data_ws.current_amount;
