@@ -23,18 +23,22 @@ class CampaignViewSet(ModelViewSet):
         send_campaign_update(campaign)
         return Response({"message": "Campaign update sent.", "status": 200})
 
-    @action(detail=True, methods=["post"])
+    @action(detail=False, methods=["post"])
     def update_progress(self, request, pk=None):
-        campaign: Campaign = self.get_object()
+        campaigns = Campaign.objects.filter(is_active=True)
+        if not campaigns.exists():
+            return Response({"message": "No active campaign.", "status": 400})
+
         amount = request.data.get("amount")
         try:
             amount = float(amount)
         except (TypeError, ValueError):
             return Response({"message": "Invalid amount.", "status": 400})
 
-        campaign.add_donation(amount)
+        for campaign in campaigns:
+            campaign.add_donation(amount)
+            send_progress_update(campaign)
 
-        send_progress_update(campaign)
         return Response({"message": "Progress update sent.", "status": 200})
 
 
