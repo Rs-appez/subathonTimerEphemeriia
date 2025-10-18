@@ -23,7 +23,7 @@ class CampaignViewSet(ModelViewSet):
         send_campaign_update(campaign)
         return Response({"message": "Campaign update sent.", "status": 200})
 
-    @action(detail=True, methods=["post"], permission_classes=[AllowAny])
+    @action(detail=True, methods=["post"])
     def update_progress(self, request, pk=None):
         campaign: Campaign = self.get_object()
         amount = request.data.get("amount")
