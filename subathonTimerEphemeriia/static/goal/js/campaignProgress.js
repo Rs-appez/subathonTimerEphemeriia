@@ -1,34 +1,37 @@
 const data = document.getElementById("campaign-data").textContent;
 let campaign = JSON.parse(data);
 
-const progressBar = document.getElementById("progress-bar-fill");
-const rightAmount = document.getElementById("goal-right");
+let test = document.getElementById("test");
 function updateCampaignProgress() {
-    if (progressBar) {
-        progressBar.style.width =
-            (campaign.current_amount / campaign.target_amount) * 100 + "%";
-    } else {
-        console.error("Progress bar element not found");
+    test.textContent = campaign.current_amount;
+    let previousGoal = 0;
+    for (let i = 0; i < campaign.goals.length; i++) {
+        let goal = campaign.goals[i];
+        let goalDiv = document.getElementById("goal-progress-" + goal.id);
+        let progress = Math.min(
+            100,
+            Math.max(
+                0,
+                ((campaign.current_amount - previousGoal) /
+                    (goal.goal - previousGoal)) *
+                100,
+            ),
+        );
+        previousGoal = goal.goal;
+        let progressBar = goalDiv.querySelector(".progress-bar-fill");
+
+        // progressBar.style.transitionDelay = i * 0.5 + "s";
+        progressBar.style.width = progress + "%";
     }
 }
 
 function initCampaign() {
     updateCampaignProgress();
-    var markerContainer = document.getElementById("markers-container");
-    markerContainer.innerHTML = "";
-    rightAmount.innerHTML = campaign.target_amount;
-    for (var goal of campaign.goals) {
-        var goalMarker = document.createElement("div");
-        goalMarker.className = "goal-marker";
-        var position = (goal.goal / campaign.target_amount) * 100;
-        goalMarker.style.left = position + "%";
-        markerContainer.appendChild(goalMarker);
-    }
 }
 
 // Websocket
-var ws_scheme = window.location.protocol === "https:" ? "wss" : "ws";
-var ws_url =
+let ws_scheme = window.location.protocol === "https:" ? "wss" : "ws";
+let ws_url =
     ws_scheme +
     "://" +
     window.location.host +
@@ -62,5 +65,17 @@ function connect() {
     };
 }
 
-connect();
+// connect();
 initCampaign();
+
+function fakeload() {
+    campaign.current_amount += 3;
+    updateCampaignProgress();
+    if (
+        campaign.current_amount > campaign.goals[campaign.goals.length - 1].goal
+    ) {
+        campaign.current_amount = -10;
+    }
+}
+
+setInterval(fakeload, 2000);

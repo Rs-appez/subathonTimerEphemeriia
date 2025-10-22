@@ -11,16 +11,16 @@
               href="{% static 'goal/css/campaignProgress.css' %}" />
     </head>
     <body>
+        <p id='test'></p>
         <div class="progress-container" id="progress-container">
             <div class="progress-wrapper" id="progress-wrapper">
-                <div>
-                    <div class="progress-bar">
-                        <div class="progress-bar-fill" id="progress-bar-fill"></div>
+                {% for goal in campaign.goals %}
+                    <div class="goal-progress" id="goal-progress-{{ goal.id }}">
+                        <div class="progress-bar">
+                            <div class="progress-bar-fill" id="progress-bar-fill"></div>
+                        </div>
                     </div>
-                    <p class="progress-left number" id="goal-left">0</p>
-                    <p class="progress-right number" id="goal-right">{{ campaign.target_amount }}</p>
-                </div>
-                <div id="markers-container" class="markers-container"></div>
+                {% endfor %}
             </div>
         </body>
     </html>
