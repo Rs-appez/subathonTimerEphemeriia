@@ -9,6 +9,22 @@
   --gift-validate-color-1: #dd0f8e;
   --gift-validate-color-2: #4a0732;
 }
+.header {
+  display: flex;
+  padding: 10px 20px;
+  align-items: center;
+}
+
+.campaign-info {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+  align-items: flex-end;
+}
+
+.campaign-info > * {
+  margin: 2px 0;
+}
 .progress-wrapper {
   display: flex;
   width: 50%;
@@ -64,4 +80,10 @@
   width: 0;
   transition: width 0.5s ease-in-out;
   transition-delay: 0s;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+  margin-right: 20px;
 }

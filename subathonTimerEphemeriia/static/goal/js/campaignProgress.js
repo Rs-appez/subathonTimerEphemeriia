@@ -5,9 +5,9 @@ const data = document.getElementById("campaign-data").textContent;
 let campaign = JSON.parse(data);
 const parser = new DOMParser();
 
-let test = document.getElementById("test");
+let campaingAmount = document.getElementById("campaing-amount");
 function updateCampaignProgress() {
-    test.textContent = campaign.current_amount;
+    campaingAmount.textContent = `${campaign.current_amount} / ${campaign.target_amount}`;
     let previousGoal = 0;
     for (let i = 0; i < campaign.goals.length; i++) {
         let goal = campaign.goals[i];
@@ -108,7 +108,7 @@ function connect() {
 initCampaign();
 
 function fakeload() {
-    campaign.current_amount += 40;
+    campaign.current_amount += 20;
     updateCampaignProgress();
     if (
         campaign.current_amount > campaign.goals[campaign.goals.length - 1].goal
