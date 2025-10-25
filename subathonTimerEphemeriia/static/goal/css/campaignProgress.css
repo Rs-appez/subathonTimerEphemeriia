@@ -1,3 +1,7 @@
+@font-face {
+  font-family: "Sauce Barbe";
+  src: url("/static/general/fonts/Sauce_Barbe.otf") format("truetype");
+}
 :root {
   /* background-color: #1a001a; */
   --gift-color-1: #570244;
@@ -8,6 +12,7 @@
 
   --gift-validate-color-1: #dd0f8e;
   --gift-validate-color-2: #4a0732;
+  font-family: "Sauce Barbe";
 }
 .header {
   display: flex;
