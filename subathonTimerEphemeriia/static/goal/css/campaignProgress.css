@@ -1,9 +1,13 @@
 :root {
+  /* background-color: #1a001a; */
   --gift-color-1: #570244;
   --gift-color-2: #61013a;
 
-  --gift-color-3: #6f0145;
-  --gift-color-4: #7d0150;
+  /* --gift-validate-color-1: #6f0145; */
+  /* --gift-validate-color-2: #7d0150; */
+
+  --gift-validate-color-1: #dd0f8e;
+  --gift-validate-color-2: #4a0732;
 }
 .progress-wrapper {
   display: flex;

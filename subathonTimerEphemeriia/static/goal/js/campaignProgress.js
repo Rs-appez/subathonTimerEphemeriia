@@ -32,8 +32,8 @@ function updateCampaignProgress() {
 }
 
 function initCampaign() {
-    updateCampaignProgress();
     addGoalMarkers();
+    updateCampaignProgress();
 }
 
 function addGoalMarkers() {
@@ -56,6 +56,14 @@ function validateGoal(goalDiv) {
     if (markerDiv) {
         if (!markerDiv.classList.contains("validate-marker")) {
             markerDiv.classList.add("validate-marker");
+            let iconCls1 = markerDiv.querySelectorAll(".cls-1");
+            let iconCls2 = markerDiv.querySelectorAll(".cls-2");
+            iconCls1.forEach((el) => {
+                el.style.fill = "var(--gift-validate-color-1)";
+            });
+            iconCls2.forEach((el) => {
+                el.style.fill = "var(--gift-validate-color-2)";
+            });
         }
     }
 }
@@ -100,7 +108,7 @@ function connect() {
 initCampaign();
 
 function fakeload() {
-    campaign.current_amount += 3;
+    campaign.current_amount += 40;
     updateCampaignProgress();
     if (
         campaign.current_amount > campaign.goals[campaign.goals.length - 1].goal
