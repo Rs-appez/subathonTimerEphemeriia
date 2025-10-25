@@ -9,6 +9,7 @@ let campaingAmount = document.getElementById("campaing-amount");
 function updateCampaignProgress() {
     campaingAmount.textContent = `${campaign.current_amount} / ${campaign.target_amount}`;
     let previousGoal = 0;
+    let lockGoal = false;
     for (let i = 0; i < campaign.goals.length; i++) {
         let goal = campaign.goals[i];
         let goalDiv = document.getElementById("goal-progress-" + goal.id);
@@ -28,6 +29,15 @@ function updateCampaignProgress() {
         if (progress >= 100) {
             validateGoal(goalDiv);
         }
+        if (campaign.current_amount < goal.goal && !lockGoal) {
+            lockGoal = true;
+            displayNextGoal(goal);
+        }
+        if (
+            campaign.current_amount >= campaign.goals[campaign.goals.length - 1].goal
+        ) {
+            displayNextGoal({ title: "FINI !!!" });
+        }
     }
 }
 
@@ -36,6 +46,12 @@ function initCampaign() {
     updateCampaignProgress();
 }
 
+function displayNextGoal(goal) {
+    let nextGoalDiv = document.getElementById("next-goal-amount");
+    if (nextGoalDiv) {
+        nextGoalDiv.textContent = goal.title;
+    }
+}
 function addGoalMarkers() {
     for (let i = 0; i < campaign.goals.length; i++) {
         let goal = campaign.goals[i];

@@ -13,6 +13,7 @@
   display: flex;
   padding: 10px 20px;
   align-items: center;
+  width: 450px;
 }
 
 .campaign-info {
@@ -28,6 +29,10 @@
 .progress-wrapper {
   display: flex;
   width: 50%;
+}
+
+.end {
+  flex: 1;
 }
 
 .goal-progress {
@@ -60,8 +65,8 @@
   height: 80%;
   transform: rotate(-45deg);
 }
-
-.gloal-validate {
+.progress-container {
+  width: 1000px;
 }
 
 .progress-bar {
