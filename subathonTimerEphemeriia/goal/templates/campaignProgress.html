@@ -129,7 +129,9 @@
             <div class="progress-container" id="progress-container">
                 <div class="progress-wrapper" id="progress-wrapper">
                     {% for goal in campaign.goals %}
-                        <div class="goal-progress" id="goal-progress-{{ goal.id }} data-goal-id="{{ goal.id }}">
+                        <div class="goal-progress"
+                             id="goal-progress-{{ goal.id }}"
+                             data-goal-id="{{ goal.id }}">
                             <div class="progress-bar">
                                 <div class="progress-bar-fill" id="progress-bar-fill"></div>
                             </div>
