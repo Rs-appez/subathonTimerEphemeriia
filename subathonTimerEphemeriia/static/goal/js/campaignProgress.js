@@ -7,7 +7,7 @@ const parser = new DOMParser();
 
 let campaingAmount = document.getElementById("campaing-amount");
 function updateCampaignProgress() {
-    campaingAmount.textContent = `${campaign.current_amount} / ${campaign.target_amount}`;
+    campaingAmount.textContent = `${campaign.current_amount} / ?`;
     let previousGoal = 0;
     let lockGoal = false;
     for (let i = 0; i < campaign.goals.length; i++) {
