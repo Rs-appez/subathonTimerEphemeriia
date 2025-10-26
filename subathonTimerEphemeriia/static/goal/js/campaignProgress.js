@@ -74,13 +74,20 @@ function validateGoal(goalDiv) {
     if (markerDiv) {
         if (!markerDiv.classList.contains("validate-marker")) {
             markerDiv.classList.add("validate-marker");
-            let goalIcon = document.createElement("div");
-            goalIcon.className = "goal-icon";
-            goalIcon.innerHTML = calendarSVG;
-            markerDiv.innerHTML = "";
-            markerDiv.appendChild(goalIcon);
+            addCalendarMarker(markerDiv);
         }
     }
+}
+
+function addCalendarMarker(goalDiv) {
+    let goalIcon = document.createElement("div");
+    goalIcon.className = "goal-icon";
+    goalIcon.innerHTML = calendarSVG;
+    goalDiv.innerHTML = "";
+    goalDiv.appendChild(goalIcon);
+
+    let goalId = goalDiv.getAttribute("data-goal-id");
+    console.log("goalId : ", goalId);
 }
 
 // Websocket
