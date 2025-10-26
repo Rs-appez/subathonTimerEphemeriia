@@ -120,7 +120,7 @@ function connect() {
     };
 }
 
-// connect();
+connect();
 initCampaign();
 
 function fakeload() {
@@ -133,4 +133,4 @@ function fakeload() {
     }
 }
 
-setInterval(fakeload, 2000);
+// setInterval(fakeload, 2000);
