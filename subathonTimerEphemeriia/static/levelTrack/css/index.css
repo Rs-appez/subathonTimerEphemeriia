@@ -1,0 +1,21 @@
+.level-progress {
+  width: 100%;
+  max-width: 400px;
+}
+.progress-bar {
+  width: 100%;
+  height: 10px;
+  background-color: #d5b9c4;
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(to right, #2e0025, #570031);
+  border-radius: 20px;
+  width: 0;
+  transition: width 0.5s ease-in-out;
+  transition-delay: 0s;
+}

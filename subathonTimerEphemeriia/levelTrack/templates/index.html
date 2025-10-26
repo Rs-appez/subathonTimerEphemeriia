@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Level Track</title>
+        <link rel="stylesheet"
+              type="text/css"
+              href="{% static 'levelTrack/css/index.css' %}" />
+    </head>
+    <body>
+        <div class="level-progress" id="level-progress">
+            <div class="level-info">
+                <span class="target-level" id="target-level">Level {{ tracker.target_level }}</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-bar-fill" id="progress-bar-fill"></div>
+            </div>
+        </div>
+    </body>
+</html>
