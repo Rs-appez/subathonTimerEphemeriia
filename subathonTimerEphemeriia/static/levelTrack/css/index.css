@@ -12,6 +12,9 @@
   align-items: center;
   justify-content: flex-end;
 }
+.target-level {
+  text-shadow: 1px 1px 3px white;
+}
 
 .level-progress {
   width: 100%;
