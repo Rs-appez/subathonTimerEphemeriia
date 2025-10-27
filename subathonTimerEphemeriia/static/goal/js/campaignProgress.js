@@ -145,15 +145,3 @@ function connect() {
 
 connect();
 initCampaign();
-
-function fakeload() {
-    campaign.current_amount += 20;
-    updateCampaignProgress();
-    if (
-        campaign.current_amount > campaign.goals[campaign.goals.length - 1].goal
-    ) {
-        campaign.current_amount = -10;
-    }
-}
-
-// setInterval(fakeload, 2000);
