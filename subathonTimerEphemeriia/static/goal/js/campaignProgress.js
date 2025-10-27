@@ -60,6 +60,7 @@ function addGoalMarkers() {
         let goalDiv = document.createElement("div");
         let goalIcon = document.createElement("div");
         goalDiv.className = "goal-marker";
+        goalDiv.setAttribute("data-goal-id", goal.id);
         goalIcon.className = "goal-icon";
 
         goalIcon.innerHTML = giftSVG;
