@@ -48,7 +48,7 @@
   transition-delay: 0s;
 }
 
-.current-time {
+.current-level {
   display: flex;
   justify-content: center;
   position: absolute;
@@ -59,7 +59,7 @@
   margin: 0;
 }
 
-.current-time > p {
+.current-level > p {
   font-family: "Sauce Barbe";
   color: white;
   margin: 0;
