@@ -81,17 +81,20 @@ function validateGoal(goalDiv) {
     if (markerDiv) {
         if (!markerDiv.classList.contains("validate-marker")) {
             markerDiv.classList.add("validate-marker");
-            addCalendarMarker(markerDiv);
+            addCalendarIndicator(markerDiv);
         }
     }
 }
 
-function addCalendarMarker(goalDiv) {
+function addCalendarIndicator(goalDiv) {
     let goalIcon = document.createElement("div");
     goalIcon.className = "goal-icon";
+    let oldIcon = goalDiv.querySelector(".goal-icon");
+    if (oldIcon) {
+        oldIcon.classList.add("vanishing");
+    }
     goalIcon.innerHTML = calendarSVG;
-    goalDiv.innerHTML = "";
-    goalDiv.appendChild(goalIcon);
+    goalDiv.insertAdjacentElement("afterbegin", goalIcon);
 
     let goalId = goalDiv.getAttribute("data-goal-id");
     let indicator = campaign.goals.find((g) => g.id == goalId).indicator;

@@ -78,6 +78,7 @@
   /* background: linear-gradient(135deg, #750046 0%, #97005a 100%); */
   background: linear-gradient(135deg, #d5b9c4 0%, #f0e1e6 100%);
   opacity: 60%;
+  transition: opacity 1s ease-in-out;
 }
 
 .validate-marker {
@@ -86,13 +87,22 @@
 }
 
 .goal-icon {
+  position: absolute;
   width: 80%;
   height: 80%;
   transform: rotate(-45deg);
+  opacity: 100%;
+  transition: 1s ease-in-out;
+}
+
 .goal-container {
   position: relative;
 }
 
+.vanishing {
+  width: 1000px !important;
+  height: 1000px !important;
+  opacity: 0 !important;
 }
 
 .goal-indicator {
