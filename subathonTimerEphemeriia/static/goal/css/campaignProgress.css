@@ -89,6 +89,10 @@
   width: 80%;
   height: 80%;
   transform: rotate(-45deg);
+.goal-container {
+  position: relative;
+}
+
 }
 
 .goal-indicator {
@@ -101,7 +105,7 @@
 .indicator-container {
   position: absolute;
   top: 33px;
-  left: 99px;
+  left: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
