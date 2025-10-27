@@ -1,0 +1,35 @@
+@font-face {
+  font-family: "Sauce Barbe";
+  src: url("/static/general/fonts/Sauce_Barbe.otf") format("truetype");
+}
+
+body {
+  font-family: "Sauce Barbe", sans-serif;
+
+  background-color: #121212;
+  color: #e0e0e0;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  font-size: 36px;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+img {
+  max-width: 50px;
+  height: auto;
+}
+
+.current-level-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.level-up-container {
+  text-align: center;
+  margin-top: 50px;
+}
