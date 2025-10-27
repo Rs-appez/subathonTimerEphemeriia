@@ -3,22 +3,37 @@
   src: url("/static/general/fonts/Sauce_Barbe.otf") format("truetype");
 }
 :root {
-  /* background-color: #1a001a; */
   --gift-color-1: #570244;
   --gift-color-2: #61013a;
+
+  --calendar-color-1: #d5b9c4;
+  --calendar-color-2: #f0e1e6;
+  --calendar-color-3: #2e0025;
 
   /* --gift-validate-color-1: #6f0145; */
   /* --gift-validate-color-2: #7d0150; */
 
-  --gift-validate-color-1: #dd0f8e;
-  --gift-validate-color-2: #4a0732;
+  /* --gift-validate-color-1: #dd0f8e; */
+  /* --gift-validate-color-1: #dd0f8e; */
+  --gift-validate-color-1: white;
+  --gift-validate-color-2: white;
+  /* #db1e92 */
   font-family: "Sauce Barbe";
 }
 .header {
   display: flex;
-  padding: 10px 20px;
+  padding: 10px 20px 10px 10px;
   align-items: center;
   width: 450px;
+}
+
+.background-overlay {
+  width: 500px;
+  height: 160px;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: -1;
+  border-radius: 15px;
+  padding: 0px 10px;
 }
 
 .campaign-info {
@@ -26,6 +41,8 @@
   flex-direction: column;
   margin-left: 10px;
   align-items: flex-end;
+  text-shadow: 2px 2px 4px #000000;
+  color: white;
 }
 
 .campaign-info > * {
@@ -56,19 +73,53 @@
   width: 30px;
   height: 30px;
   transform: rotate(45deg);
-  /* border-radius: 5px; */
+  border-radius: 3px;
   /* background: linear-gradient(135deg, #750046 0%, #97005a 100%); */
   background: linear-gradient(135deg, #d5b9c4 0%, #f0e1e6 100%);
+  opacity: 60%;
+  transition: opacity 1s ease-in-out;
 }
 
 .validate-marker {
-  background: linear-gradient(135deg, #750046 0%, #97005a 100%);
+  background: linear-gradient(45deg, #570031, #2e0025);
+  opacity: 100%;
 }
 
 .goal-icon {
+  position: absolute;
   width: 80%;
   height: 80%;
   transform: rotate(-45deg);
+  opacity: 100%;
+  transition: 1s ease-in-out;
+}
+
+.goal-container {
+  position: relative;
+}
+
+.vanishing {
+  width: 1000px !important;
+  height: 1000px !important;
+  opacity: 0 !important;
+}
+
+.goal-indicator {
+  position: initial !important;
+  transform: none !important;
+  font-size: 12px;
+  text-shadow: 1px 1px 2px #000000;
+}
+
+.indicator-container {
+  position: absolute;
+  top: 33px;
+  left: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 15px;
 }
 .progress-container {
   width: 1000px;

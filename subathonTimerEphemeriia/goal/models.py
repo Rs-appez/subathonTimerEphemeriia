@@ -28,6 +28,7 @@ class Goal(models.Model):
         Campaign, on_delete=models.CASCADE, related_name="goals"
     )
     title = models.CharField(max_length=200)
+    indicator = models.CharField(max_length=100, blank=True, null=True)
     goal = models.FloatField()
 
     class Meta:

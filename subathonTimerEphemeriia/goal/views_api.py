@@ -1,7 +1,6 @@
-from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.decorators import action
-from rest_framework.permissions import DjangoModelPermissions
+from rest_framework.permissions import DjangoModelPermissions, IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 
 from .models import Campaign, Goal
@@ -19,13 +18,13 @@ class CampaignViewSet(ModelViewSet):
 
     seen_ids = set()
 
-    @action(detail=True, methods=["get"])
+    @action(detail=True, methods=["get"], permission_classes=[IsAuthenticated])
     def update_campaign(self, request, pk=None):
         campaign = self.get_object()
         send_campaign_update(campaign)
         return Response({"message": "Campaign update sent.", "status": 200})
 
-    @action(detail=False, methods=["post"], permission_classes=[AllowAny])
+    @action(detail=False, methods=["post"], permission_classes=[IsAuthenticated])
     def update_progress(self, request, pk=None):
         campaigns = Campaign.objects.filter(is_active=True)
         if not campaigns.exists():
