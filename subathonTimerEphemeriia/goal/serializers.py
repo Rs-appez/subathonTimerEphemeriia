@@ -5,7 +5,7 @@ from .models import Campaign, Goal
 class GoalSerializer(serializers.ModelSerializer):
     class Meta:
         model = Goal
-        fields = ["id", "title", "goal", "campaign"]
+        fields = ["id", "title", "goal", "campaign", "indicator"]
 
 
 class CampaignSerializer(serializers.ModelSerializer):
