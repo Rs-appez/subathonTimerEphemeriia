@@ -3,7 +3,6 @@
   src: url("/static/general/fonts/Sauce_Barbe.otf") format("truetype");
 }
 :root {
-  background-color: #1a001a;
   --gift-color-1: #d5b9c4;
   --gift-color-2: #d5b9c4;
 }
