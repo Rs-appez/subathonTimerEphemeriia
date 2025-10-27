@@ -57,16 +57,22 @@ function displayNextGoal(goal) {
 function addGoalMarkers() {
     for (let i = 0; i < campaign.goals.length; i++) {
         let goal = campaign.goals[i];
+
+        let goalContainer = document.createElement("div");
+        goalContainer.className = "goal-container";
+
         let goalDiv = document.createElement("div");
-        let goalIcon = document.createElement("div");
         goalDiv.className = "goal-marker";
         goalDiv.setAttribute("data-goal-id", goal.id);
-        goalIcon.className = "goal-icon";
+        goalContainer.appendChild(goalDiv);
 
+        let goalIcon = document.createElement("div");
+        goalIcon.className = "goal-icon";
         goalIcon.innerHTML = giftSVG;
         goalDiv.appendChild(goalIcon);
+
         let linkedBar = document.getElementById("goal-progress-" + goal.id);
-        linkedBar.appendChild(goalDiv);
+        linkedBar.appendChild(goalContainer);
     }
 }
 
@@ -88,7 +94,14 @@ function addCalendarMarker(goalDiv) {
     goalDiv.appendChild(goalIcon);
 
     let goalId = goalDiv.getAttribute("data-goal-id");
-    console.log("goalId : ", goalId);
+    let indicator = campaign.goals.find((g) => g.id == goalId).indicator;
+    let indicatorDiv = document.createElement("div");
+    indicatorDiv.className = "indicator-container";
+    let pTag = document.createElement("p");
+    pTag.textContent = indicator;
+    pTag.className = "goal-indicator";
+    indicatorDiv.appendChild(pTag);
+    goalDiv.insertAdjacentElement("afterend", indicatorDiv);
 }
 
 // Websocket
