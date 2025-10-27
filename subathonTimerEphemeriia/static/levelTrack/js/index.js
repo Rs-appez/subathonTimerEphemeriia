@@ -11,7 +11,7 @@ function updateProgress() {
     progressBar.style.width = progress + "%";
 
     let levelAmount = document.getElementById("current-level").querySelector("p");
-    levelAmount.textContent = `Lv ${tracker.current_level}`;
+    levelAmount.textContent = `L V ${tracker.current_level}`;
 
     if (tracker.current_level >= tracker.target_level) {
         validateGift();

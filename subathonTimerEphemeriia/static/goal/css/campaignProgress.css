@@ -2,6 +2,10 @@
   font-family: "Sauce Barbe";
   src: url("/static/general/fonts/Sauce_Barbe.otf") format("truetype");
 }
+@font-face {
+  font-family: "LifeCraft";
+  src: url("/static/general/fonts/LifeCraft_Font.ttf") format("truetype");
+}
 :root {
   --gift-color-1: #570244;
   --gift-color-2: #61013a;
@@ -18,7 +22,7 @@
   --gift-validate-color-1: white;
   --gift-validate-color-2: white;
   /* #db1e92 */
-  font-family: "Sauce Barbe";
+  font-family: "LifeCraft";
 }
 .header {
   display: flex;
@@ -50,7 +54,7 @@
 }
 
 .campaign-amount {
-  margin-top: -10px;
+  margin-top: -5px;
   font-size: 24px;
 }
 .progress-wrapper {

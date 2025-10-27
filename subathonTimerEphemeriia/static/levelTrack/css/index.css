@@ -2,6 +2,10 @@
   font-family: "Sauce Barbe";
   src: url("/static/general/fonts/Sauce_Barbe.otf") format("truetype");
 }
+@font-face {
+  font-family: "LifeCraft";
+  src: url("/static/general/fonts/LifeCraft_Font.ttf") format("truetype");
+}
 :root {
   --gift-color-1: #d5b9c4;
   --gift-color-2: #d5b9c4;
@@ -23,7 +27,7 @@
   color: #ffffff;
   margin-bottom: 5px;
   font-weight: bold;
-  font-family: "Sauce Barbe";
+  font-family: "LifeCraft";
   text-shadow: 1px 1px 3px black;
 }
 .progress-bar {
@@ -60,9 +64,9 @@
 }
 
 .current-level > p {
-  font-family: "Sauce Barbe";
+  margin-top: 2px;
+  font-family: "LifeCraft";
   color: white;
-  margin: 0;
   text-shadow: 1px 1px 3px black;
 }
 
