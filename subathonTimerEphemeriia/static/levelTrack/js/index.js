@@ -12,6 +12,16 @@ function updateProgress() {
 
     let levelAmount = document.getElementById("current-level").querySelector("p");
     levelAmount.textContent = `Lv ${tracker.current_level}`;
+
+    if (tracker.current_level >= tracker.target_level) {
+        validateGift();
+    }
+}
+
+function validateGift() {
+    let giftSvg = document.querySelector("#level-progress svg");
+    giftSvg.style.setProperty("--gift-color-1", "#dd0f8e");
+    giftSvg.style.setProperty("--gift-color-2", "#4a0732");
 }
 
 // Websocket
