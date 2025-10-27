@@ -4,6 +4,7 @@ from django.http import  HttpResponse
 from django.contrib.auth.decorators import permission_required
 from .models import LevelTracker
 from .serializers import LevelTrackerSerializer
+from .realtime import update_level
 
 
 @permission_required("levelTrack.view_leveltracker")
@@ -24,6 +25,8 @@ def admin_view(request, id: int):
         except (TypeError, ValueError):
             return HttpResponse("Invalid current level", status=400)
         lt.update_level(current_level)
+        update_level(lt)
+
         return redirect("bar_tracker_admin", id=lt.id)
 
     return render(request, "admin_view.html", {"tracker": lt})
