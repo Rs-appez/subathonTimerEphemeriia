@@ -11,4 +11,5 @@ urlpatterns = [
     path("giveaway/", include("giveaway.urls")),
     path("chatbot/", include("chatbot.urls")),
     path("goal/", include("goal.urls")),
+    path("levelTracker/", include("levelTrack.urls")),
 ]

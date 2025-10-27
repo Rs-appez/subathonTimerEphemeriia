@@ -1,0 +1,77 @@
+@font-face {
+  font-family: "Sauce Barbe";
+  src: url("/static/general/fonts/Sauce_Barbe.otf") format("truetype");
+}
+:root {
+  --gift-color-1: #d5b9c4;
+  --gift-color-2: #d5b9c4;
+}
+
+.level-info {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.level-progress {
+  width: 100%;
+  max-width: 400px;
+}
+
+.target-level {
+  font-size: 14px;
+  color: #570031;
+  margin-bottom: 5px;
+  font-weight: bold;
+  font-family: "Sauce Barbe";
+}
+.progress-bar {
+  width: 100%;
+  height: 20px;
+  background-color: #d5b9c4;
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-container {
+  width: 100%;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(to right, #2e0025, #570031);
+  border-radius: 20px;
+  width: 0;
+  transition: width 0.5s ease-in-out;
+  transition-delay: 0s;
+}
+
+.current-level {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  width: 100%;
+  height: 10px;
+  left: 0px;
+  top: 0px;
+  margin: 0;
+}
+
+.current-level > p {
+  font-family: "Sauce Barbe";
+  color: white;
+  margin: 0;
+  text-shadow: 1px 1px 3px black;
+}
+
+.gift-icon {
+  width: 20px;
+  height: 20px;
+  /* position: absolute; */
+  /* top: 7%; */
+  /* left: 76%; */
+}
+.bar {
+  display: flex;
+}

@@ -2,10 +2,10 @@ from asgiref.sync import async_to_sync
 from channels.consumer import SyncConsumer
 
 
-class CampaignSyncConsumer(SyncConsumer):
+class LevelSyncConsumer(SyncConsumer):
     def websocket_connect(self, event):
-        self.campaign_id = self.scope["url_route"]["kwargs"]["campaign_id"]
-        self.group_name = f"campaign_{self.campaign_id}"
+        self.tracker_id = self.scope["url_route"]["kwargs"]["tracker_id"]
+        self.group_name = f"level_{self.tracker_id}"
         self.send({"type": "websocket.accept"})
 
         # Join ticks group
