@@ -12,9 +12,6 @@
   align-items: center;
   justify-content: flex-end;
 }
-.target-level {
-  text-shadow: 1px 1px 3px white;
-}
 
 .level-progress {
   width: 100%;
@@ -23,10 +20,11 @@
 
 .target-level {
   font-size: 14px;
-  color: #570031;
+  color: #ffffff;
   margin-bottom: 5px;
   font-weight: bold;
   font-family: "Sauce Barbe";
+  text-shadow: 1px 1px 3px black;
 }
 .progress-bar {
   width: 100%;
