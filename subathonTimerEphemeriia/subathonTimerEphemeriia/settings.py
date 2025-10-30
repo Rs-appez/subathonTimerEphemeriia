@@ -169,18 +169,23 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 CHANNEL_LAYERS = {
     "default": {
-        "BACKEND": "channels_redis.core.RedisChannelLayer",
-        "CONFIG": {
-            "hosts": [
-                {
-                    "host": config("REDIS_HOST", default="127.0.0.1"),
-                    "port": config("REDIS_PORT", default=6379),
-                    "password": config("REDIS_PASSWORD", default=""),
-                }
-            ],
-        },
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
     },
 }
+# CHANNEL_LAYERS = {
+#     "default": {
+#         "BACKEND": "channels_redis.core.RedisChannelLayer",
+#         "CONFIG": {
+#             "hosts": [
+#                 {
+#                     "host": config("REDIS_HOST", default="127.0.0.1"),
+#                     "port": config("REDIS_PORT", default=6379),
+#                     "password": config("REDIS_PASSWORD", default=""),
+#                 }
+#             ],
+#         },
+#     },
+# }
 
 TICKS_GROUP_NAME = "ticks"
 GLOBAL_TIMER_GROUP_NAME = "global_timer"
