@@ -62,7 +62,7 @@ INSTALLED_APPS = [
     "chatbot",
     "giveaway",
     "goal",
-    "levelTrack"
+    "levelTrack",
 ]
 
 MIDDLEWARE = [
