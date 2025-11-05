@@ -1,0 +1,1 @@
+[{"model": "goal.goalicon", "pk": 1, "fields": {"icon": "gift"}}, {"model": "goal.goalicon", "pk": 2, "fields": {"icon": "calendar"}}, {"model": "goal.campaigntype", "pk": 1, "fields": {"name": "sub"}}, {"model": "goal.campaigntype", "pk": 2, "fields": {"name": "donation"}}]
