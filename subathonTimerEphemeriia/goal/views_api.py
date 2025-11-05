@@ -3,7 +3,8 @@ from rest_framework.decorators import action
 from rest_framework.permissions import DjangoModelPermissions, IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 
-from .models import Campaign, Goal
+from django.shortcuts import get_object_or_404
+from .models import Campaign, Goal, CampaignType
 from .realtime import (
     update_campaign as send_campaign_update,
     update_progress as send_progress_update,
@@ -32,6 +33,11 @@ class CampaignViewSet(ModelViewSet):
 
         amount = request.data.get("amount")
         id = request.data.get("id")
+        type_data = request.data.get("type", None)
+
+        typeCampaign = (
+            get_object_or_404(CampaignType, name=type_data) if type_data else None
+        )
 
         if id in self.seen_ids:
             return Response({"message": "Already seen", "status": 400})
@@ -43,8 +49,9 @@ class CampaignViewSet(ModelViewSet):
             return Response({"message": "Invalid amount.", "status": 400})
 
         for campaign in campaigns:
-            campaign.add_donation(amount)
-            send_progress_update(campaign)
+            if campaign.type == typeCampaign:
+                campaign.add_amount(amount)
+                send_progress_update(campaign)
 
         return Response({"message": "Progress update sent.", "status": 200})
 
