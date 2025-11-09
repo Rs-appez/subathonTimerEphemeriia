@@ -7,6 +7,7 @@ class Campaign(models.Model):
     current_amount = models.FloatField(default=0.0)
     target_amount = models.FloatField(default=0.0)
     is_target_hidden = models.BooleanField(default=False)
+    is_next_goal_hidden = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
     type = models.ForeignKey(
         "CampaignType", on_delete=models.SET_NULL, null=True, blank=True
