@@ -29,6 +29,8 @@
   padding: 10px 20px 10px 10px;
   align-items: center;
   width: 450px;
+  color: white;
+  text-shadow: 2px 2px 4px #000000;
 }
 
 .background-overlay {
@@ -45,8 +47,6 @@
   flex-direction: column;
   margin-left: 10px;
   align-items: flex-end;
-  text-shadow: 2px 2px 4px #000000;
-  color: white;
 }
 
 .campaign-info > * {
@@ -56,6 +56,22 @@
 .campaign-amount {
   margin-top: 0px;
   font-size: 24px;
+}
+
+.goal-info {
+  font-size: 20px;
+  margin-left: auto;
+  display: flex;
+  justify-content: end;
+  align-items: end;
+}
+
+.goal-info > p {
+  margin-bottom: -55px;
+}
+
+.next-text {
+  margin-right: 5px;
 }
 .progress-wrapper {
   display: flex;

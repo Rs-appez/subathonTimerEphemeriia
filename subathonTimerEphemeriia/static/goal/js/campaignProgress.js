@@ -34,6 +34,7 @@ function updateCampaignProgress() {
                 100,
             ),
         );
+
         previousGoal = goal.goal;
         let progressBar = goalDiv.querySelector(".progress-bar-fill");
 
@@ -44,6 +45,7 @@ function updateCampaignProgress() {
         if (campaign.current_amount < goal.goal && !lockGoal) {
             lockGoal = true;
             displayNextGoal(goal);
+            setNextGoalTitle(goal.title);
         }
         if (
             campaign.current_amount >= campaign.goals[campaign.goals.length - 1].goal
@@ -70,6 +72,13 @@ function initTitle() {
         } else {
             titleDiv.textContent = "Goal";
         }
+    }
+}
+
+function setNextGoalTitle(title) {
+    let nextGoalText = document.getElementById("next-goal");
+    if (nextGoalText) {
+        nextGoalText.textContent = title;
     }
 }
 
