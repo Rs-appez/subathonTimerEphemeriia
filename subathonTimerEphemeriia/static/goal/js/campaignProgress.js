@@ -9,15 +9,15 @@ const data = document.getElementById("campaign-data").textContent;
 let campaign = JSON.parse(data);
 const parser = new DOMParser();
 
-let campaingAmount = document.getElementById("campaing-amount");
+let campaignAmount = document.getElementById("campaign-amount");
 function updateCampaignProgress() {
-    campaingAmount.textContent = `${campaign.current_amount} /`;
+    campaignAmount.textContent = `${campaign.current_amount} /`;
     if (campaign.is_target_hidden) {
-        campaingAmount.textContent += ` ?`;
+        campaignAmount.textContent += ` ?`;
     } else {
-        campaingAmount.textContent += ` ${campaign.target_amount}`;
+        campaignAmount.textContent += ` ${campaign.target_amount}`;
         if (campaign.type === "donation") {
-            campaingAmount.textContent += ` €`;
+            campaignAmount.textContent += ` €`;
         }
     }
     let previousGoal = 0;
@@ -54,8 +54,23 @@ function updateCampaignProgress() {
 }
 
 function initCampaign() {
+    initTitle();
     addGoalMarkers();
     updateCampaignProgress();
+}
+
+function initTitle() {
+    let titleDiv = document.getElementById("campaign-title");
+    let titleType = campaign.type;
+    if (titleDiv) {
+        if (titleType === "donation") {
+            titleDiv.textContent = "Tips Goal";
+        } else if (titleType === "sub") {
+            titleDiv.textContent = "Sub Goal";
+        } else {
+            titleDiv.textContent = "Goal";
+        }
+    }
 }
 
 function displayNextGoal(goal) {
