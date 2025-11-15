@@ -7,19 +7,11 @@ const calendarSVG =
 const data = document.getElementById("campaign-data").textContent;
 
 let campaign = JSON.parse(data);
+let nextGoalAmount = 0;
 const parser = new DOMParser();
 
 let campaignAmount = document.getElementById("campaign-amount");
 function updateCampaignProgress() {
-    campaignAmount.textContent = `${campaign.current_amount} /`;
-    if (campaign.is_target_hidden) {
-        campaignAmount.textContent += ` ?`;
-    } else {
-        campaignAmount.textContent += ` ${campaign.target_amount}`;
-        if (campaign.type === "donation") {
-            campaignAmount.textContent += ` €`;
-        }
-    }
     let previousGoal = 0;
     let lockGoal = false;
     for (let i = 0; i < campaign.goals.length; i++) {
@@ -44,13 +36,22 @@ function updateCampaignProgress() {
         }
         if (campaign.current_amount < goal.goal && !lockGoal) {
             lockGoal = true;
-            displayNextGoal(goal);
+            changeNextGoalAmount(goal.goal);
             setNextGoalTitle(goal.title);
         }
         if (
             campaign.current_amount >= campaign.goals[campaign.goals.length - 1].goal
         ) {
             displayNextGoal({ title: "FINI !!!" });
+        }
+    }
+    campaignAmount.textContent = `${campaign.current_amount} /`;
+    if (campaign.is_target_hidden) {
+        campaignAmount.textContent += ` ?`;
+    } else {
+        campaignAmount.textContent += ` ${nextGoalAmount}`;
+        if (campaign.type === "donation") {
+            campaignAmount.textContent += ` €`;
         }
     }
 }
@@ -82,11 +83,8 @@ function setNextGoalTitle(title) {
     }
 }
 
-function displayNextGoal(goal) {
-    let nextGoalDiv = document.getElementById("next-goal-amount");
-    if (nextGoalDiv) {
-        nextGoalDiv.textContent = goal.title;
-    }
+function changeNextGoalAmount(goal) {
+    nextGoalAmount = goal;
 }
 function addGoalMarkers() {
     for (let i = 0; i < campaign.goals.length; i++) {
