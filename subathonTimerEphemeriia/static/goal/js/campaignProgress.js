@@ -42,7 +42,8 @@ function updateCampaignProgress() {
         if (
             campaign.current_amount >= campaign.goals[campaign.goals.length - 1].goal
         ) {
-            displayNextGoal({ title: "FINI !!!" });
+            changeNextGoalAmount(campaign.goals[campaign.goals.length - 1].goal);
+            setNextGoalTitle("Fini !");
         }
     }
     campaignAmount.textContent = `${campaign.current_amount} /`;
