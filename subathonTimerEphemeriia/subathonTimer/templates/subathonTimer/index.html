@@ -31,14 +31,16 @@
                                     </video>
                                     <img class="{% if tip.validated %}validate validated{% else %}validate{% endif %}"
                                          src="{% static 'subathonTimer/images/validation.png' %}" />
-                                    <img src="{{ tip.goal_image_validated.url }}"
+                                    <img src="{% static 'subathonTimer/images/Asset_exemple_vierge.png' %}"
                                          id='validated'
                                          class="image {% if not tip.validated %}hidden{% endif %}"
                                          alt='' />
-                                    <img src="{{ tip.goal_image.url }}"
+                                    <img src="{% static 'subathonTimer/images/Asset_exemple_vierge.png' %}"
                                          id='default'
                                          alt=""
                                          class="image {% if tip.validated %}hidden{% endif %}" />
+                                    <p class="goal-name">{{ tip.goal_name }}</p>
+                                    <p class="goal-amount">{{ tip.goal_amount | floatformat:0 }} €</p>
                                 </div>
                             {% endfor %}
                         </div>
@@ -53,14 +55,16 @@
                                 </video>
                                 <img class="{% if sub.validated %}validate validated{% else %}validate{% endif %}"
                                      src="{% static 'subathonTimer/images/validation.png' %}" />
-                                <img src="{{ sub.goal_image_validated.url }}"
+                                <img src="{% static 'subathonTimer/images/Asset_exemple_vierge.png' %}"
                                      id='validated'
                                      class="image {% if not sub.validated %}hidden{% endif %}"
                                      alt='' />
-                                <img src="{{ sub.goal_image.url }}"
+                                <img src="{% static 'subathonTimer/images/Asset_exemple_vierge.png' %}"
                                      id='default'
                                      alt=""
                                      class="image {% if sub.validated %}hidden{% endif %}" />
+                                <p class="goal-name">{{ sub.goal_name }}</p>
+                                <p class="goal-amount">{{ sub.goal_amount }} SUB</p>
                             </div>
                         {% endfor %}
                     </div>
