@@ -31,58 +31,62 @@ class TipGoal(models.Model):
     timer = models.ForeignKey("Timer", on_delete=models.CASCADE)
     goal_name = models.CharField(max_length=100)
     goal_amount = models.FloatField()
-    goal_image = models.ImageField(
-        storage=GoalStorage(),
-    )
-    goal_image_validated = models.ImageField(
-        storage=GoalStorage(),
-        null=True,
-        blank=True,
-    )
+    # goal_image = models.ImageField(
+    #     storage=GoalStorage(),
+    # )
+    # goal_image_validated = models.ImageField(
+    #     storage=GoalStorage(),
+    #     null=True,
+    #     blank=True,
+    # )
     validated = False
 
-    def save(self, *args, **kwargs):
-        if not self.goal_image_validated:
-            self.goal_image_validated = self.goal_image
-        super().save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     if not self.goal_image_validated:
+    #         self.goal_image_validated = self.goal_image
+    #     super().save(*args, **kwargs)
 
     def __str__(self):
         return self.goal_name
 
     def get_image_validated(self):
+        raise NotImplementedError("TipGoal does not have an image.")
         return self.goal_image_validated.url[32:]
 
     def get_image(self):
+        raise NotImplementedError("TipGoal does not have an image.")
         return self.goal_image.url[32:]
 
 
 class SubGoal(models.Model):
     timer = models.ForeignKey("Timer", on_delete=models.CASCADE)
     goal_name = models.CharField(max_length=100)
-    goal_amount = models.FloatField()
-    goal_image = models.ImageField(
-        storage=GoalStorage(),
-        upload_to=rename_file_to_upload,
-    )
-    goal_image_validated = models.ImageField(
-        storage=GoalStorage(),
-        null=True,
-        blank=True,
-    )
+    goal_amount = models.SmallIntegerField()
+    # goal_image = models.ImageField(
+    #     storage=GoalStorage(),
+    #     upload_to=rename_file_to_upload,
+    # )
+    # goal_image_validated = models.ImageField(
+    #     storage=GoalStorage(),
+    #     null=True,
+    #     blank=True,
+    # )
     validated = False
 
-    def save(self, *args, **kwargs):
-        if not self.goal_image_validated:
-            self.goal_image_validated = self.goal_image
-        super().save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     if not self.goal_image_validated:
+    #         self.goal_image_validated = self.goal_image
+    #     super().save(*args, **kwargs)
 
     def __str__(self):
         return self.goal_name
 
     def get_image(self):
+        raise NotImplementedError("SubGoal does not have an image.")
         return self.goal_image.url[32:]
 
     def get_image_validated(self):
+        raise NotImplementedError("SubGoal does not have an image.")
         return self.goal_image_validated.url[32:]
 
 
