@@ -73,12 +73,18 @@ class TimerViewSet(viewsets.ModelViewSet):
                         update_gifter = (
                             gifter, last_gifter[1] + 1, time.time())
 
-                        if update_gifter[1] == 5:
-                            bonus_time = timer.add_bonus_sub(tier, 5)
+                        # if update_gifter[1] == 5:
+                        #     bonus_time = timer.add_bonus_sub(tier, 5)
+                        #
+                        # elif update_gifter[1] == 10:
+                        #     bonus_time = timer.add_bonus_sub(tier, 15)
+                        #     update_gifter = (gifter, 0, time.time())
 
-                        elif update_gifter[1] == 10:
-                            bonus_time = timer.add_bonus_sub(tier, 15)
-                            update_gifter = (gifter, 0, time.time())
+                        if update_gifter[1] == 20 :
+                            bonus_time = timer.add_bonus_sub(tier, 20)
+                        elif update_gifter[1] > 20 :
+                            bonus_time = timer.add_bonus_sub(tier, 1)
+
 
                     else:
                         update_gifter = (gifter, 1, time.time())
