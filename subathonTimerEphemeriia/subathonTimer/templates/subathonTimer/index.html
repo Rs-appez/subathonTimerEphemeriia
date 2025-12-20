@@ -24,6 +24,8 @@
                         <div class="image-column" id="tips">
                             {% for tip in tips %}
                                 <div id='{{ tip.goal_name }}' class="tip_image_to_move">
+                                    <p class="goal-name">{{ tip.goal_name }}</p>
+                                    <p class="goal-amount">{{ tip.goal_amount | floatformat:0 }} €</p>
                                     <video muted class='butterfly_animation'>
                                         <source src="{% static 'subathonTimer/images/animation.webm' %}"
                                                 type="video/webm">
@@ -39,8 +41,6 @@
                                          id='default'
                                          alt=""
                                          class="image {% if tip.validated %}hidden{% endif %}" />
-                                    <p class="goal-name">{{ tip.goal_name }}</p>
-                                    <p class="goal-amount">{{ tip.goal_amount | floatformat:0 }} €</p>
                                 </div>
                             {% endfor %}
                         </div>
@@ -48,6 +48,8 @@
                     <div class="image-column-sub" id='subs'>
                         {% for sub in subs %}
                             <div id='{{ sub.goal_name }}' class="sub_image_to_move">
+                                <p class="goal-name">{{ sub.goal_name }}</p>
+                                <p class="goal-amount">{{ sub.goal_amount }} SUB</p>
                                 <video muted class='butterfly_animation'>
                                     <source src="{% static 'subathonTimer/images/animation.webm' %}"
                                             type="video/webm">
@@ -63,8 +65,6 @@
                                      id='default'
                                      alt=""
                                      class="image {% if sub.validated %}hidden{% endif %}" />
-                                <p class="goal-name">{{ sub.goal_name }}</p>
-                                <p class="goal-amount">{{ sub.goal_amount }} SUB</p>
                             </div>
                         {% endfor %}
                     </div>
