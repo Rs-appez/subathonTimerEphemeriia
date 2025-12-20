@@ -26,6 +26,7 @@
                                 <div id='{{ tip.goal_name }}' class="tip_image_to_move">
                                     <p class="goal-name">{{ tip.goal_name }}</p>
                                     <p class="goal-amount">{{ tip.goal_amount | floatformat:0 }} €</p>
+                                    <div class="checkbox"></div>
                                     <video muted class='butterfly_animation'>
                                         <source src="{% static 'subathonTimer/images/animation.webm' %}"
                                                 type="video/webm">
@@ -50,6 +51,7 @@
                             <div id='{{ sub.goal_name }}' class="sub_image_to_move">
                                 <p class="goal-name">{{ sub.goal_name }}</p>
                                 <p class="goal-amount">{{ sub.goal_amount }} SUB</p>
+                                <div class="checkbox"></div>
                                 <video muted class='butterfly_animation'>
                                     <source src="{% static 'subathonTimer/images/animation.webm' %}"
                                             type="video/webm">
