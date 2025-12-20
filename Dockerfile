@@ -16,7 +16,6 @@ COPY . /code
 
 WORKDIR /code/subathonTimerEphemeriia
 
-ENV DATABASE_URL=""
 ENV SECRET_KEY="non-secret-key-for-building-purposes"
 
 RUN python manage.py collectstatic --noinput

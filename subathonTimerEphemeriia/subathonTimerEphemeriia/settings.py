@@ -96,7 +96,7 @@ WSGI_APPLICATION = "subathonTimerEphemeriia.wsgi.application"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 if not DEBUG:
-    tmpPostgres = urlparse(config("DATABASE_URL"))
+    tmpPostgres = urlparse(config("DATABASE_URL", default=""))
 
 DATABASES = {
     "default": {
