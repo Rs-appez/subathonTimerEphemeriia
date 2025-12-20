@@ -1,33 +1,24 @@
-ARG PYTHON_VERSION=3.13.5-slim-bullseye
+ARG PYTHON_VERSION=3.13-alpine
 
 FROM python:${PYTHON_VERSION}
 
 ENV TZ="Europe/Brussels"
 
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
-
-# install psycopg2 dependencies.
-RUN apt-get update && apt-get install -y \
-    libpq-dev \
-    gcc \
-    && rm -rf /var/lib/apt/lists/*
-
-RUN mkdir -p /code
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 
 WORKDIR /code
 
 COPY requirements.txt /tmp/requirements.txt
-RUN set -ex && \
-    pip install --upgrade pip && \
-    pip install -r /tmp/requirements.txt && \
-    rm -rf /root/.cache/
+RUN pip install --no-cache-dir -r /tmp/requirements.txt 
+
 COPY . /code
 
 WORKDIR /code/subathonTimerEphemeriia
 
-ENV DATABASE_URL ""
-ENV SECRET_KEY "non-secret-key-for-building-purposes"
+ENV DATABASE_URL=""
+ENV SECRET_KEY="non-secret-key-for-building-purposes"
+
 RUN python manage.py collectstatic --noinput
 
 EXPOSE 8000
