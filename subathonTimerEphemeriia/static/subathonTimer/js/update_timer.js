@@ -220,8 +220,9 @@ function validateGoal(goalId) {
         image.classList.add("hidden");
         validatedImage.classList.remove("hidden");
         animation.style.display = "block";
-        animation.play();
-        console.log("Goal square found for ID:", goalId);
+        animation.play().catch((error) => {
+            console.error("Error playing animation:", error);
+        });
         setTimeout(() => {
             goalSquare.classList.add("validated");
             animation.style.display = "none";
