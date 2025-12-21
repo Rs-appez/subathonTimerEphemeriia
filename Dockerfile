@@ -7,19 +7,27 @@ ENV TZ="Europe/Brussels"
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
+RUN apk add --no-cache supervisor;
+
+RUN adduser -D -H -s /sbin/nologin subathonuser;
+
 WORKDIR /code
+
+
 
 COPY requirements.txt /tmp/requirements.txt
 RUN pip install --no-cache-dir -r /tmp/requirements.txt 
 
 COPY . /code
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
+WORKDIR /code/log
 WORKDIR /code/subathonTimerEphemeriia
 
-ENV SECRET_KEY="non-secret-key-for-building-purposes"
+RUN chown -R subathonuser:subathonuser /code;
 
 RUN python manage.py collectstatic --noinput
 
 EXPOSE 8000
 
-CMD ["daphne", "-b", "0.0.0.0", "-p", "8000", "subathonTimerEphemeriia.asgi:application"]
+CMD ["supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
