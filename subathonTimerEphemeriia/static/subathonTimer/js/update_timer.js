@@ -1,4 +1,30 @@
-// Update the timer every second
+const data = document.currentScript.dataset;
+let end_timer = data.time_left;
+let total_tips = data.total_tips;
+let total_subscriptions = data.total_subscriptions;
+
+let tip_goal_values = JSON.parse(data.tip_goal_values);
+let sub_goal_values = JSON.parse(data.sub_goals_values);
+
+let tip_nb_goals = parseInt(data.tip_nb_goals) || 3;
+let sub_nb_goals = parseInt(data.sub_nb_goals) || 3;
+
+let sub_validated = JSON.parse(
+    data.sub_validated.replace(/True/g, "true").replace(/False/g, "false"),
+);
+let tip_validated = JSON.parse(
+    data.tip_validated.replace(/True/g, "true").replace(/False/g, "false"),
+);
+
+let remainingTime = end_timer - new Date().getTime() / 1000;
+
+let skip_tip_animation = false;
+let skip_sub_animation = false;
+
+let timer_paused = data.timer_paused === "True";
+let paused_time = data.paused_time;
+
+// Timer update function
 function update() {
     const timeElement = document.getElementById("time");
     if (timeElement) {
@@ -25,32 +51,6 @@ function formatTime(seconds) {
 
     return `${hours}:${minutes}:${seconds}`;
 }
-
-const data = document.currentScript.dataset;
-var end_timer = data.time_left;
-var total_tips = data.total_tips;
-var total_subscriptions = data.total_subscriptions;
-
-var tip_goal_values = JSON.parse(data.tip_goal_values);
-var sub_goal_values = JSON.parse(data.sub_goals_values);
-
-var tip_nb_goals = parseInt(data.tip_nb_goals) || 3;
-var sub_nb_goals = parseInt(data.sub_nb_goals) || 3;
-
-var sub_validated = JSON.parse(
-    data.sub_validated.replace(/True/g, "true").replace(/False/g, "false"),
-);
-var tip_validated = JSON.parse(
-    data.tip_validated.replace(/True/g, "true").replace(/False/g, "false"),
-);
-
-var remainingTime = end_timer - new Date().getTime() / 1000;
-
-var skip_tip_animation = false;
-var skip_sub_animation = false;
-
-var timer_paused = data.timer_paused === "True";
-var paused_time = data.paused_time;
 
 // Tip goal
 
