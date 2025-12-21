@@ -243,6 +243,12 @@ function resizeDisplayGoals() {
     );
 }
 
+function refreshAll() {
+    update();
+    checkTipGoal();
+    checkSubGoal();
+    resizeDisplayGoals();
+}
 // Websocket
 var ws_scheme = window.location.protocol === "https:" ? "wss" : "ws";
 var ws_url = ws_scheme + "://" + window.location.host + "/ws/ticks/";
@@ -258,9 +264,7 @@ function connect() {
         timer_paused = data_ws.timer_paused;
         paused_time = data_ws.paused_time;
 
-        update();
-        checkTipGoal();
-        checkSubGoal();
+        refreshAll();
     };
 
     ws.onclose = function(event) {
@@ -274,6 +278,17 @@ function connect() {
     };
 }
 
-connect();
+// connect();
+const evtSource = new EventSource("/timer/events/");
+evtSource.onmessage = function(event) {
+    const data_ws = JSON.parse(event.data);
+    end_timer = data_ws.time_end;
+    total_tips = data_ws.total_tips;
+    total_subscriptions = data_ws.total_subscriptions;
+    timer_paused = data_ws.timer_paused;
+    paused_time = data_ws.paused_time;
+
+    refreshAll();
+};
 
 resizeDisplayGoals();
