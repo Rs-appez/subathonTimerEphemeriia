@@ -105,11 +105,9 @@ function validateTipGoal() {
     let tips = document.querySelector("#tips").children;
     let firstElements = Array.prototype.slice.call(tips, 0, tip_nb_goals);
     firstElements.forEach((element, index) => {
-        console.log("Checking tip goal " + element.id);
         if (tip_validated[index] == false && skip_tip_animation == false) {
             if (total_tips >= tip_goal_values[index]) {
                 skip_tip_animation = true;
-                console.log("Validating tip goal " + element.id);
                 tip_validated[index] = true;
                 validateGoal(element.id);
 
@@ -122,17 +120,12 @@ function validateTipGoal() {
     });
 }
 function checkTipGoal() {
-    console.log("Checking tip goal");
     if (skip_tip_animation) {
-        console.log("Skipping tip animation");
         return;
     }
-    console.log("Checking tip animation");
     if (tip_validated.every((value) => value == true)) {
-        console.log("Removing first tree tip");
         removeFirstTreeTip();
     } else {
-        console.log("Validating tip goal");
         validateTipGoal();
     }
 }
