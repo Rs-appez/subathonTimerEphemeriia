@@ -1,14 +1,15 @@
-from django.db.models import F
-from django.db import models
-from django.utils import timezone
+import json
 
-from subathonTimerEphemeriia.storage_backends import GoalStorage, AnnouncementStorage
+import channels.layers
+from asgiref.sync import async_to_sync
+from django.conf import settings
+from django.db import models
+from django.db.models import F
+from django.utils import timezone
+from subathonTimerEphemeriia.storage_backends import AnnouncementStorage
 from utils.utils import rename_file_to_upload
 
-import json
-from asgiref.sync import async_to_sync
-import channels.layers
-from django.conf import settings
+from .celery_task import send_update
 from .utils import write_log
 
 
