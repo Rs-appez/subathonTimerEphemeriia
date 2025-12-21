@@ -353,6 +353,19 @@ class Timer(models.Model):
         time = self.display_time()
         paused_time = self.display_paused_time()
 
+        data = json.dumps(
+            {
+                "time_end": time,
+                "total_tips": self.timer_total_donations,
+                "total_subscriptions": self.timer_total_subscriptions,
+                "timer_paused": self.timer_paused,
+                "paused_time": paused_time,
+            }
+        )
+        send_update.delay(data)
+
+        return
+
         channel_layer = channels.layers.get_channel_layer()
         async_to_sync(channel_layer.group_send)(
             settings.TICKS_GROUP_NAME,
