@@ -15,6 +15,7 @@ from .views import (
     carousel_announcement,
 )
 from .views_api import TimerViewSet
+from .views_sse import sse_stream
 
 from rest_framework.routers import DefaultRouter
 
@@ -45,6 +46,6 @@ urlpatterns = [
     path(
         "subanniversary_summary/", subannivesary_summary, name="subanniversary_summary"
     ),
-    path("carousel_announcement/", carousel_announcement,
-         name="carousel_announcement"),
+    path("carousel_announcement/", carousel_announcement, name="carousel_announcement"),
+    path("events/", sse_stream, name="sse_stream"),
 ]
