@@ -27,29 +27,10 @@ function formatTime(seconds) {
     return `${hours}:${minutes}:${seconds}`;
 }
 
-// Websocket
-var ws_scheme = window.location.protocol === "https:" ? "wss" : "ws";
-var ws_url = ws_scheme + "://" + window.location.host + "/ws/global_timer/";
+const evtSource = new EventSource("/timer/start_events/");
+evtSource.onmessage = function(event) {
+    const data_ws = JSON.parse(event.data);
+    time = data_ws.time;
 
-function connect() {
-    var ws = new WebSocket(ws_url);
-
-    ws.onmessage = function(event) {
-        var data_ws = JSON.parse(event.data);
-        time = data_ws.time;
-
-        update();
-    };
-
-    ws.onclose = function(event) {
-        console.log("Connection closed");
-        connect();
-    };
-
-    ws.onerror = function(event) {
-        console.log("Error");
-        ws.close();
-    };
-}
-
-connect();
+    update();
+};
