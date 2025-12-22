@@ -21,7 +21,7 @@ RUN pip install --no-cache-dir -r /tmp/requirements.txt
 COPY . /code
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-WORKDIR /code/log
+WORKDIR /code/logs
 WORKDIR /code/subathonTimerEphemeriia
 
 RUN chown -R subathonuser:subathonuser /code;
