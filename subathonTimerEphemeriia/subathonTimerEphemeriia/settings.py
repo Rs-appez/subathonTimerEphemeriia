@@ -182,8 +182,6 @@ CHANNEL_LAYERS = {
     },
 }
 
-TICKS_GROUP_NAME = "ticks"
-GLOBAL_TIMER_GROUP_NAME = "global_timer"
 BINGO_GROUP_NAME = "bingo"
 CAMPAIGN_GROUP_NAME = "campaigns"
 
