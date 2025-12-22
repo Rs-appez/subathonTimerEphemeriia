@@ -15,3 +15,9 @@ def send_update(data):
     payload = json.dumps(data) if isinstance(data, dict) else str(data)
     client.publish("updates", payload)
 
+
+@shared_task
+def send_start_event(data):
+    client = get_redis_client()
+    payload = json.dumps(data) if isinstance(data, dict) else str(data)
+    client.publish("start_event", payload)
