@@ -13,8 +13,6 @@ RUN adduser -D -H -s /sbin/nologin subathonuser;
 
 WORKDIR /code
 
-
-
 COPY requirements.txt /tmp/requirements.txt
 RUN pip install --no-cache-dir -r /tmp/requirements.txt 
 
@@ -25,6 +23,8 @@ WORKDIR /code/logs
 WORKDIR /code/subathonTimerEphemeriia
 
 RUN chown -R subathonuser:subathonuser /code;
+
+ENV SECRET_KEY="non-secret-key-for-building-purposes"
 
 RUN python manage.py collectstatic --noinput
 
