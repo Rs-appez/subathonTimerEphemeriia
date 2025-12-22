@@ -9,8 +9,6 @@ ENV PYTHONUNBUFFERED=1
 
 RUN apk add --no-cache supervisor;
 
-RUN adduser -D -H -s /sbin/nologin subathonuser;
-
 WORKDIR /code
 
 COPY requirements.txt /tmp/requirements.txt
@@ -21,8 +19,6 @@ COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 WORKDIR /code/logs
 WORKDIR /code/subathonTimerEphemeriia
-
-RUN chown -R subathonuser:subathonuser /code;
 
 ENV SECRET_KEY="non-secret-key-for-building-purposes"
 
