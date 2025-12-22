@@ -1,15 +1,12 @@
 import json
 
-import channels.layers
-from asgiref.sync import async_to_sync
-from django.conf import settings
 from django.db import models
 from django.db.models import F
 from django.utils import timezone
 from subathonTimerEphemeriia.storage_backends import AnnouncementStorage
 from utils.utils import rename_file_to_upload
 
-from .celery_task import send_update
+from .celery_task import send_update, send_start_event
 from .utils import write_log
 
 
@@ -21,8 +18,7 @@ class BonusType(models.TextChoices):
 
 
 class BonusTime(models.Model):
-    bonus_condition = models.CharField(
-        choices=BonusType.choices, max_length=10)
+    bonus_condition = models.CharField(choices=BonusType.choices, max_length=10)
     bonus_value = models.IntegerField()
     bonus_time = models.IntegerField()
     bonus_used = models.BooleanField(default=False)
@@ -225,13 +221,13 @@ class Timer(models.Model):
         )
 
         grouped_goals = [
-            tip_goals[i: i + self.timer_nb_tips]
+            tip_goals[i : i + self.timer_nb_tips]
             for i in range(0, len(tip_goals), self.timer_nb_tips)
         ]
         goals = []
         for i, goal in enumerate(grouped_goals):
             if goal[-1].goal_amount > self.timer_total_donations:
-                goals = tip_goals[i * self.timer_nb_tips:]
+                goals = tip_goals[i * self.timer_nb_tips :]
                 break
         for goal in goals:
             if goal.goal_amount <= self.timer_total_donations:
@@ -251,13 +247,13 @@ class Timer(models.Model):
             SubGoal.objects.filter(timer=self).all().order_by("goal_amount")
         )
         grouped_goals = [
-            sub_goals[i: i + self.timer_nb_subs]
+            sub_goals[i : i + self.timer_nb_subs]
             for i in range(0, len(sub_goals), self.timer_nb_subs)
         ]
         goals = []
         for i, goal in enumerate(grouped_goals):
             if goal[-1].goal_amount > self.timer_total_subscriptions:
-                goals = sub_goals[i * self.timer_nb_subs:]
+                goals = sub_goals[i * self.timer_nb_subs :]
                 break
         for goal in goals:
             if goal.goal_amount <= self.timer_total_subscriptions:
@@ -330,8 +326,7 @@ class Timer(models.Model):
 
         bonus_time *= multiplier
 
-        self.timer_end = F("timer_end") + \
-            timezone.timedelta(seconds=bonus_time)
+        self.timer_end = F("timer_end") + timezone.timedelta(seconds=bonus_time)
 
         self.save(update_fields=["timer_end"])
         self.refresh_from_db()
@@ -342,8 +337,7 @@ class Timer(models.Model):
         """Double the time added for a tip"""
         bonus_time = self.timer_add_time_donation * tip_amount
 
-        self.timer_end = F("timer_end") + \
-            timezone.timedelta(seconds=bonus_time)
+        self.timer_end = F("timer_end") + timezone.timedelta(seconds=bonus_time)
         self.save(update_fields=["timer_end"])
         self.refresh_from_db()
 
@@ -364,39 +358,15 @@ class Timer(models.Model):
         )
         send_update.delay(data)
 
-        return
-
-        channel_layer = channels.layers.get_channel_layer()
-        async_to_sync(channel_layer.group_send)(
-            settings.TICKS_GROUP_NAME,
-            {
-                "type": "new_ticks",
-                "content": json.dumps(
-                    {
-                        "time_end": time,
-                        "total_tips": self.timer_total_donations,
-                        "total_subscriptions": self.timer_total_subscriptions,
-                        "timer_paused": self.timer_paused,
-                        "paused_time": paused_time,
-                    }
-                ),
-            },
-        )
-
     def send_ticket_start(self):
         time = self.started_time()
-        channel_layer = channels.layers.get_channel_layer()
-        async_to_sync(channel_layer.group_send)(
-            settings.GLOBAL_TIMER_GROUP_NAME,
+
+        data = json.dumps(
             {
-                "type": "new_ticks",
-                "content": json.dumps(
-                    {
-                        "time": time,
-                    }
-                ),
-            },
+                "time": time,
+            }
         )
+        send_start_event.delay(data)
 
 
 class CarouselAnnouncement(models.Model):
