@@ -1,5 +1,5 @@
 from enum import Enum
-from redis.client import Redis, ConnectionPool
+from redis.asyncio import Redis, ConnectionPool
 import asyncio
 from collections import defaultdict
 from django.conf import settings
@@ -43,12 +43,10 @@ class RedisBroadcaster:
         client = redis_client()
         pubsub = client.pubsub()
         # Subscribe to all known channels at once to save commands
-        print("Starting Redis listener task...")
         await pubsub.subscribe(*[ch.value for ch in Channels])
 
         try:
             async for message in pubsub.listen():
-                print("message : ", message)
                 if message["type"] == "message":
                     channel = message["channel"].decode()
                     data = message["data"].decode()
