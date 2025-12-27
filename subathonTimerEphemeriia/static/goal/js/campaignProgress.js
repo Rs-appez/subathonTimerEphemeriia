@@ -184,5 +184,5 @@ function connect() {
     };
 }
 
-connect();
+// connect();
 initCampaign();

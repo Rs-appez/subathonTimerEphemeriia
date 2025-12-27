@@ -60,5 +60,5 @@ function connect() {
     };
 }
 
-connect();
+// connect();
 updateProgress();
