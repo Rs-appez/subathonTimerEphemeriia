@@ -1,39 +1,22 @@
+from utils.redis import RedisBroadcaster, Channels
 import asyncio
-from collections.abc import AsyncGenerator
 
-import redis.asyncio as redis
-from django.conf import settings
 from django.http import StreamingHttpResponse
-from django.http.response import HttpResponseServerError
 
 HEARTBEAT_INTERVAL = 30  # seconds
 
-redis_pool = redis.ConnectionPool.from_url(settings.CELERY_BROKER_URL)
 
-def get_redis_client() -> redis.Redis:
-    return redis.Redis(connection_pool=redis_pool)
+broadcaster = RedisBroadcaster()
+
 
 async def sse_stream(event_to_subscribe: str) -> StreamingHttpResponse:
-    try:
-        client = get_redis_client()
-        await client.ping()
-        pubsub = client.pubsub()
-        await pubsub.subscribe(event_to_subscribe)
+    # Create a local queue for this specific user
+    queue: asyncio.Queue[str] = asyncio.Queue()
 
-    except redis.ConnectionError:
-        return HttpResponseServerError("Could not connect to Redis.")
+    # Register this user's queue with the global broadcaster
+    await broadcaster.add_subscriber(event_to_subscribe, queue)
 
-    async def event_stream() -> AsyncGenerator[str, None]:
-        queue: asyncio.Queue[str] = asyncio.Queue()
-
-        async def listen_messages():
-            try:
-                async for message in pubsub.listen():
-                    if message["type"] == "message":
-                        await queue.put(f"data: {message['data'].decode()}\n\n")
-            except asyncio.CancelledError:
-                pass
-
+    async def event_stream():
         async def send_heartbeats():
             try:
                 while True:
@@ -42,7 +25,6 @@ async def sse_stream(event_to_subscribe: str) -> StreamingHttpResponse:
             except asyncio.CancelledError:
                 pass
 
-        listener_task = asyncio.create_task(listen_messages())
         heartbeat_task = asyncio.create_task(send_heartbeats())
 
         try:
@@ -51,12 +33,8 @@ async def sse_stream(event_to_subscribe: str) -> StreamingHttpResponse:
         except asyncio.CancelledError:
             pass
         finally:
-            listener_task.cancel()
             heartbeat_task.cancel()
-            await asyncio.gather(listener_task, heartbeat_task, return_exceptions=True)
-            await pubsub.unsubscribe(event_to_subscribe)
-            await pubsub.aclose()
-            await client.aclose()
+            await broadcaster.remove_subscriber(event_to_subscribe, queue)
 
     response = StreamingHttpResponse(event_stream(), content_type="text/event-stream")
     response["Cache-Control"] = "no-cache"
@@ -66,8 +44,8 @@ async def sse_stream(event_to_subscribe: str) -> StreamingHttpResponse:
 
 
 async def sse_start_event_stream(_request) -> StreamingHttpResponse:
-    return await sse_stream("start_event")
+    return await sse_stream(Channels.START_EVENT.value)
 
 
 async def sse_updates_stream(_request) -> StreamingHttpResponse:
-    return await sse_stream("updates")
+    return await sse_stream(Channels.UPDATES.value)
