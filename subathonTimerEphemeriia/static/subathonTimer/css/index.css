@@ -112,11 +112,11 @@ body {
 .goal-name {
   font-family: "Golane";
   color: white;
-  font-size: 30px;
+  font-size: 35px;
   text-shadow: 3px 3px 5px #000000;
   position: absolute;
   left: 51%;
-  top: 39%;
+  top: 37%;
   transform: translate(-50%, -50%);
   width: 528px;
   text-align: center;
