@@ -82,8 +82,8 @@ class TimerViewSet(viewsets.ModelViewSet):
 
                         if update_gifter[1] == 20 :
                             bonus_time = timer.add_bonus_sub(tier, 20)
-                        elif update_gifter[1] > 20 :
-                            bonus_time = timer.add_bonus_sub(tier, 1)
+                        # elif update_gifter[1] > 20 :
+                        #     bonus_time = timer.add_bonus_sub(tier, 1)
 
 
                     else:
@@ -164,7 +164,7 @@ class TimerViewSet(viewsets.ModelViewSet):
             donation = float(donation)
             timer.new_donation(donation)
 
-            if timer.multiplicator_tip_on and donation >= 100.0:
+            if timer.multiplicator_tip_on and donation == 100.0:
                 bonus_time = timer.add_bonus_tip(donation)
 
         except Exception as e:
