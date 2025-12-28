@@ -4,18 +4,19 @@
     <head>
         <title>Subathon Timer</title>
     </head>
-
     <body>
         <div class="progress-container">
-                <div class="progress-wrapper">
-                    <p class="progress-left number" id="tip-left">0</p>
-                    <progress id="progress-tip" class="progress" value="0" max="100"></progress>
-                    <p class="progress-right number" id="tip-right">20</p>
-                </div>
+            <div class="progress-wrapper">
+                <p class="progress-left number" id="tip-left">0</p>
+                <progress id="progress-tip" class="progress" value="0" max="100"></progress>
+                <p class="progress-right number" id="tip-right"></p>
             </div>
+        </div>
     </body>
-
 </html>
-
-<link rel="stylesheet" type="text/css" href="{% static 'subathonTimer/css/tipProgress.css' %}">
-<script src="{% static 'subathonTimer/js/update_tip_progress.js' %}" data-total_tips="{{ total_tips }}" data-last_goal="{{ last_goal }}"></script>
+<link rel="stylesheet"
+      type="text/css"
+      href="{% static 'subathonTimer/css/tipProgress.css' %}">
+<script src="{% static 'subathonTimer/js/update_tip_progress.js' %}"
+        data-total_tips="{{ total_tips }}"
+        data-last_goal="{{ last_goal }}"></script>

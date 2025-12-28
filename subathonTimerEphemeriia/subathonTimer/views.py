@@ -42,6 +42,7 @@ def index(request):
         request,
         "subathonTimer/index.html",
         {
+            "name": timer.timer_name,
             "time": time,
             "started": started,
             "tips": tips,

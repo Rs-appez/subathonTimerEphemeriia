@@ -7,16 +7,42 @@
   src: url("/static/subathonTimer/fonts/century.ttf") format("truetype");
 }
 
+@font-face {
+  font-family: "Golane";
+  src: url("/static/general/fonts/Golane-Regular.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Kinder";
+  src: url("/static/general/fonts/Kinder Cold.otf") format("opentype");
+}
+
 .container {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 1000px;
 }
 
 .time-container {
   display: flex;
   justify-content: left;
   width: 100%;
+}
+
+.name-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.title {
+  font-family: "Kinder";
+  color: white;
+  font-size: 50px;
+  text-shadow: 3px 3px 5px #000000;
+  margin-right: 20px;
 }
 
 span.time {
@@ -84,7 +110,7 @@ body {
 }
 
 .goal-name {
-  font-family: "Century";
+  font-family: "Golane";
   color: white;
   font-size: 30px;
   text-shadow: 3px 3px 5px #000000;
