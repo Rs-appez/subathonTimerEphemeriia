@@ -1,6 +1,7 @@
 from utils.redis import RedisBroadcaster, Channels
 import asyncio
 
+from collections.abc import AsyncIterator
 from django.http import StreamingHttpResponse
 
 HEARTBEAT_INTERVAL = 30  # seconds
@@ -16,7 +17,7 @@ async def sse_stream(event_to_subscribe: str) -> StreamingHttpResponse:
     # Register this user's queue with the global broadcaster
     await broadcaster.add_subscriber(event_to_subscribe, queue)
 
-    async def event_stream():
+    async def event_stream() -> AsyncIterator[str]:
         async def send_heartbeats():
             try:
                 while True:
