@@ -102,6 +102,8 @@ class TimerViewSet(viewsets.ModelViewSet):
             except Exception as e:
                 return Response({"message": "Invalid tier", "status": 400})
 
+            write_log(f"Pre send : Sub tier {tier} received from {username} offered by {gifter}")
+
             timer.send_ticket()
 
             msg = f"New sub: {username} - {tier}"
