@@ -28,6 +28,7 @@ CORS_ALLOWED_ORIGINS = [config("FRONTEND_HOST", default="http://localhost:4321")
 # Application definition
 
 INSTALLED_APPS = [
+    "daphne",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -94,15 +95,16 @@ WSGI_APPLICATION = "subathonTimerEphemeriia.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# if not DEBUG:
-tmpPostgres = urlparse(config("DATABASE_URL", default=""))
+if not DEBUG:
+    tmpPostgres = urlparse(config("DATABASE_URL", default=""))
 
 DATABASES = {
     "default": {
-        #     "ENGINE": "django.db.backends.sqlite3",
-        #     "NAME": BASE_DIR / "db.sqlite3",
-        # }
-        # if DEBUG
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+    }
+    if DEBUG
+    else {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": tmpPostgres.path.replace("/", ""),
         "USER": tmpPostgres.username,
@@ -171,7 +173,7 @@ CHANNEL_LAYERS = {
         "CONFIG": {
             "hosts": [
                 {
-                    "host": config("REDIS_HOST", default="172.17.0.1"),
+                    "host": config("REDIS_HOST", default="127.0.0.1"),
                     "port": config("REDIS_PORT", default=6379),
                     "password": config("REDIS_PASSWORD", default=""),
                 }
@@ -185,15 +187,7 @@ CAMPAIGN_GROUP_NAME = "campaigns"
 
 
 # Celery Configuration
-CELERY_BROKER_URL = (
-    "redis://:"
-    + config("REDIS_PASSWORD", default="")
-    + "@"
-    + config("REDIS_HOST", default="172.17.0.1")
-    + ":"
-    + str(config("REDIS_PORT", default=6379))
-    + "/0"
-)
+CELERY_BROKER_URL = "redis://:" + config("REDIS_PASSWORD", default="") + "@" + config("REDIS_HOST", default="127.0.0.1") + ":" + str(config("REDIS_PORT", default=6379)) + "/0"
 CELERY_TIMEZONE = TIME_ZONE
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
@@ -213,14 +207,7 @@ REST_FRAMEWORK = {
 
 CACHES = {
     "default": {
-        "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": "redis://:"
-        + config("REDIS_PASSWORD", default="")
-        + "@"
-        + config("REDIS_HOST", default="172.17.0.1")
-        + ":"
-        + str(config("REDIS_PORT", default=6379))
-        + "/0",
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
     }
 }
 
