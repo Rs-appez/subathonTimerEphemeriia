@@ -11,7 +11,7 @@ function updateTipProgress() {
         next_goal = last_goal;
 
         tipProgress.value = (total_tips / next_goal) * 100;
-        tipLeft.innerHTML = total_tips;
+        tipLeft.innerText = total_tips + " €";
         // tipRight.innerHTML = next_goal;
     }
 }
