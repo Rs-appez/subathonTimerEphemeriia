@@ -19,7 +19,6 @@ class TimerViewSet(viewsets.ModelViewSet):
 
     seen_ids = set()
     cache_lock = threading.Lock()
-    sub_lock = threading.Lock()
 
     @action(detail=False, methods=["get"], permission_classes=[AllowAny])
     def get_timer_info(self, request, pk=None):
@@ -33,87 +32,81 @@ class TimerViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=["post"], permission_classes=[IsAuthenticated])
     def sub(self, request, pk=None):
-        with self.sub_lock: 
-            timer = Timer.objects.filter(timer_active=True).last()
+        timer = Timer.objects.filter(timer_active=True).last()
 
-            if timer is None:
-                return Response({"message": "No active timer", "status": 400})
+        if timer is None:
+            return Response({"message": "No active timer", "status": 400})
 
-            tier = request.data["tier"]
-            username = request.data["username"]
-            id = request.data["id"]
-            gifter = request.data["gifter"] if "gifter" in request.data else ""
+        tier = request.data["tier"]
+        username = request.data["username"]
+        id = request.data["id"]
+        gifter = request.data["gifter"] if "gifter" in request.data else ""
 
-            if gifter is None:
-                gifter = ""
+        if gifter is None:
+            gifter = ""
 
-            bonus_time = 0
+        bonus_time = 0
 
-            if id in self.seen_ids:
-                return Response({"message": "Already seen", "status": 400})
+        if id in self.seen_ids:
+            return Response({"message": "Already seen", "status": 400})
 
-            self.seen_ids.add(id)
+        self.seen_ids.add(id)
 
-            try:
-                tier = int(tier)
+        try:
+            tier = int(tier)
 
-                if not timer.new_sub(tier):
-                    raise Exception
+            if not timer.new_sub(tier):
+                raise Exception
 
-                if timer.multiplicator_sub_on:
-                    with self.cache_lock:
-                        last_gifters = cache.get("last_gifter", [])
+            if timer.multiplicator_sub_on:
+                with self.cache_lock:
+                    last_gifters = cache.get("last_gifter", [])
 
-                        last_gifter = [x for x in last_gifters if x[0] == gifter]
-                        last_gifter = last_gifter[0] if last_gifter else ("", 0, 0)
+                    last_gifter = [x for x in last_gifters if x[0] == gifter]
+                    last_gifter = last_gifter[0] if last_gifter else ("", 0, 0)
 
-                        if (
-                            gifter != ""
-                            and gifter == last_gifter[0]
-                            and time.time() - last_gifter[2] < 20
-                        ):
-                            update_gifter = (
-                                gifter, last_gifter[1] + 1, time.time())
+                    if (
+                        gifter != ""
+                        and gifter == last_gifter[0]
+                        and time.time() - last_gifter[2] < 20
+                    ):
+                        update_gifter = (gifter, last_gifter[1] + 1, time.time())
 
-                            # if update_gifter[1] == 5:
-                            #     bonus_time = timer.add_bonus_sub(tier, 5)
-                            #
-                            # elif update_gifter[1] == 10:
-                            #     bonus_time = timer.add_bonus_sub(tier, 15)
-                            #     update_gifter = (gifter, 0, time.time())
+                        # if update_gifter[1] == 5:
+                        #     bonus_time = timer.add_bonus_sub(tier, 5)
+                        #
+                        # elif update_gifter[1] == 10:
+                        #     bonus_time = timer.add_bonus_sub(tier, 15)
+                        #     update_gifter = (gifter, 0, time.time())
 
-                            if update_gifter[1] == 20 :
-                                bonus_time = timer.add_bonus_sub(tier, 20)
-                            # elif update_gifter[1] > 20 :
-                            #     bonus_time = timer.add_bonus_sub(tier, 1)
+                        if update_gifter[1] == 20:
+                            bonus_time = timer.add_bonus_sub(tier, 20)
+                        # elif update_gifter[1] > 20 :
+                        #     bonus_time = timer.add_bonus_sub(tier, 1)
 
+                    else:
+                        update_gifter = (gifter, 1, time.time())
 
-                        else:
-                            update_gifter = (gifter, 1, time.time())
+                    if last_gifter in last_gifters and last_gifter[0] != "":
+                        last_gifters[last_gifters.index(last_gifter)] = update_gifter
+                    else:
+                        last_gifters.append(update_gifter)
 
-                        if last_gifter in last_gifters and last_gifter[0] != "":
-                            last_gifters[last_gifters.index(
-                                last_gifter)] = update_gifter
-                        else:
-                            last_gifters.append(update_gifter)
+                    cache.set("last_gifter", last_gifters)
 
-                        cache.set("last_gifter", last_gifters)
+        except Exception as e:
+            return Response({"message": "Invalid tier", "status": 400})
 
-            except Exception as e:
-                return Response({"message": "Invalid tier", "status": 400})
+        timer.send_ticket()
 
-            write_log(f"Pre send : Sub tier {tier} received from {username} offered by {gifter}")
+        msg = f"New sub: {username} - {tier}"
 
-            timer.send_ticket()
+        if gifter != "":
+            msg += f" - offered by {gifter}"
+        write_log(msg)
 
-            msg = f"New sub: {username} - {tier}"
-
-            if gifter != "":
-                msg += f" - offered by {gifter}"
-            write_log(msg)
-
-            if bonus_time > 0:
-                write_log(f"Bonus time added for {gifter} - {bonus_time} seconds")
+        if bonus_time > 0:
+            write_log(f"Bonus time added for {gifter} - {bonus_time} seconds")
 
         return Response({"message": "Sub added", "status": 200})
 
