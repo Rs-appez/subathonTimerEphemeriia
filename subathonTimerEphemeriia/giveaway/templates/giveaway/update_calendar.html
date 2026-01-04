@@ -1,49 +1,44 @@
+{% extends 'giveaway/base_admin.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Calendar Edit</title>
-        <link rel="icon" href="{% static 'bingo/images/cacatchu.png' %}" />
-        <link rel="stylesheet"
-              type="text/css"
-              href="{% static 'giveaway/css/base_admin.css' %}" />
-        <link rel="stylesheet"
-              type="text/css"
-              href="{% static 'giveaway/css/update.css' %}" />
-        <meta charset="utf-8" />
-        <script type="module"
-                src="{% static 'giveaway/js/update_calendar.js' %}"
-                defer></script>
-    </head>
-    <body>
-        <a class="btn back-button" href="{% url 'calendar_admin' %}">Back</a>
-        <div class="btn-row">
-            <a class="btn " id="close-button">Close all</a>
-            <a class="btn " id="shuffle-button">Shuffle</a>
-        </div>
-        <div class="container">
-            <h1>{{ calendar.title }}</h1>
-            <div class="item cells-container">
-                {% for cell in sorted_cells %}
-                    <div class="cell ">
-                        <p>{{ cell.cell.number }}</p>
-                        <div class="reward {% if cell.is_opened %}opened{% else %}closed{% endif %}">
-                            {% if cell.reward %}
-                                {% if cell.reward.image %}
-                                    <img class="reward-image"
-                                         src="{{ cell.reward.image.url }}"
-                                         alt="Reward Image" />
-                                {% else %}
-                                    <p>{{ cell.reward.name }}</p>
-                                {% endif %}
+{% block title %}Calendar Edit{% endblock %}
+{% block extra_css %}
+    <link rel="stylesheet"
+          type="text/css"
+          href="{% static 'giveaway/css/update.css' %}" />
+{% endblock %}
+{% block extra_js %}
+    <script type="module"
+            src="{% static 'giveaway/js/update_calendar.js' %}"
+            defer></script>
+{% endblock %}
+{% block content %}
+    <a class="btn back-button" href="{% url 'calendar_admin' %}">Back</a>
+    <div class="btn-row">
+        <a class="btn " id="close-button">Close all</a>
+        <a class="btn " id="shuffle-button">Shuffle</a>
+    </div>
+    <div class="container">
+        <h1>{{ calendar.title }}</h1>
+        <div class="item cells-container">
+            {% for cell in sorted_cells %}
+                <div class="cell ">
+                    <p>{{ cell.cell.number }}</p>
+                    <div class="reward {% if cell.is_opened %}opened{% else %}closed{% endif %}">
+                        {% if cell.reward %}
+                            {% if cell.reward.image %}
+                                <img class="reward-image"
+                                     src="{{ cell.reward.image.url }}"
+                                     alt="Reward Image" />
                             {% else %}
-                                <p class="bold">No Reward</p>
+                                <p>{{ cell.reward.name }}</p>
                             {% endif %}
-                        </div>
+                        {% else %}
+                            <p class="bold">No Reward</p>
+                        {% endif %}
                     </div>
-                {% endfor %}
-            </div>
+                </div>
+            {% endfor %}
         </div>
-        {{ calendar.id|json_script:"calendar-id-data" }}
-    </body>
-</html>
+    </div>
+    {{ calendar.id|json_script:"calendar-id-data" }}
+{% endblock %}
