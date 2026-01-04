@@ -1,145 +1,145 @@
 body {
-    padding: 0;
-    margin: 0;
+  padding: 0;
+  margin: 0;
 }
 
 .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
 .background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -1;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .curtains {
-    z-index: 1;
+  z-index: 1;
 }
 
 .hidden {
-    display: none !important;
+  display: none !important;
 }
 
 .reward {
-    position: absolute;
-    display: flex;
+  position: absolute;
+  display: flex;
 
-    justify-content: center;
-    align-items: center;
+  justify-content: center;
+  align-items: center;
 
-    overflow: hidden;
+  overflow: hidden;
 
-    z-index: -1;
+  z-index: -1;
 }
 
 .reward img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .cacatchu {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-    position: relative;
+  position: relative;
 
-    height: min(90vh, 90vw);
-    width: min(90vh, 90vw);
+  height: min(90vh, 90vw);
+  width: min(90vh, 90vw);
 }
 
 .cacatchu_background {
-    opacity: 0.5;
-    z-index: -1;
+  opacity: 0.5;
+  z-index: -1;
 }
 
 .cacatchu_image {
-    display: flex;
-    position: absolute;
+  display: flex;
+  position: absolute;
 
-    height: 100%;
-    width: 100%;
+  height: 100%;
+  width: 100%;
 }
 
 area {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .fade-out {
-    animation: fade 1s forwards;
+  animation: fade 1s forwards;
 }
 
 .go-up {
-    animation: go-up 1.5s forwards;
+  animation: go-up 1.5s forwards;
 }
 
 .go-down {
-    animation: go-down 1.5s forwards;
+  animation: go-down 1.5s forwards;
 }
 
 .go-right {
-    animation: go-right 1.5s forwards;
+  animation: go-right 1.5s forwards;
 }
 
 .go-left {
-    animation: go-left 1.5s forwards;
+  animation: go-left 1.5s forwards;
 }
 
 @keyframes fade {
-    0% {
-        opacity: 1;
-    }
+  0% {
+    opacity: 1;
+  }
 
-    100% {
-        opacity: 0;
-    }
+  100% {
+    opacity: 0;
+  }
 }
 
 @keyframes go-up {
-    0% {
-        transform: translateY(0);
-    }
+  0% {
+    transform: translateY(0);
+  }
 
-    100% {
-        transform: translateY(-200%);
-    }
+  100% {
+    transform: translateY(-200%);
+  }
 }
 
 @keyframes go-down {
-    0% {
-        transform: translateY(0%);
-    }
+  0% {
+    transform: translateY(0%);
+  }
 
-    100% {
-        transform: translateY(200%);
-    }
+  100% {
+    transform: translateY(200%);
+  }
 }
 
 @keyframes go-right {
-    0% {
-        transform: translateX(0);
-    }
+  0% {
+    transform: translateX(0);
+  }
 
-    100% {
-        transform: translateX(200%);
-    }
+  100% {
+    transform: translateX(200%);
+  }
 }
 
 @keyframes go-left {
-    0% {
-        transform: translateX(0%);
-    }
+  0% {
+    transform: translateX(0%);
+  }
 
-    100% {
-        transform: translateX(-200%);
-    }
+  100% {
+    transform: translateX(-200%);
+  }
 }
