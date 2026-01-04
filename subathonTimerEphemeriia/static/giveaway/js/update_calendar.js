@@ -42,5 +42,9 @@ function closeAll() {
         });
 }
 
-shuffleButton.addEventListener("click", shuffle);
-closeAllButton.addEventListener("click", closeAll);
+// shuffleButton.addEventListener("click", shuffle);
+// closeAllButton.addEventListener("click", closeAll);
+
+document.body.addEventListener("htmx:configRequest", (event) => {
+    event.detail.headers["X-CSRFToken"] = getCookie("csrftoken");
+});

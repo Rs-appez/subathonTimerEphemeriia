@@ -1,0 +1,20 @@
+{% for cell in sorted_cells %}
+    <div class="cell">
+        <p>{{ cell.cell.number }}</p>
+        <div class="reward {% if cell.is_opened %}opened{% else %}closed{% endif %}">
+            {% if cell.reward %}
+                {% if cell.reward.image %}
+                    <img class="reward-image"
+                         src="{{ cell.reward.image.url }}"
+                         alt="Reward Image" />
+                {% else %}
+                    <p>{{ cell.reward.name }}</p>
+                {% endif %}
+            {% else %}
+                <p class="bold">No Reward</p>
+            {% endif %}
+        </div>
+    </div>
+{% empty %}
+    <p>No cells available.</p>
+{% endfor %}
