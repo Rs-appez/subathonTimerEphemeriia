@@ -8,7 +8,9 @@ router = DefaultRouter()
 router.register(r"calendar", views_api.CalendarViewSet, basename="calendar")
 router.register(r"reward", views_api.RewardViewSet, basename="reward")
 router.register(r"base_cell", views_api.CellViewSet, basename="base_cell")
-router.register(r"base_calendar", views_api.BaseCalendarViewSet, basename="base_calendar")
+router.register(
+    r"base_calendar", views_api.BaseCalendarViewSet, basename="base_calendar"
+)
 router.register(r"cell", views_api.CalendarCellViewSet, basename="cell")
 
 app_name = "giveaway"
@@ -18,6 +20,11 @@ urlpatterns = [
     path("", views.index, name="index"),
     path("admin/", views.admin, name="calendar_admin"),
     path("admin/<int:calendar_id>/", views.edit_calendar, name="calendar_admin_arg"),
+    path(
+        "admin/shuffle_rewards/<int:calendar_id>/",
+        views.shuffle_rewards,
+        name="shuffle_rewards",
+    ),
     path(
         "admin/<int:calendar_id>/activate/",
         views.activate_calendar,

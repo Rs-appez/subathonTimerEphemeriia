@@ -1,11 +1,10 @@
-from django.shortcuts import render, HttpResponseRedirect
-from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import permission_required, user_passes_test
-
-from .models import Calendar, BaseCalendar
-from .serializers import CalendarSerializer, BaseCalendarSerializer
-
+from django.shortcuts import HttpResponseRedirect, get_object_or_404, render
+from django.views.decorators.http import require_http_methods
 from utils.permissions import is_streamer
+
+from .models import BaseCalendar, Calendar
+from .serializers import BaseCalendarSerializer, CalendarSerializer
 
 
 @user_passes_test(is_streamer)
@@ -54,6 +53,18 @@ def edit_calendar(request, calendar_id):
         request,
         "giveaway/update_calendar.html",
         {"calendar": calendar, "sorted_cells": sorted_cells},
+    )
+
+
+@permission_required("giveaway.change_calendar")
+@require_http_methods(["POST"])
+def shuffle_rewards(request, calendar_id: int):
+    calendar = get_object_or_404(Calendar, id=calendar_id)
+    calendar.shuffle_reward()
+    return render(
+        request,
+        "giveaway/partials/cells-container.html",
+        {"sorted_cells": calendar.get_sorted_cells()},
     )
 
 
