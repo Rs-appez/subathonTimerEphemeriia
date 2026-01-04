@@ -30,8 +30,18 @@ button:hover {
   /* Darker green on hover */
 }
 
+a.btn:disabled,
+button:disabled {
+  background-color: #18143c;
+  cursor: not-allowed;
+}
+
 .back-button {
   position: fixed;
   top: 20px;
   left: 20px;
+}
+
+.loading {
+  opacity: 0.1;
 }
