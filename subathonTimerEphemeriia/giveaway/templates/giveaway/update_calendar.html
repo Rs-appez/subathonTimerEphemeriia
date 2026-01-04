@@ -14,10 +14,12 @@
 {% block content %}
     <a class="btn back-button" href="{% url 'giveaway:calendar_admin' %}">Back</a>
     <div class="btn-row">
-        <a class="btn " id="close-button">Close all</a>
         <button class="btn"
                 type="submit"
-                id="shuffle-button"
+                hx-post="{% url 'giveaway:close_all_cells' calendar.id %}"
+                hx-target="#cells-container">Close all</button>
+        <button class="btn"
+                type="submit"
                 hx-post="{% url 'giveaway:shuffle_rewards' calendar.id %}"
                 hx-target="#cells-container">Shuffle</button>
     </div>
