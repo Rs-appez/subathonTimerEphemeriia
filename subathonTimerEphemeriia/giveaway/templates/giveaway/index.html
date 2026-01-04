@@ -1,68 +1,65 @@
 {% load static %}
-<!doctype html>
+<!DOCTYPE html>
 <html>
-  <head>
-    <title>Calendar</title>
-    <link rel="icon" href="{% static 'bingo/images/cacatchu.png' %}" />
-    <meta charset="utf-8" />
-  </head>
-
-  <body>
-        <img class="background" src="{{ calendar.background }}"  alt=""/>
-        <img class="background curtains" id="curtains" src="{{ calendar.background }}"  alt=""/>
-    <div class="container hidden" id="container">
-      <div class="cacatchu " id="cacatchu">
-        <img
-          class="cacatchu_background cacatchu_image"
-          src="{% static 'giveaway/images/cacatchu.png' %}"
-          alt="cacatchu"
-        />
-        {% for cell in calendar.cells %}
-            {% if cell.reward %}
-                <div id="reward_{{ cell.id }}" class="reward {% if not cell.is_opened %} hidden {% endif %}" style="left: {{ cell.cell.reward_x }}%; top: {{ cell.cell.reward_y }}%; width: {{ cell.cell.reward_width }}%; height: {{ cell.cell.reward_height }}%;"> 
-                        {% if cell.reward.image %}
-                            <img class="reward_image" src="{{ cell.reward.image }}" alt="Reward Image" />
-                        {% else %}
-                    <p> {{ cell.reward.name }} </p>
+    <head>
+        <title>Calendar</title>
+        <link rel="icon" href="{% static 'bingo/images/cacatchu.png' %}" />
+        <link rel="stylesheet"
+              type="text/css"
+              href="{% static 'giveaway/css/index.css' %}" />
+        <meta charset="utf-8" />
+        <script type="module" src="{% static 'giveaway/js/index.js' %}" defer></script>
+    </head>
+    <body>
+        <img class="background" src="{{ calendar.background }}"  alt="" />
+        <img class="background curtains"
+             id="curtains"
+             src="{{ calendar.background }}"
+             alt="" />
+        <div class="container hidden" id="container">
+            <div class="cacatchu " id="cacatchu">
+                <img class="cacatchu_background cacatchu_image"
+                     src="{% static 'giveaway/images/cacatchu.png' %}"
+                     alt="cacatchu" />
+                {% for cell in calendar.cells %}
+                    {% if cell.reward %}
+                        <div id="reward_{{ cell.id }}"
+                             class="reward {% if not cell.is_opened %}hidden{% endif %}"
+                             style="left: {{ cell.cell.reward_x }}%;
+                                    top: {{ cell.cell.reward_y }}%;
+                                    width: {{ cell.cell.reward_width }}%;
+                                    height: {{ cell.cell.reward_height }}%">
+                            {% if cell.reward.image %}
+                                <img class="reward_image" src="{{ cell.reward.image }}" alt="Reward Image" />
+                            {% else %}
+                                <p>{{ cell.reward.name }}</p>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                    {% if not cell.is_opened %}
+                        <img class="cacatchu_image"
+                             id="cell_{{ cell.id }}"
+                             src="{{ cell.cell.image_url }}"
+                             alt="cell" />
+                    {% endif %}
+                {% endfor %}
+                <img class="cacatchu_image mask"
+                     src="{{ calendar.base_calendar.mask_url }}"
+                     alt=""
+                     usemap="#cacatchu-map" />
+                <map name="cacatchu-map">
+                    {% for cell in calendar.cells %}
+                        {% if not cell.is_opened %}
+                            <area id="cell_{{ cell.id }}_area"
+                                  shape="poly"
+                                  coords="0, 0"
+                                  alt="Clickable Area"
+                                  nohref="nohref" />
                         {% endif %}
-                </div>
-            {% endif %}
-            {% if not cell.is_opened %}
-            <img
-              class="cacatchu_image"
-              id="cell_{{ cell.id }}"
-              src="{{ cell.cell.image_url }}"
-              alt="cell"
-            />
-            {% endif %}
-
-        {% endfor %}
-        <img class="cacatchu_image mask" src="{{ calendar.base_calendar.mask_url }}" alt="" usemap="#cacatchu-map" />
-        <map name="cacatchu-map">
-        {% for cell in calendar.cells %}
-        {% if not cell.is_opened %}
-          <area
-            id="cell_{{ cell.id }}_area"
-            shape="poly"
-            coords="0, 0"
-            alt="Clickable Area"
-            nohref="nohref"
-          />
-        {% endif %}
-        {% endfor %}
-        </map>
-      </div>
-</div>
-  </body>
+                    {% endfor %}
+                </map>
+            </div>
+        </div>
+        {{ calendar.cells|json_script:"calendar-cells-data" }}
+    </body>
 </html>
-<link
-  rel="stylesheet"
-  type="text/css"
-  href="{% static 'giveaway/css/index.css' %}"
-/>
-
-{{ calendar.cells|json_script:"calendar-cells-data" }}
-<script
-  type="module"
-  src="{% static 'giveaway/js/index.js' %}"
-></script>
