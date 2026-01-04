@@ -16,10 +16,12 @@
     <div class="btn-row">
         <button class="btn"
                 type="submit"
+                id="close-all-button"
                 hx-post="{% url 'giveaway:close_all_cells' calendar.id %}"
                 hx-target="#cells-container">Close all</button>
         <button class="btn"
                 type="submit"
+                id="shuffle-button"
                 hx-post="{% url 'giveaway:shuffle_rewards' calendar.id %}"
                 hx-target="#cells-container">Shuffle</button>
     </div>
