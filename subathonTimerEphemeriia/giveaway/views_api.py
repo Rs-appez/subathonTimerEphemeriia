@@ -40,9 +40,7 @@ class CalendarViewSet(viewsets.ModelViewSet):
         if not baseCalendar:
             return Response({"status": "BaseCalendar not found"}, status=404)
 
-        calendar = Calendar.objects.create(
-            title=title,  base_calendar=baseCalendar
-        )
+        calendar = Calendar.objects.create(title=title, base_calendar=baseCalendar)
         calendar.generate_cells()
 
         serializer = CalendarSerializer(calendar)
@@ -56,7 +54,6 @@ class CalendarViewSet(viewsets.ModelViewSet):
         return Response(
             {
                 "status": "rewards shuffled",
-                "calendar": CalendarSerializer(calendar).data,
             }
         )
 
