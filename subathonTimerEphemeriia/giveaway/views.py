@@ -1,6 +1,5 @@
 from django.contrib.auth.decorators import permission_required, user_passes_test
 from django.shortcuts import HttpResponseRedirect, get_object_or_404, render
-from django.views.decorators.http import require_http_methods
 from utils.permissions import is_streamer
 
 from .models import BaseCalendar, Calendar
@@ -53,18 +52,6 @@ def edit_calendar(request, calendar_id):
         request,
         "giveaway/update_calendar.html",
         {"calendar": calendar, "sorted_cells": sorted_cells},
-    )
-
-
-@permission_required("giveaway.change_calendar")
-@require_http_methods(["POST"])
-def shuffle_rewards(request, calendar_id: int):
-    calendar = get_object_or_404(Calendar, id=calendar_id)
-    calendar.shuffle_reward()
-    return render(
-        request,
-        "giveaway/partials/cells-container.html",
-        {"sorted_cells": calendar.get_sorted_cells()},
     )
 
 
