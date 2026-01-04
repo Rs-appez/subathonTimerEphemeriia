@@ -7,8 +7,8 @@
 {% endblock %}
 {% block content %}
     <div class="btn-group">
-        <a href="{% url 'create_calendar' %}" class="btn">Create Calendar</a>
-        <a href="{% url 'create_reward' %}" class="btn">Create Reward</a>
+        <a href="{% url 'giveaway:create_calendar' %}" class="btn">Create Calendar</a>
+        <a href="{% url 'giveaway:create_reward' %}" class="btn">Create Reward</a>
     </div>
     <h1>Active Calendar</h1>
     <div class="active-calendar">
@@ -28,28 +28,28 @@
             <p class="bold">Delete</p>
         </div>
         {% for calendar in calendars %}
-            <a href="{% url 'calendar_admin_arg' calendar.id %}"
+            <a href="{% url 'giveaway:calendar_admin_arg' calendar.id %}"
                class="div-clickable">
                 <div class="item {% if forloop.counter|divisibleby:2 %}alternate{% endif %}">
                     <p class="bold">{{ calendar.title }}</p>
                     <p>{{ calendar.base_calendar.size }}</p>
                     <button type="button">Edit</button>
                     {% if calendar.is_active %}
-                        <form action="{% url 'deactivate_calendar' calendar.id %}"
+                        <form action="{% url 'giveaway:deactivate_calendar' calendar.id %}"
                               method="post"
                               style="display:inline">
                             {% csrf_token %}
                             <button type="submit">Deactivate</button>
                         </form>
                     {% else %}
-                        <form action="{% url 'activate_calendar' calendar.id %}"
+                        <form action="{% url 'giveaway:activate_calendar' calendar.id %}"
                               method="post"
                               style="display:inline">
                             {% csrf_token %}
                             <button type="submit">Activate</button>
                         </form>
                     {% endif %}
-                    <form action="{% url 'delete_calendar' calendar.id %}"
+                    <form action="{% url 'giveaway:delete_calendar' calendar.id %}"
                           method="post"
                           style="display:inline">
                         {% csrf_token %}
