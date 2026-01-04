@@ -11,6 +11,8 @@ router.register(r"base_cell", views_api.CellViewSet, basename="base_cell")
 router.register(r"base_calendar", views_api.BaseCalendarViewSet, basename="base_calendar")
 router.register(r"cell", views_api.CalendarCellViewSet, basename="cell")
 
+app_name = "giveaway"
+
 urlpatterns = [
     path("api/", include(router.urls)),
     path("", views.index, name="index"),
