@@ -1,7 +1,7 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
-from . import views, views_api
+from . import views, views_api, views_partial
 
 router = DefaultRouter()
 
@@ -22,8 +22,13 @@ urlpatterns = [
     path("admin/<int:calendar_id>/", views.edit_calendar, name="calendar_admin_arg"),
     path(
         "admin/shuffle_rewards/<int:calendar_id>/",
-        views.shuffle_rewards,
+        views_partial.shuffle_rewards,
         name="shuffle_rewards",
+    ),
+    path(
+        "admin/close_all_cells/<int:calendar_id>/",
+        views_partial.close_all_cells,
+        name="close_all_cells",
     ),
     path(
         "admin/<int:calendar_id>/activate/",
