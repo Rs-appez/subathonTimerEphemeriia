@@ -1,16 +1,15 @@
+{% extends 'giveaway/base_admin.html' %}
 {% load static %}
-<!doctype html>
-<html>
-
-<head>
-    <title>Create Calendar</title>
-    <link rel="icon" href="{% static 'bingo/images/cacatchu.png' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'giveaway/css/base_admin.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'giveaway/css/create.css' %}" />
-    <meta charset="utf-8" />
-</head>
-
-<body>
+{% block title %}Create Reward{% endblock %}
+{% block extra_css %}
+    <link rel="stylesheet"
+          type="text/css"
+          href="{% static 'giveaway/css/create.css' %}" />
+{% endblock %}
+{% block extra_js %}
+    <script type="module" src="{% static 'giveaway/js/create_reward.js' %}" defer></script>
+{% endblock %}
+{% block content %}
     <a class="btn back-button" href="{% url 'calendar_admin' %}">Back</a>
     <div class="container">
         <h1>Create Reward</h1>
@@ -25,7 +24,5 @@
             </div>
             <button id="create-reward" class="button">Create Reward</button>
         </div>
-</body>
-
-</html>
-<script type="module" src="{% static 'giveaway/js/create_reward.js' %}"></script>
+    </div>
+{% endblock %}
