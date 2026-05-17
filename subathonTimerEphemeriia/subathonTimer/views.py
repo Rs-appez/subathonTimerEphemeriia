@@ -132,7 +132,7 @@ def linked_goals(request):
     if timer is None:
         return render(request, "subathonTimer/linkedGoals.html", {"goals": []})
 
-    goals = timer.get_tip_goal()
+    goals = timer.get_tip_goal(both=True)
     goals_data = TipGoalSerializer(goals, many=True).data
 
     slice_goals = timer.timer_nb_tips
