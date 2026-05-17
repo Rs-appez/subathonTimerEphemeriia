@@ -12,8 +12,7 @@ const slice_goals_data =
 let goals = JSON.parse(goals_data);
 console.log("goals : ", goals);
 let nextGoalAmount = 0;
-// let current_amount = parseFloat(current_amount_data);
-let current_amount = 8.2;
+let current_amount = parseFloat(current_amount_data);
 let slice_goals = JSON.parse(slice_goals_data);
 console.log("current_amount : ", current_amount);
 
