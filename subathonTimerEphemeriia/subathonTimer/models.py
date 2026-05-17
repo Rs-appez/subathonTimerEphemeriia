@@ -104,6 +104,8 @@ class Timer(models.Model):
     timer_total_follows = models.IntegerField(default=0)
     timer_total_bits = models.IntegerField(default=0)
 
+    timer_total_both = models.FloatField(default=0)
+
     # Timer add time
     timer_add_time_sub_t1 = models.IntegerField(default=0)
     timer_add_time_sub_t2 = models.IntegerField(default=0)
@@ -271,14 +273,17 @@ class Timer(models.Model):
                 self.timer_end = F("timer_end") + timezone.timedelta(
                     seconds=self.timer_add_time_sub_t1
                 )
+                self.timer_total_both = F("timer_total_both") + 5
             case 2:
                 self.timer_end = F("timer_end") + timezone.timedelta(
                     seconds=self.timer_add_time_sub_t2
                 )
+                self.timer_total_both = F("timer_total_both") + 8
             case 3:
                 self.timer_end = F("timer_end") + timezone.timedelta(
                     seconds=self.timer_add_time_sub_t3
                 )
+                self.timer_total_both = F("timer_total_both") + 20
             case _:
                 return False
         self.save(update_fields=["timer_total_subscriptions", "timer_end"])
@@ -298,6 +303,7 @@ class Timer(models.Model):
 
     def new_donation(self, donation: float):
         self.timer_total_donations = F("timer_total_donations") + donation
+        self.timer_total_both = F("timer_total_both") + donation
 
         self.timer_end = F("timer_end") + timezone.timedelta(
             seconds=self.timer_add_time_donation * donation
