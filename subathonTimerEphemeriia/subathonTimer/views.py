@@ -6,7 +6,11 @@ from .utils import get_logs, get_donators, get_gifters
 from utils.permissions import is_streamer
 
 from .models import Timer, CarouselAnnouncement
-from .serializers import CarouselAnnouncementSerializer
+from .serializers import (
+    CarouselAnnouncementSerializer,
+    TimerSerializer,
+    TipGoalSerializer,
+)
 from .views_api import TimerViewSet
 
 
@@ -122,6 +126,29 @@ def subannivesary_summary(request):
     )
 
 
+@user_passes_test(is_streamer)
+def linked_goals(request):
+    timer = Timer.objects.last()
+    if timer is None:
+        return render(request, "subathonTimer/linkedGoals.html", {"goals": []})
+
+    goals = timer.get_tip_goal()
+    goals_data = TipGoalSerializer(goals, many=True).data
+
+    slice_goals = timer.timer_nb_tips
+    current_amount = timer.timer_total_both
+
+    return render(
+        request,
+        "subathonTimer/linkedGoals.html",
+        {
+            "goals": goals_data,
+            "slice_goals": slice_goals,
+            "current_amount": current_amount,
+        },
+    )
+
+
 @permission_required("subathonTimer.view_timer")
 def add_time_success(request):
     timer = Timer.objects.last()
@@ -224,8 +251,7 @@ def tip_progress(request):
     return render(
         request,
         "subathonTimer/tipProgress.html",
-        {"total_tips": timer.timer_total_donations,
-            "last_goal": last_goal.goal_amount},
+        {"total_tips": timer.timer_total_donations, "last_goal": last_goal.goal_amount},
     )
 
 
@@ -255,8 +281,7 @@ def global_timer(request):
 def carousel_announcement(request):
     timer = Timer.objects.last()
     announcements = CarouselAnnouncement.objects.filter(timer=timer).all()
-    announcements_json = CarouselAnnouncementSerializer(
-        announcements, many=True).data
+    announcements_json = CarouselAnnouncementSerializer(announcements, many=True).data
     switch_time = timer.nb_seconds_announcement
 
     return render(

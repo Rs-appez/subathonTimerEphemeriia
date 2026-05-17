@@ -13,6 +13,7 @@ from .views import (
     list_participants,
     subannivesary_summary,
     carousel_announcement,
+    linked_goals,
 )
 from .views_api import TimerViewSet
 from .views_sse import sse_updates_stream, sse_start_event_stream
@@ -42,6 +43,7 @@ urlpatterns = [
     path("sub_progress", sub_progress, name="sub_progress"),
     path("pause_timer", pause_timer, name="pause_timer"),
     path("global_timer", global_timer, name="global_timer"),
+    path("linked_goals/", linked_goals, name="linked_goals"),
     path("list_participants/", list_participants, name="list_participants"),
     path(
         "subanniversary_summary/", subannivesary_summary, name="subanniversary_summary"
