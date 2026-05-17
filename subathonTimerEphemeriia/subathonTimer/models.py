@@ -296,7 +296,9 @@ class Timer(models.Model):
                 self.timer_total_both = F("timer_total_both") + 20
             case _:
                 return False
-        self.save(update_fields=["timer_total_subscriptions", "timer_end"])
+        self.save(
+            update_fields=["timer_total_subscriptions", "timer_end", "timer_total_both"]
+        )
         self.refresh_from_db()
 
         return True
@@ -319,7 +321,9 @@ class Timer(models.Model):
             seconds=self.timer_add_time_donation * donation
         )
 
-        self.save(update_fields=["timer_total_donations", "timer_end"])
+        self.save(
+            update_fields=["timer_total_donations", "timer_end", "timer_total_both"]
+        )
         self.refresh_from_db()
 
     def add_time(self, time: float):
@@ -368,6 +372,7 @@ class Timer(models.Model):
                 "time_end": time,
                 "total_tips": self.timer_total_donations,
                 "total_subscriptions": self.timer_total_subscriptions,
+                "total_both": self.timer_total_both,
                 "timer_paused": self.timer_paused,
                 "paused_time": paused_time,
             }
