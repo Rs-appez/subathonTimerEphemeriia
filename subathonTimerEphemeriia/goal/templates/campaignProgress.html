@@ -141,7 +141,8 @@
                     {% endfor %}
                 </div>
             </div>
-        </body>
-    </html>
-    {{ campaign|json_script:"campaign-data" }}
-    <script src="{% static 'goal/js/campaignProgress.js' %}" type="module"></script>
+        </div>
+    </body>
+</html>
+{{ campaign|json_script:"campaign-data" }}
+<script src="{% static 'goal/js/campaignProgress.js' %}" type="module"></script>
