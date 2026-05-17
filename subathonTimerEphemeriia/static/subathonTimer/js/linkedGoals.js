@@ -120,3 +120,11 @@ function addValidateIndicator(goalDiv) {
 }
 
 init();
+
+const evtSource = new EventSource("/timer/events/");
+evtSource.onmessage = function (event) {
+  const data_ws = JSON.parse(event.data);
+  current_amount = data_ws.total_both;
+
+  updateGoalProgress();
+};
