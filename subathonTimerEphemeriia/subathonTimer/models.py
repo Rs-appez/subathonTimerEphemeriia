@@ -225,9 +225,10 @@ class Timer(models.Model):
         self.multiplicator_tip_on = active
         self.save()
 
-    def get_tip_goal(self):
+    def get_tip_goal(self, both=False):
         if self.timer_nb_tips <= 0:
             return []
+        threshold = self.timer_total_both if both else self.timer_total_donations
         tip_goals = list(
             TipGoal.objects.filter(timer=self).all().order_by("goal_amount")
         )
@@ -238,11 +239,11 @@ class Timer(models.Model):
         ]
         goals = []
         for i, goal in enumerate(grouped_goals):
-            if goal[-1].goal_amount > self.timer_total_donations:
+            if goal[-1].goal_amount > threshold:
                 goals = tip_goals[i * self.timer_nb_tips :]
                 break
         for goal in goals:
-            if goal.goal_amount <= self.timer_total_donations:
+            if goal.goal_amount <= threshold:
                 goal.validated = True
             else:
                 break
