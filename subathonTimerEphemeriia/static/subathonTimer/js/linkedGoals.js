@@ -22,7 +22,12 @@ function init() {
 }
 
 function addGoalMarkers() {
-  for (let i = 0; i < slice_goals; i++) {
+  let progressWrapperContainer = document.getElementById("progress-wrapper");
+  progressWrapperContainer.style.setProperty(
+    "width",
+    13.9 * slice_goals * goals.length + "px",
+  );
+  for (let i = 0; i < goals.length; i++) {
     let goal = goals[i];
 
     let goalContainer = document.createElement("div");
@@ -46,7 +51,8 @@ function addGoalMarkers() {
 function updateGoalProgress() {
   let previousGoal = 0;
   let lockGoal = false;
-  for (let i = 0; i < slice_goals; i++) {
+  let activeIndex = 0;
+  for (let i = 0; i < goals.length; i++) {
     let goal = goals[i];
     let goalDiv = document.getElementById("goal-progress-" + goal.id);
     let progress = Math.min(
@@ -67,6 +73,8 @@ function updateGoalProgress() {
     }
     if (current_amount < goal.goal_amount && !lockGoal) {
       lockGoal = true;
+
+      activeIndex = Math.floor(i / slice_goals) * slice_goals;
       changeNextGoalAmount(goal.goal_amount);
       setNextGoalTitle(goal.goal_name);
     }
@@ -75,6 +83,8 @@ function updateGoalProgress() {
       setNextGoalTitle("Fini !");
     }
   }
+
+  slideToGoal(activeIndex);
 }
 
 function changeNextGoalAmount(goal) {
@@ -117,6 +127,13 @@ function addValidateIndicator(goalDiv) {
   pTag.className = "goal-indicator";
   indicatorDiv.appendChild(pTag);
   goalDiv.insertAdjacentElement("afterend", indicatorDiv);
+}
+
+function slideToGoal(index) {
+  const goalWidth = 13.9 * slice_goals;
+  const offset = index * goalWidth;
+  const wrapper = document.getElementById("progress-wrapper");
+  wrapper.style.transform = `translateX(-${offset}px)`;
 }
 
 init();
