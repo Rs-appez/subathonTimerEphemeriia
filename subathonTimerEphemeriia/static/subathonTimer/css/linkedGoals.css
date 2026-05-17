@@ -1,0 +1,209 @@
+@font-face {
+  font-family: "Sauce Barbe";
+  src: url("/static/general/fonts/Sauce_Barbe.otf") format("truetype");
+}
+@font-face {
+  font-family: "LifeCraft";
+  src: url("/static/general/fonts/LifeCraft_Font.ttf") format("truetype");
+}
+:root {
+  --gift-color-1: #570244;
+  --gift-color-2: #61013a;
+
+  --calendar-color-1: #d5b9c4;
+  --calendar-color-2: #f0e1e6;
+  --calendar-color-3: #2e0025;
+
+  /* --gift-validate-color-1: #6f0145; */
+  /* --gift-validate-color-2: #7d0150; */
+
+  /* --gift-validate-color-1: #dd0f8e; */
+  /* --gift-validate-color-1: #dd0f8e; */
+  --gift-validate-color-1: #f0e1e6;
+  --gift-validate-color-2: #d5b9c4;
+  /* #db1e92 */
+  font-family: "LifeCraft";
+}
+
+.number {
+  font-family: "Century";
+  color: white;
+  font-size: 20px;
+  letter-spacing: 1.5px;
+  text-shadow: 3px 3px 5px #000000;
+}
+
+.progress-wrapper {
+  position: relative;
+  width: 40%;
+  margin-bottom: 5px; /* Space between numbers and progress bar */
+}
+
+.progress-wrapper p {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: 0;
+  color: white;
+  font-weight: bold;
+}
+
+.progress-left {
+  left: 10px;
+}
+
+.progress-right {
+  right: 10px;
+}
+
+.progress-wrapper progress {
+  width: 100%;
+  height: 30px;
+  background-color: #d5b9c4;
+  border-radius: 20px;
+  -webkit-appearance: none;
+  appearance: none;
+  transition: width 0.5s ease-in-out; /* Add this line for transition */
+  overflow: hidden; /* Ensure inner elements are clipped to the rounded corners */
+}
+
+progress::-webkit-progress-bar {
+  background-color: #d5b9c4; /* Background color */
+  border-radius: 20px; /* Rounded corners */
+}
+
+progress::-webkit-progress-value {
+  background: linear-gradient(to right, #2e0025, #570031); /* Gradient color */
+  border-radius: 20px; /* Rounded corners */
+  transition: width 0.5s ease-in-out; /* Add this line for transition */
+}
+
+progress::-moz-progress-bar {
+  background: linear-gradient(to right, #2e0025, #570031); /* Gradient color */
+  border-radius: 20px; /* Rounded corners */
+  transition: width 0.5s ease-in-out; /* Add this line for transition */
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  color: white;
+  text-shadow: 2px 2px 4px #000000;
+}
+
+.background-overlay {
+  width: 500px;
+  height: 95px;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: -1;
+  border-radius: 15px;
+  padding: 0px 10px;
+}
+
+.goal-info {
+  font-size: 20px;
+  display: flex;
+}
+
+.goal-info > p {
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+
+.next-text {
+  margin-right: 5px;
+}
+.progress-wrapper {
+  display: flex;
+  width: 50%;
+}
+
+/* .end { */
+/*   flex: 1; */
+/* } */
+
+.goal-progress {
+  display: flex;
+  width: 100%;
+}
+
+.goal-marker {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  flex-shrink: 0;
+  flex-grow: 0;
+  top: 20px;
+  width: 30px;
+  height: 30px;
+  transform: rotate(45deg);
+  border-radius: 3px;
+  /* background: linear-gradient(135deg, #750046 0%, #97005a 100%); */
+  background: linear-gradient(135deg, #d5b9c4 0%, #f0e1e6 100%);
+  opacity: 60%;
+  transition: opacity 1s ease-in-out;
+}
+
+.validate-marker {
+  background: linear-gradient(45deg, #570031, #2e0025);
+  opacity: 100%;
+}
+
+.goal-icon {
+  position: absolute;
+  width: 80%;
+  height: 80%;
+  transform: rotate(-45deg);
+  opacity: 100%;
+  transition: 1s ease-in-out;
+}
+
+.goal-container {
+  position: relative;
+}
+
+.vanishing {
+  width: 1000px !important;
+  height: 1000px !important;
+  opacity: 0 !important;
+}
+
+.goal-indicator {
+  position: initial !important;
+  transform: none !important;
+  font-size: 12px;
+  text-shadow: 1px 1px 2px #000000;
+}
+
+.indicator-container {
+  position: absolute;
+  top: 33px;
+  left: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 15px;
+}
+.progress-container {
+  width: 1000px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 10px;
+  background-color: #d5b9c4;
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(to right, #2e0025, #570031);
+  border-radius: 20px;
+  width: 0;
+  transition: width 0.5s ease-in-out;
+  transition-delay: 0s;
+}
