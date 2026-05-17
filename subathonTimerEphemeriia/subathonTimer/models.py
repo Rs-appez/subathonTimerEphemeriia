@@ -107,11 +107,21 @@ class Timer(models.Model):
     timer_total_both = models.FloatField(default=0)
 
     # Timer add time
-    timer_add_time_sub_t1 = models.IntegerField(default=0)
-    timer_add_time_sub_t2 = models.IntegerField(default=0)
-    timer_add_time_sub_t3 = models.IntegerField(default=0)
-    timer_add_time_bits = models.FloatField(default=0)
-    timer_add_time_donation = models.FloatField(default=0)
+    timer_add_time_sub_t1 = models.IntegerField(
+        default=0, help_text="Time in seconds added for a tier 1 subscription"
+    )
+    timer_add_time_sub_t2 = models.IntegerField(
+        default=0, help_text="Time in seconds added for a tier 2 subscription"
+    )
+    timer_add_time_sub_t3 = models.IntegerField(
+        default=0, help_text="Time in seconds added for a tier 3 subscription"
+    )
+    timer_add_time_bits = models.FloatField(
+        default=0, help_text="Time in seconds added for each bit"
+    )
+    timer_add_time_donation = models.FloatField(
+        default=0, help_text="Time in seconds added for each currency unit donated"
+    )
 
     # Timer messages
     timer_message = models.CharField(
