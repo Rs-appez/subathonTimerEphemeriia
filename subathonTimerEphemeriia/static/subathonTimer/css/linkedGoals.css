@@ -85,6 +85,7 @@ progress::-moz-progress-bar {
   display: flex;
   align-items: center;
   color: white;
+  margin-bottom: 5px;
 }
 
 .header-image {
@@ -95,7 +96,7 @@ progress::-moz-progress-bar {
 
 .background-overlay {
   width: 500px;
-  height: 95px;
+  height: 100px;
   z-index: -1;
   border-radius: 15px;
   padding: 0px 10px;
@@ -135,7 +136,7 @@ progress::-moz-progress-bar {
   position: relative;
   flex-shrink: 0;
   flex-grow: 0;
-  top: 20px;
+  top: 12px;
   width: 30px;
   height: 30px;
   transform: rotate(45deg);
