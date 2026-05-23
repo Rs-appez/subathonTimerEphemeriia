@@ -86,11 +86,11 @@ function updateGoalProgress() {
 
       activeIndex = Math.floor(i / slice_goals) * slice_goals;
       changeNextGoalAmount(goal.goal_amount);
-      setNextGoalTitle(goal.goal_name);
+      setNextGoalDisplay(goal.goal_name, goal.goal_amount);
     }
     if (current_amount >= goals[goals.length - 1].goal_amount) {
       changeNextGoalAmount(goals[goals.length - 1].goal_amount);
-      setNextGoalTitle("Fini !");
+      setNextGoalDisplay("Fini !", goals[goals.length - 1].goal_amount);
     }
   }
 
@@ -100,10 +100,14 @@ function updateGoalProgress() {
 function changeNextGoalAmount(goal) {
   nextGoalAmount = goal;
 }
-function setNextGoalTitle(title) {
+function setNextGoalDisplay(title, amount) {
   let nextGoalText = document.getElementById("next-goal");
+  let nextGoalAmountText = document.getElementById("goal-amount");
   if (nextGoalText) {
     nextGoalText.textContent = title;
+  }
+  if (nextGoalAmountText) {
+    nextGoalAmountText.textContent = amount / 5;
   }
 }
 
