@@ -1,0 +1,186 @@
+[
+  {
+    "model": "subathonTimer.tipgoal",
+    "fields": {
+      "timer": 5,
+      "goal_name": "LA CAMERA S'ALLUME",
+      "goal_amount": 5.0
+    }
+  },
+  {
+    "model": "subathonTimer.tipgoal",
+    "fields": {
+      "timer": 5,
+      "goal_name": "NE S'EXCUSE PLUS",
+      "goal_amount": 25.0
+    }
+  },
+  {
+    "model": "subathonTimer.tipgoal",
+    "fields": {
+      "timer": 5,
+      "goal_name": "S'EXCUSE ANOUVEAU",
+      "goal_amount": 50.0
+    }
+  },
+  {
+    "model": "subathonTimer.tipgoal",
+    "fields": {
+      "timer": 5,
+      "goal_name": "ARAM LE SOIR !",
+      "goal_amount": 250.0
+    }
+  },
+  {
+    "model": "subathonTimer.tipgoal",
+    "fields": {
+      "timer": 5,
+      "goal_name": "EPISODES DES K-SOS",
+      "goal_amount": 500.0
+    }
+  },
+  {
+    "model": "subathonTimer.tipgoal",
+    "fields": {
+      "timer": 5,
+      "goal_name": "VOTRE PLAYLIST MUSIC",
+      "goal_amount": 755.0
+    }
+  },
+  {
+    "model": "subathonTimer.tipgoal",
+    "fields": {
+      "timer": 5,
+      "goal_name": "AVENTURE THE FOREST",
+      "goal_amount": 1000.0
+    }
+  },
+  {
+    "model": "subathonTimer.tipgoal",
+    "fields": {
+      "timer": 5,
+      "goal_name": "DUAL STREAM WE'RE HERE",
+      "goal_amount": 1255.0
+    }
+  },
+  {
+    "model": "subathonTimer.tipgoal",
+    "fields": {
+      "timer": 5,
+      "goal_name": "VILLAGE MINECRAFT",
+      "goal_amount": 1750.0
+    }
+  },
+  {
+    "model": "subathonTimer.tipgoal",
+    "fields": {
+      "timer": 5,
+      "goal_name": "GIVEAWAY (LOL x3)",
+      "goal_amount": 1500.0
+    }
+  },
+  {
+    "model": "subathonTimer.tipgoal",
+    "fields": {
+      "timer": 5,
+      "goal_name": "BALADE IRL",
+      "goal_amount": 2250.0
+    }
+  },
+  {
+    "model": "subathonTimer.tipgoal",
+    "fields": {
+      "timer": 5,
+      "goal_name": "+10 HEURES",
+      "goal_amount": 2000.0
+    }
+  },
+  {
+    "model": "subathonTimer.tipgoal",
+    "fields": {
+      "timer": 5,
+      "goal_name": "LES FILLES À LA CUISINE",
+      "goal_amount": 2750.0
+    }
+  },
+  {
+    "model": "subathonTimer.tipgoal",
+    "fields": {
+      "timer": 5,
+      "goal_name": "TEST ELDEN RING",
+      "goal_amount": 3330.0
+    }
+  },
+  {
+    "model": "subathonTimer.tipgoal",
+    "fields": {
+      "timer": 5,
+      "goal_name": "DISPLAY POKEMON (Kyky)",
+      "goal_amount": 3000.0
+    }
+  },
+  {
+    "model": "subathonTimer.tipgoal",
+    "fields": {
+      "timer": 5,
+      "goal_name": "DIABLO 4 LOH",
+      "goal_amount": 3500.0
+    }
+  },
+  {
+    "model": "subathonTimer.tipgoal",
+    "fields": {
+      "timer": 5,
+      "goal_name": "LIVE DOUBLAGE DE VOIX",
+      "goal_amount": 3750.0
+    }
+  },
+  {
+    "model": "subathonTimer.tipgoal",
+    "fields": {
+      "timer": 5,
+      "goal_name": "OCRE SUR L'ENI",
+      "goal_amount": 4000.0
+    }
+  },
+  {
+    "model": "subathonTimer.tipgoal",
+    "fields": {
+      "timer": 5,
+      "goal_name": "BALADE IRL",
+      "goal_amount": 4250.0
+    }
+  },
+  {
+    "model": "subathonTimer.tipgoal",
+    "fields": {
+      "timer": 5,
+      "goal_name": "HOT ONES + FAQ",
+      "goal_amount": 4500.0
+    }
+  },
+  {
+    "model": "subathonTimer.tipgoal",
+    "fields": {
+      "timer": 5,
+      "goal_name": "8 JEUX* = GOLD MINIMUM",
+      "goal_amount": 5500.0
+    }
+  },
+  {
+    "model": "subathonTimer.tipgoal",
+    "fields": {
+      "timer": 5,
+      "goal_name": "VLOG DISNEY !",
+      "goal_amount": 6000.0
+    }
+  },
+  {
+    "model": "subathonTimer.tipgoal",
+    "fields": {
+      "timer": 5,
+      "goal_name": "REMISE EN FORME",
+      "goal_amount": 6500.0
+    }
+  }
+]
