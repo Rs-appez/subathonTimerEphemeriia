@@ -50,7 +50,7 @@ function addGoalMarkers() {
 
     let goalIcon = document.createElement("div");
     goalIcon.className = "goal-icon";
-    goalIcon.innerHTML = starSVG;
+    asignGoodSVG(goalIcon, goal, false);
     goalDiv.appendChild(goalIcon);
 
     let linkedBar = document.getElementById("goal-progress-" + goal.id);
@@ -100,6 +100,30 @@ function updateGoalProgress() {
 function changeNextGoalAmount(goal) {
   nextGoalAmount = goal;
 }
+
+function asignGoodSVG(goalIcon, goal, validated) {
+  if (goalIcon) {
+    if (goal.goal_type === "GIVEAWAY") {
+      if (validated) {
+        goalIcon.innerHTML = giftValidateSVG;
+      } else {
+        goalIcon.innerHTML = giftSVG;
+      }
+    } else if (goal.goal_type === "GAMING") {
+      if (validated) {
+        goalIcon.innerHTML = manetteValidateSVG;
+      } else {
+        goalIcon.innerHTML = manetteSVG;
+      }
+    } else {
+      if (validated) {
+        goalIcon.innerHTML = starValidateSVG;
+      } else {
+        goalIcon.innerHTML = starSVG;
+      }
+    }
+  }
+}
 function setNextGoalDisplay(title, amount) {
   let nextGoalText = document.getElementById("next-goal");
   let nextGoalAmountText = document.getElementById("goal-amount");
@@ -128,7 +152,11 @@ function addValidateIndicator(goalDiv) {
   if (oldIcon) {
     oldIcon.classList.add("vanishing");
   }
-  goalIcon.innerHTML = starValidateSVG;
+  asignGoodSVG(
+    goalIcon,
+    goals.find((g) => g.id == goalDiv.getAttribute("data-goal-id")),
+    true,
+  );
 
   goalDiv.insertAdjacentElement("afterbegin", goalIcon);
 
