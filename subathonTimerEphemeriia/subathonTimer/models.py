@@ -10,6 +10,12 @@ from .celery_task import send_update, send_start_event
 from .utils import write_log
 
 
+class GoalType(models.TextChoices):
+    GIVEAWAY = "GIVEAWAY"
+    GAMING = "GAMING"
+    MISC = "MISC"
+
+
 class BonusType(models.TextChoices):
     SUB = "SUB"
     FOLLOW = "FOLLOW"
@@ -28,6 +34,9 @@ class TipGoal(models.Model):
     timer = models.ForeignKey("Timer", on_delete=models.CASCADE)
     goal_name = models.CharField(max_length=100)
     goal_amount = models.FloatField()
+    goal_type = models.CharField(
+        choices=GoalType.choices, max_length=10, default=GoalType.MISC
+    )
     # goal_image = models.ImageField(
     #     storage=GoalStorage(),
     # )
