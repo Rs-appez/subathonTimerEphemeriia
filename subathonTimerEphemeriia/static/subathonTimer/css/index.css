@@ -17,8 +17,14 @@
   src: url("/static/general/fonts/Kinder Cold.otf") format("opentype");
 }
 
+@font-face {
+  font-family: "Alberto";
+  src: url("/static/general/fonts/Alberto_Stencil.ttf") format("truetype");
+}
+
 .container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 1000px;
@@ -26,7 +32,8 @@
 
 .time-container {
   display: flex;
-  justify-content: left;
+  /* justify-content: left; */
+  justify-content: center;
   width: 100%;
 }
 
@@ -35,10 +42,11 @@
   justify-content: center;
   align-items: center;
   width: 100%;
+  margin-bottom: -80px;
 }
 
 .title {
-  font-family: "Kinder";
+  font-family: "Alberto";
   color: white;
   font-size: 50px;
   text-shadow: 3px 3px 5px #000000;
