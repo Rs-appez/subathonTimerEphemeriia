@@ -268,6 +268,18 @@ def sub_progress(request):
 
 
 @permission_required("subathonTimer.view_timer")
+def linked_progress(request):
+    timer = Timer.objects.last()
+    total_both = timer.timer_total_both
+
+    return render(
+        request,
+        "subathonTimer/totalLinked.html",
+        {"total_both": total_both},
+    )
+
+
+@permission_required("subathonTimer.view_timer")
 def global_timer(request):
     timer = Timer.objects.last()
     return render(

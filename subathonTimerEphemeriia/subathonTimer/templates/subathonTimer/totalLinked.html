@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Subathon Timer</title>
+        <link rel="stylesheet"
+              type="text/css"
+              href="{% static 'subathonTimer/css/linkedProgress.css' %}" />
+        <script src="{% static 'subathonTimer/js/linkedProgress.js' %}"
+                data-total_both="{{ total_both }}"
+                defer></script>
+    </head>
+    <body>
+        <div class="progress-container">
+            <div class="svg-container">
+                <svg id="Calque_1"
+                     data-name="Calque 1"
+                     xmlns="http://www.w3.org/2000/svg"
+                     xmlns:xlink="http://www.w3.org/1999/xlink"
+                     viewBox="0 0 182.3 100">
+                    <defs>
+                    <style>
+              .cls-1 {
+                fill: #400333;
+              }
+
+              .cls-2 {
+                fill: none;
+              }
+
+              .cls-3 {
+                fill: url(#Dégradé_sans_nom_3);
+              }
+
+              .cls-4 {
+                clip-path: url(#clippath);
+              }
+                    </style>
+                    <clipPath id="clippath">
+                    <rect class="cls-2" x="9.35" y="5.29" width="163.6" height="89.42" rx="33.69" ry="33.69" />
+                    </clipPath>
+                    <linearGradient id="Dégradé_sans_nom_3" data-name="Dégradé sans nom 3" x1="-212.05" y1="101.4" x2="-210.75" y2="101.4" gradientTransform="translate(26780.31 12852.25) scale(126.25 -126.25)" gradientUnits="userSpaceOnUse">
+                    <stop offset="0" stop-color="#77245a" />
+                    <stop offset="1" stop-color="#500f44" />
+                    </linearGradient>
+                    </defs>
+                    <g class="cls-4">
+                    <rect class="cls-3" x="9.35" y="5.29" width="163.6" height="89.42" />
+                    </g>
+                    <path class="cls-1" d="M65.05,22.79c-15.03,0-27.21,12.18-27.21,27.21s12.18,27.21,27.21,27.21h52.21c15.03,0,27.21-12.18,27.21-27.21s-12.18-27.21-27.21-27.21h-52.21Z" />
+                </svg>
+                <div class="current-amount">
+                    <p id="current-amount"></p>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
