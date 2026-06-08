@@ -10,7 +10,7 @@ function updateProgress() {
 }
 
 function ceilTo2Formatted(num) {
-  const n = Math.ceil(Number(num) * 100) / 100;
+  const n = Math.floor(Number(num) * 100) / 100;
   return n.toLocaleString(undefined, { maximumFractionDigits: 2 });
 }
 
