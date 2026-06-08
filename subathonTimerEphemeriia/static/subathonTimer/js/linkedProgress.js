@@ -5,8 +5,13 @@ function updateProgress() {
   const tipProgress = document.getElementById("current-amount");
 
   if (tipProgress) {
-    tipProgress.innerText = total_both / 5;
+    tipProgress.innerText = ceilTo2Formatted(total_both / 5);
   }
+}
+
+function ceilTo2Formatted(num) {
+  const n = Math.ceil(Number(num) * 100) / 100;
+  return n.toLocaleString(undefined, { maximumFractionDigits: 2 });
 }
 
 const evtSource = new EventSource("/timer/events/");
